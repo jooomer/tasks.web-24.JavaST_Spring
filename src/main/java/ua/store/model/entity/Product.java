@@ -17,7 +17,7 @@ import org.hibernate.annotations.Type;
 import ua.store.service.ProductTypeService;
 
 @Entity
-public class Product {
+public class Product implements Comparable<Product> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +34,9 @@ public class Product {
 	private String description;
 
 	private Double price;
+	
+	@Column(name = "quantity_in_stock")
+	private int quantityInStock;
 	
 	@Column(name = "published_date")
 	private Date publishedDate;
@@ -101,6 +104,21 @@ public class Product {
 	public void setPrice(Double price) {
 		this.price = price;
 	}
+
+	public int getQuantityInStock() {
+		return quantityInStock;
+	}
+
+	public void setQuantityInStock(int quantityInStock) {
+		this.quantityInStock = quantityInStock;
+	}
+
+	@Override
+	public int compareTo(Product product) {
+		return this.id - product.getId();
+	}
+
+
 
 
 }

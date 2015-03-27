@@ -12,20 +12,20 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.store.controller.admin.UsersController;
+import ua.store.controller.admin.ProductsController;
 
 /**
  * @author Sergey
  *
  */
 @SuppressWarnings("serial")
-public class UserTableTag extends BodyTagSupport {
-	
-	private static final Logger logger = LogManager.getLogger(UserTableTag.class);
+public class ProductTableTag extends BodyTagSupport {
+
+	private static final Logger logger = LogManager.getLogger(ProductTableTag.class);
 
 	private String head;
 	private int rows;
-	private UserList userList;
+	private ProductMap productMap;
 
 	public void setHead(String head) {
 		this.head = head;
@@ -40,27 +40,21 @@ public class UserTableTag extends BodyTagSupport {
 
 		logger.debug("doStartTag() - begin");
 
-		// get list of all users
-		userList = (UserList) pageContext.getSession().getAttribute("userList");
+		// get list of all products
+		productMap = (ProductMap) pageContext.getSession().getAttribute("productMap");
 
-		logger.debug("userList is gotten.");
-
-		// send list of users to a browser
+		// send list of products to a browser
 		try {
 			JspWriter out = pageContext.getOut();
 			out.write("<table style='width:95%'><colgroup span='2' title='title' />");
-			out.write("<caption>" + "List of users" + "</caption>");
+			out.write("<caption>" + "List of products" + "</caption>");
 			out.write("<thead><tr>"
 					+ "<th scope='col'>" + "Id" + "</th>"
-					+ "<th scope='col'>" + "Type" + "</th>"
-					+ "<th scope='col'>" + "userName" + "</th>"
-					+ "<th scope='col'>" + "First name" + "</th>"
-					+ "<th scope='col'>" + "Last name" + "</th>"
-					+ "<th scope='col'>" + "Email" + "</th>"
-					+ "<th scope='col'>" + "Phone" + "</th>"
-					+ "<th scope='col'>" + "Address" + "</th>"
-					+ "<th scope='col'>" + "Comments" + "</th>"
-					+ "<th scope='col'>" + "Black list"	+ "</tr></thead>");
+					+ "<th scope='col'>" + "Product Type" + "</th>"
+					+ "<th scope='col'>" + "Product name" + "</th>"
+					+ "<th scope='col'>" + "Price" + "</th>"
+					+ "<th scope='col'>" + "In stock" + "</th>"
+					+ "<th scope='col'>" + "Description"	+ "</tr></thead>");
 			out.write("<tbody><tr><td>");
 		} catch (IOException e) {
 			logger.error("An error occurred while writing by JspWriter", e);
@@ -91,7 +85,7 @@ public class UserTableTag extends BodyTagSupport {
 			// TODO Auto-generated catch block
 			throw new JspException(e.getMessage());
 		} finally {
-			userList.resetIterator();
+			productMap.resetIterator();
 		}
 		return EVAL_PAGE;
 	}

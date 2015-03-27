@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
 <fmt:setLocale value="${language}" scope="session" />
 <fmt:setBundle basename="ua.store.properties.lang" />
@@ -19,7 +19,7 @@
 	<div class="row">
 		<div class="product-holder">
 			<div class="product">
-				<a title="More Details" href="cabinets"><img src="<c:url value="/resources/css/images/1.jpg" />" alt="Yin Yang shaped bookshelf" /></a> <img class="top-label"
+				<a title="More Details" href="<spring:url value="/type-Cabinets" />"><img src="<c:url value="/resources/css/images/1.jpg" />" alt="Yin Yang shaped bookshelf" /></a> <img class="top-label"
 					src="<c:url value="/resources/css/images/top.png" />" alt="top sign" />
 				<div class="desc">
 						<fmt:message key="main.Cabinets" />
@@ -29,7 +29,7 @@
 		</div>
 		<div class="product-holder">
 			<div class="product">
-				<a title="More Details" href="sofas"><img src="<c:url value="/resources/css/images/6.jpg"/>"
+				<a title="More Details" href="<spring:url value="/type-Sofas" />"><img src="<c:url value="/resources/css/images/6.jpg"/>"
 					alt="Brown table with pink, blue and two green stools" /></a> <img
 					class="top-label" src="<c:url value="/resources/css/images/top.png" />" alt="top sign"/>
 				<div class="desc">
@@ -44,7 +44,7 @@
 	<div class="row">
 		<div class="product-holder">
 			<div class="product">
-				<a title="More Details" href="armchairs"><img src="<c:url value="/resources/css/images/5.jpg" />"
+				<a title="More Details" href="<spring:url value="/type-Armchairs" />"><img src="<c:url value="/resources/css/images/5.jpg" />"
 					alt="table" /></a>
 				<div class="desc">
 						<fmt:message key="main.Armchairs" />
@@ -55,7 +55,7 @@
 		</div>
 		<div class="product-holder">
 			<div class="product">
-				<a title="More Details" href="tables"><img src="<c:url value="/resources/css/images/4.jpg" />" alt="Armchair with a round stool" /></a> <img class="new-label"
+				<a title="More Details" href="<spring:url value="/type-Tables" />"><img src="<c:url value="/resources/css/images/4.jpg" />" alt="Armchair with a round stool" /></a> <img class="new-label"
 					src="<c:url value="/resources/css/images/new.png" />" alt="new sign" />
 				<div class="desc">
 						<fmt:message key="main.Tables" />

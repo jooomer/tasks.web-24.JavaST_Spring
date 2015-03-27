@@ -28,9 +28,12 @@
 <hr/>
 <br>
 <ulist:product-table rows="${ productMap.size }" >
-	${ productMap.productId } </td><td>
+	
+	<c:set var="productId" value="${ productMap.productId }" />
+	
+	${productId} </td><td>
 	${ productMap.productType } </td><td>
-	${ productMap.productName } </td><td>
+	<a href="<c:url value="/product-${ productId }" />" >${ productMap.productName }</a> </td><td>
 	${ productMap.price } </td><td>
 	${ productMap.quantityInStock } </td><td>
 	${ productMap.description }

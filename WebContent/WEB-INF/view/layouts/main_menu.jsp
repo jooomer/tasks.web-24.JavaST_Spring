@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
+
 <%@ page import="ua.store.model.entity.User"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${language}" scope="session" />
 <fmt:setBundle basename="ua.store.properties.lang" />
@@ -10,29 +11,29 @@
 <div id="navigation"> 
 	<ul>
 		<li class="first">
-			<a title="Home" href="<c:url value="/" />">
+			<a title="Home" href="<spring:url value="/" />">
 				<fmt:message key="main_menu.Home" />
 			<span class="home">&nbsp;</span>
 			</a>
 		</li>
 		<li>
-			<a title="Cabinets" href="cabinets">
+			<a title="Cabinets" href="<spring:url value="/type-Cabinets" />">
 				<fmt:message key="main_menu.Cabinets" />
 			</a>
 		</li>
 		<li>
-			<a title="Sofas" href="sofas">
+			<a title="Sofas" href="<spring:url value="/type-Sofas" />">
 				<fmt:message key="main_menu.Sofas" />
 			</a>
 		</li>
 
 		<li>
-			<a title="Armchairs" href="armchairs">
+			<a title="Armchairs" href="<spring:url value="/type-Armchairs" />">
 				<fmt:message key="main_menu.Armchairs" />
 			</a>
 		</li>
 		<li>
-			<a title="Tables" href="tables">
+			<a title="Tables" href="<spring:url value="/type-Tables" />">
 				<fmt:message key="main_menu.Tables" />
 			</a>
 		</li>

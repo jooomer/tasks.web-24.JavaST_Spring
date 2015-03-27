@@ -131,6 +131,7 @@ public class InitDbService {
 		product1.setProductType(productTypeCabinets);
 		product1.setPrice(600.);
 		product1.setPublishedDate(new Date());
+		product1.setQuantityInStock(14);
 		productRepository.save(product1);
 
 		Product product2 = new Product();
@@ -140,6 +141,7 @@ public class InitDbService {
 		product2.setProductType(productTypeSofas);
 		product2.setPrice(500.);
 		product2.setPublishedDate(new Date());
+		product2.setQuantityInStock(5);
 		productRepository.save(product2);
 
 		Product product3 = new Product();
@@ -149,6 +151,7 @@ public class InitDbService {
 		product3.setProductType(productTypeArmchairs);
 		product3.setPrice(1000.);
 		product3.setPublishedDate(new Date());
+		product3.setQuantityInStock(29);
 		productRepository.save(product3);
 
 		Product product4 = new Product();
@@ -158,6 +161,7 @@ public class InitDbService {
 		product4.setProductType(productTypeTables);
 		product4.setPrice(3000.);
 		product4.setPublishedDate(new Date());
+		product4.setQuantityInStock(8);
 		productRepository.save(product4);
 		
 	}

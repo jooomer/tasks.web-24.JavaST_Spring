@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+
+<%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
 <%@ page import="ua.store.model.entity.User"%>
 
@@ -16,7 +15,7 @@
 <div id="sidebar">
 	<div class="box">
 	
-		<security:authorize access="hasRole('ROLE_ADMIN') and isAuthenticated()">
+		<security:authorize access="isAuthenticated() and hasRole('ROLE_ADMIN')">
 	
 			<div class="title">
 				<h2>
@@ -27,13 +26,13 @@
 					alt="small grey bullet" />
 			</div>
 			<ul>
-					<li><a title="Users" href="<c:url value="users" />"> 
+					<li><a title="Users" href="<spring:url value="/users" />"> 
 					<fmt:message key="sidebar.Users" />
 					</a></li> 
-					<li><a title="Delete user" href="<c:url value="products" />"> <fmt:message
+					<li><a title="Delete user" href="<spring:url value="/products" />"> <fmt:message
 								key="sidebar.Products" />
 					</a></li>
-					<li><a title="Add new product" href="<c:url value="add-product" />">
+					<li><a title="Add new product" href="<spring:url value="/add-product" />">
 							<fmt:message key="sidebar.Add_product" />
 					</a></li>
 

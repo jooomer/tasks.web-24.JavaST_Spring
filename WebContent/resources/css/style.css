@@ -49,7 +49,7 @@ textarea { overflow: auto; }
 
 #wrapper-top { margin-top: 9px; height: 31px; line-height: 0; font-size: 0; text-indent: -4000px; background: url(images/wrapper-top.png) no-repeat 0 0; }
 #wrapper-middle { padding: 0 25px 0 27px; background: url(images/wrapper-middle.png) repeat-y 0 0; }
-#wrapper-bottom { height: 32px; line-height: 0; font-size: 0; text-indent: -4000px; background: url(${pageContext.request.contextPath}/resources/css/images/wrapper-bottom.png) no-repeat 0 0; }
+#wrapper-bottom { height: 32px; line-height: 0; font-size: 0; text-indent: -4000px; background: url(images/wrapper-bottom.png) no-repeat 0 0; }
 
 #header { position: relative; height: 99%; padding: 6px 0 26px 17px; }
 
