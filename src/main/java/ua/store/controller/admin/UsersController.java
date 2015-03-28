@@ -56,7 +56,7 @@ public class UsersController {
 	// call user-detail.jsp
 	@RequestMapping(value = "/{id}")
 	public String detail(Model model, @PathVariable int id) {
-		model.addAttribute("user", userService.findOneWithCarts(id));
+		model.addAttribute("user", userService.findOneWithOrders(id));
 		return "user-detail";
 	}
 	

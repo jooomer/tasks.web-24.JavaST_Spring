@@ -28,7 +28,7 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private OrderRepository cartRepository;
+	private OrderRepository orderRepository;
 	
 	@Autowired
 	private RoleRepository roleRepository;
@@ -42,10 +42,10 @@ public class UserService {
 	}
 
 	@Transactional
-	public User findOneWithCarts(int id) {
+	public User findOneWithOrders(int id) {
 		User user = findOne(id);
-		Set<Order> orders = cartRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "createDate"));
-		user.setCarts(orders);
+		Set<Order> orders = orderRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "date"));
+		user.setOrders(orders);
 		return user;
 	}
 
@@ -62,12 +62,16 @@ public class UserService {
 
 	public User findOneWithCarts(String name) {
 		User user = userRepository.findByName(name);
-		return findOneWithCarts(user.getId());
+		return findOneWithOrders(user.getId());
 	}
 
 	public void update(User user) {
 		userRepository.save(user);
 		
+	}
+
+	public User findByName(String name) {
+		return userRepository.findByName(name);
 	}
 
 

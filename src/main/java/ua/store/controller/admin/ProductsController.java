@@ -114,32 +114,30 @@ public class ProductsController {
 		
 		HttpSession session = request.getSession();
 		
-		// get Cart from session
+		// get Order from session
 		Order order = (Order) session.getAttribute("order");
 		if (order == null) {
 			order = new Order();
 		}
 		
-		// add Product to Cart
+		// add Product to Order
 		order.addProduct(product);
 		
-//		// save Cart for User
+//		// save Order for User
 //		if (principal != null) {
 //			User user = userService.findOneWithCarts(principal.getName());
 //		}
 		
-		// save cart to session
-		session.setAttribute("cart", order);
+		// save Order to session
+		session.setAttribute("order", order);
 		
 		// prepare ProductMap to show products in a cart page
 		ProductMap productMap = new ProductMap(order);
 		session.setAttribute("productMap", productMap);
 		
 		// show cart.jsp
-		model.addAttribute("message", "Product is successfully added to your cart.");
-		model.addAttribute("jspPage",
-				"/WEB-INF/view/common/cart.jsp");
-		return "template";
+		redirectAttributes.addFlashAttribute("message", "Product is successfully added to your cart.");
+		return "redirect:/cart";
 	}
 
 }

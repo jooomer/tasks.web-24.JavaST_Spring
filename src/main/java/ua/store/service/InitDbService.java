@@ -42,6 +42,9 @@ public class InitDbService {
 	
 	@Autowired
 	private OrderRepository orderRepository;
+	
+	@Autowired
+	private OrderService orderService;
 
 	@PostConstruct
 	public void init() {
@@ -172,7 +175,7 @@ public class InitDbService {
 		order1.addProduct(product1);
 		order1.addProduct(product1);
 		order1.addProduct(product3);
-		orderRepository.save(order1);
+		orderService.save(order1);
 		
 		
 	}

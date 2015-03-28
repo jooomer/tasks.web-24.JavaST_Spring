@@ -34,10 +34,13 @@ public class Order {
 	
 	private String name;
 	
-	@Column(name = "create_date")
-	private Date createDate;
+	private Date date;
 	
 	private double amount;
+	
+//	private OrderStatus orderStatus;
+
+	private String comments;
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -118,12 +121,12 @@ public class Order {
 		this.id = id;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public String getName() {
@@ -140,6 +143,14 @@ public class Order {
 
 	public void setOrderItems(Set<OrderItem> orderItems) {
 		this.orderItems = orderItems;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 
 

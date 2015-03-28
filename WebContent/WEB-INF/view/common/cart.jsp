@@ -16,7 +16,7 @@
 </h1>
 <br>
 
-<h3><c:out value="${sessionScope['message']}" /></h3>
+<h3>${message}</h3>
 <br>
 
 <c:set var="productMap" value='${sessionScope["productMap"]}' />
@@ -41,7 +41,7 @@
 		<br>
 
 			<form action="order" method="post">
-				<button type="submit" name="command" value="make_an_order">
+				<button type="submit" name="make_an_order" >
 					<fmt:message key="сart.Make_an_order_button" />
 				</button>
 			</form>
@@ -49,7 +49,7 @@
 		<br>
 
 			<form action="cart" method="post">
-				<button type="submit" name="command" value="clear_cart">
+				<button type="submit" name="command" >
 					<fmt:message key="сart.Clear_cart_button" />
 				</button>
 			</form>

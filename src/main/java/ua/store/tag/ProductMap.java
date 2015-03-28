@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 import ua.store.controller.admin.UsersController;
 import ua.store.model.entity.Order;
+import ua.store.model.entity.OrderItem;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductType;
 
@@ -55,12 +57,18 @@ public class ProductMap {
 
 	public ProductMap(Order order) {
 
-		logger.debug("Constructor ProductMap(Cart cart) started");
+		logger.debug("Constructor ProductMap(Order order) started");
 
-		// get list of products from cart
-//		this.productMap = cart.getProductMap();
+		// get list of products from order
+		
+		Set<OrderItem> orderItems = order.getOrderItems();
+		this.productMap = new TreeMap<Product, Integer>();
+		 
+		for (OrderItem orderItem : orderItems) {
+			Product product = orderItem.getProduct();
+			this.productMap.put(product, product.getQuantityInStock());
+		}
 		this.iterator = productMap.entrySet().iterator();
-
 	}
 
 	public ProductMap(List<Product> products) {

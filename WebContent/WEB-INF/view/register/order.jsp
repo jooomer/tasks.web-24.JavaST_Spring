@@ -16,12 +16,12 @@
 </h1>
 <br>
 
-<c:set var="order" value='${sessionScope["order"]}' />
-<c:set var="user" value='${sessionScope["user"]}' />
+<%-- <c:set var="order" value='${sessionScope["order"]}' /> --%>
+<%-- <c:set var="user" value='${principal}' /> --%>
 <pre>
 	<b><fmt:message key="order.Customer" />:</b>	${user.firstName} ${user.lastName}
 
-	<b><fmt:message key="order.Date" />:</b>		${order.orderDate}
+	<b><fmt:message key="order.Date" />:</b>		${order.date}
 
 	<b><fmt:message key="order.Amount" />:</b>		${order.amount}
 
@@ -45,6 +45,6 @@
 	<textarea name="comments" rows="5" cols="70"></textarea>
 	<br>
 	<br>
-	<button type="submit" name="command" value="save_order" ><fmt:message key="order.Save_order_button" /></button>
+	<button type="submit" name="save_order" ><fmt:message key="order.Save_order_button" /></button>
 </form>
 <br>

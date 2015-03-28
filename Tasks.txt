@@ -1,1 +1,3 @@
 - remove Date from Product
+- change repository to service in InitDB method
+- move some .jsp to /register

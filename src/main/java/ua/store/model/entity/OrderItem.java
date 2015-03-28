@@ -76,16 +76,17 @@ public class OrderItem {
 		this.order = order;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) return false;
-		if (o instanceof OrderItem) return false;
-		if (this.product.getId() != ((OrderItem) o).getProduct().getId()) return false;
-		return true;
-	}
+//	@Override
+//	public boolean equals(Object o) {
+//		if (o == null) return false;
+//		if (o instanceof OrderItem) return false;
+//		if (this.product.getId() != ((OrderItem) o).getProduct().getId()) return false;
+//		return true;
+//	}
+//
+//	@Override
+//	public int hashCode(){
+//	    return this.product.getId().hashCode();
+//	  }
 
-	@Override
-	public int hashCode(){
-	    return this.product.getId().hashCode();
-	  }
 }

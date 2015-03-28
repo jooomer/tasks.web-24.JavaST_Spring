@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
 <fmt:setLocale value="${language}" scope="session" />
 <fmt:setBundle basename="ua.store.properties.lang" />
@@ -25,6 +24,7 @@
 		<p>
 			<button type="submit" name="command" value="login" >
 				<fmt:message key="login.Sign_in_button" />
-			</button>
+			</button>	
+			<a href="<spring:url value="/register" />" >or register</a>
 		</p>
 	</form>
