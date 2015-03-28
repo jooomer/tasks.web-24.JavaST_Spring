@@ -13,7 +13,7 @@
 		<org.apache.logging.log4j>2.1</org.apache.logging.log4j>
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
 	</properties>
-
+ 
 	<dependencies>
 
 		<!-- Jackson -->
