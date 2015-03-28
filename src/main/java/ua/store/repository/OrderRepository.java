@@ -6,10 +6,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import ua.store.model.entity.User;
-import ua.store.model.entity.UserCart;
+import ua.store.model.entity.Order;
 
-public interface CartRepository extends JpaRepository<UserCart, Long> {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
-	Set<UserCart> findByUser(User user, PageRequest pageRequest);
+	Set<Order> findByUser(User user, PageRequest pageRequest);
 
 }

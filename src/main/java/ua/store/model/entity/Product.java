@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -20,6 +23,7 @@ import org.hibernate.annotations.Type;
 import ua.store.service.ProductTypeService;
 
 @Entity
+@Table(name = "products")
 public class Product implements Comparable<Product> {
 
 	@Id
@@ -48,8 +52,8 @@ public class Product implements Comparable<Product> {
 	@JoinColumn(name = "product_type_id")
 	private ProductType productType;
 	
-	@ManyToMany(mappedBy = "products")
-	private Set<UserCart> carts = new LinkedHashSet<>();
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	private Set<OrderItem> orderItems = new LinkedHashSet<>();
 	
 	public Integer getId() {
 		return id;
@@ -112,12 +116,12 @@ public class Product implements Comparable<Product> {
 		return this.id - product.getId();
 	}
 
-	public Set<UserCart> getCarts() {
-		return carts;
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
 	}
 
-	public void setCarts(Set<UserCart> carts) {
-		this.carts = carts;
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
 

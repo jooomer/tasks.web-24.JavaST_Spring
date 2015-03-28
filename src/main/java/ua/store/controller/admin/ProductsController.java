@@ -8,6 +8,7 @@ import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,10 +20,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ua.store.model.entity.Order;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductType;
+import ua.store.model.entity.User;
 import ua.store.service.ProductService;
 import ua.store.service.ProductTypeService;
+import ua.store.service.UserService;
 import ua.store.tag.ProductMap;
 
 @Controller
@@ -33,6 +37,9 @@ public class ProductsController {
 
 	@Autowired
 	private ProductService productService;
+	
+	@Autowired
+	private UserService userService;
 
 	@Autowired
 	private ProductTypeService productTypeService;
@@ -94,19 +101,45 @@ public class ProductsController {
 
 	@RequestMapping(value = "/products/{id}", method = RequestMethod.POST, params = {"send-to-cart"})
 	public String doSendToCart(Model model, @PathVariable int id, Principal principal,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes, HttpServletRequest request) {
 		logger.debug("doSendToCart() started. Product Id is \"" + id + "\"");
-		if (principal != null) {
-			System.out.println("User name: " + principal.getName());
-		} else {
-			System.out.println("principal == null");
+		
+		// get Product from DB
+		Product product = productService.findOne(id);
+		if (product == null) {
+			model.addAttribute("message", "Error! Product is unavailable. Please, choose another one.");
+			model.addAttribute("jspPage", "/WEB-INF/view/common/message.jsp");
+			return "template";
 		}
 		
-//		redirectAttributes.addFlashAttribute("message",
-//				"Congratulations! You've just successfully deleted a product.");
+		HttpSession session = request.getSession();
 		
-		// call products.jsp again
-		return "redirect:/products";
+		// get Cart from session
+		Order order = (Order) session.getAttribute("order");
+		if (order == null) {
+			order = new Order();
+		}
+		
+		// add Product to Cart
+		order.addProduct(product);
+		
+//		// save Cart for User
+//		if (principal != null) {
+//			User user = userService.findOneWithCarts(principal.getName());
+//		}
+		
+		// save cart to session
+		session.setAttribute("cart", order);
+		
+		// prepare ProductMap to show products in a cart page
+		ProductMap productMap = new ProductMap(order);
+		session.setAttribute("productMap", productMap);
+		
+		// show cart.jsp
+		model.addAttribute("message", "Product is successfully added to your cart.");
+		model.addAttribute("jspPage",
+				"/WEB-INF/view/common/cart.jsp");
+		return "template";
 	}
 
 }

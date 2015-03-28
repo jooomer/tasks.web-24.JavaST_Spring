@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,15 +21,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cart")
-public class UserCart {
+@Table(name = "orders")
+public class Order {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private String name;
 	
 	@Column(name = "create_date")
 	private Date createDate;
@@ -38,22 +42,26 @@ public class UserCart {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private Set<OrderItem> orderItems = new LinkedHashSet<>();
 	
-	@ManyToMany
-	@JoinTable
-	private Set<Product> products = new LinkedHashSet<>();
-	
-//	public void addProduct(Product product, Integer quantity) {
-//		if (productMap.containsKey(product)) { 
-//			Integer q = productMap.get(product);
-//			q += quantity;
-//			productMap.put(product, quantity);
+	public void addProduct(Product product) {
+		OrderItem orderItem = new OrderItem();
+		orderItem.setOrder(this);
+		orderItem.setProduct(product);
+		orderItem.setAmount(product.getPrice());
+		orderItems.add(orderItem);
+		
+//		if (orderItems.contains(orderItem)) {
+//			
 //		} else {
-//			productMap.put(product, quantity);
+//			orderItems.add(orderItem);
+//			amount += product.getPrice();
 //		}
-//		amount += product.getPrice() * quantity;
-//	}
-	
+		
+	}
+		
 //	public boolean deleteProduct(Product product, Integer quantity) {
 //		if (productMap.containsKey(product)) { 
 //			Integer q = productMap.get(product);
@@ -110,14 +118,6 @@ public class UserCart {
 		this.id = id;
 	}
 
-	public Set<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(Set<Product> products) {
-		this.products = products;
-	}
-
 	public Date getCreateDate() {
 		return createDate;
 	}
@@ -125,6 +125,23 @@ public class UserCart {
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
+	}
+
 
 
 }

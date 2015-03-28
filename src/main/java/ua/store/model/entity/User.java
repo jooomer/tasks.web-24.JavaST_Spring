@@ -74,7 +74,7 @@ public class User implements Comparable<User> {
 	private Set<Role> roles = new HashSet<>();
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<UserCart> carts = new HashSet<>();
+	private Set<Order> carts = new HashSet<>();
 	
 	public void addRole(Role role) {
 		roles.add(role);
@@ -195,11 +195,11 @@ public class User implements Comparable<User> {
 		this.userType = userType;
 	}
 
-	public Set<UserCart> getCarts() {
+	public Set<Order> getCarts() {
 		return carts;
 	}
 
-	public void setCarts(Set<UserCart> carts) {
+	public void setCarts(Set<Order> carts) {
 		this.carts = carts;
 	}
 

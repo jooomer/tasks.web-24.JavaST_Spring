@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ua.store.model.entity.Order;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductType;
 import ua.store.model.entity.Role;
 import ua.store.model.entity.User;
+import ua.store.repository.OrderRepository;
 import ua.store.repository.ProductRepository;
 import ua.store.repository.ProductTypeRepository;
 import ua.store.repository.RoleRepository;
@@ -37,11 +39,14 @@ public class InitDbService {
 
 	@Autowired
 	private ProductTypeRepository productTypeRepository;
+	
+	@Autowired
+	private OrderRepository orderRepository;
 
 	@PostConstruct
 	public void init() {
 		
-		logger.debug("init() started.");
+		logger.debug("--- init() started.");
 		
 		if (roleRepository.findByName("ROLE_ADMIN") != null) {
 			return;
@@ -49,18 +54,18 @@ public class InitDbService {
 		
 		doInit(); 
 	
-		logger.debug("init() successfully finished.");
+		logger.debug("--- init() successfully finished.");
 	}
 
 	public void doInit() {
 		
-		roleRepository.deleteAll();
-		userRepository.deleteAll();
-		productRepository.deleteAll();
-		productTypeRepository.deleteAll();
+//		roleRepository.deleteAll();
+//		userRepository.deleteAll();
+//		productRepository.deleteAll();
+//		productTypeRepository.deleteAll();
 		
 		// init roles
-		logger.debug("init roles started.");
+		logger.debug("--- init roles started.");
 		Role roleUser = new Role();
 		roleUser.setName("ROLE_USER");
 		roleRepository.save(roleUser);
@@ -70,7 +75,7 @@ public class InitDbService {
 		roleRepository.save(roleAdmin);
 
 		// init first user "admin"
-		logger.debug("init first user 'admin' started.");
+		logger.debug("--- init first user 'admin' started.");
 		User userAdmin = new User();
 		userAdmin.setName("admin");
 		userAdmin.setEmail("freddy@krugger.com");
@@ -88,7 +93,7 @@ public class InitDbService {
 		userRepository.save(userAdmin);
 
 		// init second user "user"
-		logger.debug("init first user 'user' started.");
+		logger.debug("--- init first user 'user' started.");
 		User userUser = new User();
 		userUser.setName("user");
 		userUser.setEmail("mike@tyson.com");
@@ -105,7 +110,7 @@ public class InitDbService {
 		userRepository.save(userUser);
 
 		// init product types
-		logger.debug("init product types started.");
+		logger.debug("--- init product types started.");
 		ProductType productTypeCabinets = new ProductType();
 		productTypeCabinets.setName("Cabinets");
 		productTypeRepository.save(productTypeCabinets);
@@ -123,7 +128,7 @@ public class InitDbService {
 		productTypeRepository.save(productTypeTables);
 
 		// init products
-		logger.debug("init products started.");
+		logger.debug("--- init products started.");
 		Product product1 = new Product();
 		product1.setName("Cabinet");
 		product1.setDescription("This cabinet has a modern design.");
@@ -159,6 +164,16 @@ public class InitDbService {
 		product4.setPublishedDate(new Date());
 		product4.setQuantityInStock(8);
 		productRepository.save(product4);
+		
+		// init orders
+		logger.debug("--- init orders started.");
+		Order order1 = new Order();
+		order1.setUser(userAdmin);
+		order1.addProduct(product1);
+		order1.addProduct(product1);
+		order1.addProduct(product3);
+		orderRepository.save(order1);
+		
 		
 	}
 

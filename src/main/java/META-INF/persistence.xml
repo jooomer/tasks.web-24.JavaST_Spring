@@ -5,6 +5,7 @@
 		<class>ua.store.model.entity.ProductType</class>
 		<class>ua.store.model.entity.Role</class>
 		<class>ua.store.model.entity.User</class>
-		<class>ua.store.model.entity.UserCart</class>
+		<class>ua.store.model.entity.Order</class>
+		<class>ua.store.model.entity.OrderItem</class>
 	</persistence-unit>
 </persistence>

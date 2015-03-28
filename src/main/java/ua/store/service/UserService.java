@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.Role;
 import ua.store.model.entity.User;
-import ua.store.model.entity.UserCart;
-import ua.store.repository.CartRepository;
+import ua.store.model.entity.Order;
+import ua.store.repository.OrderRepository;
 import ua.store.repository.ProductRepository;
 import ua.store.repository.RoleRepository;
 import ua.store.repository.UserRepository;
@@ -28,7 +28,7 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private CartRepository cartRepository;
+	private OrderRepository cartRepository;
 	
 	@Autowired
 	private RoleRepository roleRepository;
@@ -44,8 +44,8 @@ public class UserService {
 	@Transactional
 	public User findOneWithCarts(int id) {
 		User user = findOne(id);
-		Set<UserCart> carts = cartRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "createDate"));
-		user.setCarts(carts);
+		Set<Order> orders = cartRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "createDate"));
+		user.setCarts(orders);
 		return user;
 	}
 
