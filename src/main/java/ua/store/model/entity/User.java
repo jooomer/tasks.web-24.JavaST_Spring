@@ -1,7 +1,9 @@
 package ua.store.model.entity;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -69,18 +71,14 @@ public class User implements Comparable<User> {
 
 	@ManyToMany
 	@JoinTable
-	private List<Role> roles = new ArrayList<>();
+	private Set<Role> roles = new HashSet<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
-	private List<Product> products = new ArrayList<>();
-
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<UserCart> carts = new HashSet<>();
+	
 	public void addRole(Role role) {
 		roles.add(role);
 		userType = role.getName();
-	}
-
-	public void addProduct(Product product) {
-		products.add(product);
 	}
 
 	public Integer getId() {
@@ -155,20 +153,12 @@ public class User implements Comparable<User> {
 		this.address = address;
 	}
 
-	public List<Role> getRoles() {
+	public Set<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
-	}
-
-	public List<Product> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
 	}
 
 	public String getComments() {
@@ -203,6 +193,14 @@ public class User implements Comparable<User> {
 
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+
+	public Set<UserCart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(Set<UserCart> carts) {
+		this.carts = carts;
 	}
 
 }

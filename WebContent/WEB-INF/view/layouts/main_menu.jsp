@@ -17,23 +17,23 @@
 			</a>
 		</li>
 		<li>
-			<a title="Cabinets" href="<spring:url value="/type-Cabinets" />">
+			<a title="Cabinets" href="<spring:url value="/product-types/Cabinets" />">
 				<fmt:message key="main_menu.Cabinets" />
 			</a>
 		</li>
 		<li>
-			<a title="Sofas" href="<spring:url value="/type-Sofas" />">
+			<a title="Sofas" href="<spring:url value="/product-types/Sofas" />">
 				<fmt:message key="main_menu.Sofas" />
 			</a>
 		</li>
 
 		<li>
-			<a title="Armchairs" href="<spring:url value="/type-Armchairs" />">
+			<a title="Armchairs" href="<spring:url value="/product-types/Armchairs" />">
 				<fmt:message key="main_menu.Armchairs" />
 			</a>
 		</li>
 		<li>
-			<a title="Tables" href="<spring:url value="/type-Tables" />">
+			<a title="Tables" href="<spring:url value="/product-types/Tables" />">
 				<fmt:message key="main_menu.Tables" />
 			</a>
 		</li>

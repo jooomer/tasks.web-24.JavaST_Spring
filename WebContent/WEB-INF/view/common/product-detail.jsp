@@ -6,14 +6,15 @@
 <fmt:setLocale value="${language}" scope="session" />
 <fmt:setBundle basename="ua.store.properties.lang" />
 
-<jsp:useBean id="product" scope="session" class="ua.store.model.entity.Product" />
+<jsp:useBean id="product" scope="session"
+	class="ua.store.model.entity.Product" />
 
 <h1>
 	<fmt:message key="common_product.Product_page" />
 </h1>
 <br>
 
-	<pre>
+<pre>
 	<b><fmt:message key="common_product.Product_ID" />:</b>			${product.id}
 
 	<b><fmt:message key="common_product.Product_type" />:</b> 			${product.productType.name}
@@ -25,27 +26,19 @@
 	<b><fmt:message key="common_product.Product_description" />:</b> 	${product.description}
 	</pre>
 
-	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<form action="cart" method="post" >
-	<button type="submit" name="command" value="send_to_cart" ><fmt:message key="common_product.Send_to_cart_button" /></button>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<%-- <form:form action="<spring:url value="/cart" />" method="post"> --%>
+<!-- 	<button type="submit" name="command" value="send_to_cart"> -->
+<%-- 		<fmt:message key="common_product.Send_to_cart_button" /> --%>
+<!-- 	</button> -->
+<%-- </form:form> --%>
+<br>
 
-<security:authorize access="isAuthenticated() and hasRole('ROLE_ADMIN')">
-	
-	<a href="<spring:url value="/products/update/${product.id}" />" >Update product</a>
-	<a href="<spring:url value="/products/remove/${product.id}" />" >Remove product</a>
-
-	<button type="submit" name="command" value="send_to_cart" >Update product></button>
-	<button type="submit" name="command" value="send_to_cart" >Remove product</button>
-
-</security:authorize>
-
-
-</form>
-
-<form:form commandName="product">
-
-	<button type="submit" name="command" value="send_to_cart" >Update product></button>
-	<button type="submit" name="command" value="send_to_cart" >Remove product</button>
-
+<form:form>
+	<input type="submit" name="send-to-cart" value="<fmt:message key="common_product.Send_to_cart_button" />" />
+	<security:authorize access="isAuthenticated() and hasRole('ROLE_ADMIN')">
+		<input type="submit" name="update" value="Update product" />
+		<input type="submit" name="delete" value="Delete product" />
+	</security:authorize>
 </form:form>
 

@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import ua.store.controller.admin.UsersController;
-import ua.store.model.entity.Cart;
+import ua.store.model.entity.UserCart;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductType;
 
@@ -53,12 +53,12 @@ public class ProductMap {
 //		this.iterator = productMap.entrySet().iterator();
 	}
 
-	public ProductMap(Cart cart) {
+	public ProductMap(UserCart cart) {
 
 		logger.debug("Constructor ProductMap(Cart cart) started");
 
 		// get list of products from cart
-		this.productMap = cart.getProductMap();
+//		this.productMap = cart.getProductMap();
 		this.iterator = productMap.entrySet().iterator();
 
 	}

@@ -127,7 +127,6 @@ public class InitDbService {
 		Product product1 = new Product();
 		product1.setName("Cabinet");
 		product1.setDescription("This cabinet has a modern design.");
-		product1.setUser(userAdmin);
 		product1.setProductType(productTypeCabinets);
 		product1.setPrice(600.);
 		product1.setPublishedDate(new Date());
@@ -137,7 +136,6 @@ public class InitDbService {
 		Product product2 = new Product();
 		product2.setName("Sofa");
 		product2.setDescription("This sofa is very soft.");
-		product2.setUser(userAdmin);
 		product2.setProductType(productTypeSofas);
 		product2.setPrice(500.);
 		product2.setPublishedDate(new Date());
@@ -147,7 +145,6 @@ public class InitDbService {
 		Product product3 = new Product();
 		product3.setName("Armchair");
 		product3.setDescription("This armchair has a good price.");
-		product3.setUser(userUser);
 		product3.setProductType(productTypeArmchairs);
 		product3.setPrice(1000.);
 		product3.setPublishedDate(new Date());
@@ -157,7 +154,6 @@ public class InitDbService {
 		Product product4 = new Product();
 		product4.setName("Tables");
 		product4.setDescription("This table has a circle surface.");
-		product4.setUser(userUser);
 		product4.setProductType(productTypeTables);
 		product4.setPrice(3000.);
 		product4.setPublishedDate(new Date());

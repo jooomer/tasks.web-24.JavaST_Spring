@@ -88,13 +88,12 @@ public class AddProductController {
 		}
 
 		// set name of user and current date to new product
-		String name = principal.getName();
 		product.setPublishedDate(new Date());
 
 		// save new product in DB
-		productService.save(product, name);
+		productService.save(product);
 
-		// get this produat from DB to get its id
+		// get this product from DB to get its id
 		product = productService.findOneByName(product.getName());
 		int id = product.getId();
 

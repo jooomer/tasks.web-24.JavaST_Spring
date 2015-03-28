@@ -1,0 +1,1 @@
+- remove Date from Product

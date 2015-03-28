@@ -1,6 +1,7 @@
 package ua.store.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.Role;
 import ua.store.model.entity.User;
+import ua.store.model.entity.UserCart;
+import ua.store.repository.CartRepository;
 import ua.store.repository.ProductRepository;
 import ua.store.repository.RoleRepository;
 import ua.store.repository.UserRepository;
@@ -25,7 +28,7 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private ProductRepository productRepository;
+	private CartRepository cartRepository;
 	
 	@Autowired
 	private RoleRepository roleRepository;
@@ -39,10 +42,10 @@ public class UserService {
 	}
 
 	@Transactional
-	public User findOneWithProducts(int id) {
+	public User findOneWithCarts(int id) {
 		User user = findOne(id);
-		List<Product> products = productRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "publishedDate"));
-		user.setProducts(products);
+		Set<UserCart> carts = cartRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "createDate"));
+		user.setCarts(carts);
 		return user;
 	}
 
@@ -57,9 +60,9 @@ public class UserService {
 		userRepository.save(user);
 	}
 
-	public User findOneWithProducts(String name) {
+	public User findOneWithCarts(String name) {
 		User user = userRepository.findByName(name);
-		return findOneWithProducts(user.getId());
+		return findOneWithCarts(user.getId());
 	}
 
 	public void update(User user) {

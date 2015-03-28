@@ -29,7 +29,7 @@ public class MyProductsController {
 	@RequestMapping
 	public String showMyProducts(Model model, Principal principal) {
 		String name = principal.getName();
-		model.addAttribute("myProducts", productService.findAllByUserName(name));
+//		model.addAttribute("myProducts", productService.findAllByUserName(name));
 		return "my-products";
 		
 	}

@@ -12,9 +12,9 @@
 
 <div id="top-navigation">
 	<form method="post">
-		<a title="My Account" href="account"> <fmt:message
+		<a title="My Account" href="<spring:url value="/account" />"> <fmt:message
 				key="top_menu.MY_ACCOUNT" />
-		</a> <a class="cart" title="Shopping Cart" href="cart"> <fmt:message
+		</a> <a class="cart" title="Shopping Cart" href="<spring:url value="/cart" />"> <fmt:message
 				key="top_menu.SHOPPING_CART" />
 		</a>&nbsp;&nbsp; <select id="language" name="language" onchange="submit()">
 			<option value="en" ${language == 'en' ? 'selected' : ''}>English</option>
@@ -26,14 +26,14 @@
 <div class="welcome-message">
 	<security:authorize access="!isAuthenticated()">
 		<fmt:message key="top_menu.Hi_guest" />&nbsp;&nbsp;
-			<a href="login"> <fmt:message key="top_menu.Sign_in" />&nbsp;</a>
-			<a href="register"> <fmt:message key="top_menu.Register" />&nbsp;&nbsp;</a>
+			<a href="<spring:url value="/login" />"> <fmt:message key="top_menu.Sign_in" />&nbsp;</a>
+			<a href="<spring:url value="/register" />"> <fmt:message key="top_menu.Register" />&nbsp;&nbsp;</a>
 	</security:authorize>
 
 	<security:authentication var="principal" property="principal" />
 	<security:authorize access="isAuthenticated()">
 		<fmt:message key="top_menu.Hi" />&nbsp;${principal.username}!&nbsp;&nbsp;|&nbsp;&nbsp;
-			<a href="logout"> <fmt:message
+			<a href="<spring:url value="/logout" />"> <fmt:message
 				key="top_menu.Logout" />&nbsp;&nbsp;
 		</a>
 	</security:authorize>

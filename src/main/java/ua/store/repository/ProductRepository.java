@@ -11,9 +11,9 @@ import ua.store.model.entity.User;
 
 public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-	List<Product> findByUser(User user, Pageable pageable);
-
-	List<Product> findAllByUserName(String name);
+//	List<Product> findByUser(User user, Pageable pageable);
+//
+//	List<Product> findAllByUserName(String name);
 
 	Product findOneByName(String name);
 

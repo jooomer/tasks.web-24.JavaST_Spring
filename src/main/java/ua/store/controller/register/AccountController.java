@@ -40,7 +40,7 @@ public class AccountController {
 		logger.debug("Method showAccount() started.");
 		
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithProducts(name));
+		model.addAttribute("user", userService.findOneWithCarts(name));
 		model.addAttribute("jspPage", "/WEB-INF/view/common/account.jsp");
 		return "template";
 	}
@@ -51,7 +51,7 @@ public class AccountController {
 		logger.debug("Method doAccountUpdate() started.");
 
 		String name = principal.getName();
-		User user = userService.findOneWithProducts(name);
+		User user = userService.findOneWithCarts(name);
 		
 		if (!newUser.getFirstName().equals("")) {
 			user.setFirstName(newUser.getFirstName());

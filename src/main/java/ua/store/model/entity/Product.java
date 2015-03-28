@@ -1,6 +1,8 @@
 package ua.store.model.entity;
 
 import java.util.Date;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
@@ -45,10 +48,9 @@ public class Product implements Comparable<Product> {
 	@JoinColumn(name = "product_type_id")
 	private ProductType productType;
 	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
-
+	@ManyToMany(mappedBy = "products")
+	private Set<UserCart> carts = new LinkedHashSet<>();
+	
 	public Integer getId() {
 		return id;
 	}
@@ -81,14 +83,6 @@ public class Product implements Comparable<Product> {
 		this.publishedDate = publishedDate;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 	public ProductType getProductType() {
 		return productType;
 	}
@@ -116,6 +110,14 @@ public class Product implements Comparable<Product> {
 	@Override
 	public int compareTo(Product product) {
 		return this.id - product.getId();
+	}
+
+	public Set<UserCart> getCarts() {
+		return carts;
+	}
+
+	public void setCarts(Set<UserCart> carts) {
+		this.carts = carts;
 	}
 
 

@@ -16,6 +16,9 @@
 </h1>
 <br>
 
+<h3>${message}</h3>
+<br>
+
 <form action="administrator/product" method="post">
 	<fmt:message key="products.Search" />:
 	<input type="text" name="productName" />
@@ -33,7 +36,7 @@
 	
 	${productId} </td><td>
 	${ productMap.productType } </td><td>
-	<a href="<c:url value="/product-${ productId }" />" >${ productMap.productName }</a> </td><td>
+	<a href="<c:url value="/products/${ productId }" />" >${ productMap.productName }</a> </td><td>
 	${ productMap.price } </td><td>
 	${ productMap.quantityInStock } </td><td>
 	${ productMap.description }

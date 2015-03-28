@@ -35,19 +35,19 @@ public class ProductService {
 		return productRepository.findOne(id);
 	}
 
-	public List<Product> findAllByUserName(String name) {
-		List<Product> myProducts = productRepository.findAllByUserName(name);
-		return myProducts;
-	}
+//	public List<Product> findAllByUserName(String name) {
+//		List<Product> myProducts = productRepository.findAllByUserName(name);
+//		return myProducts;
+//	}
 
-	public void save(Product product, String name) {
-		User user = userService.findOneWithProducts(name);
-		product.setUser(user);
-		String productTypeName = product.getProductType().getName();
-		ProductType productType = productTypeService.findByName(productTypeName);
-		product.setProductType(productType);
-		productRepository.save(product);
-	}
+//	public void save(Product product, String name) {
+//		User user = userService.findOneWithCarts(name);
+//		product.setUser(user);
+//		String productTypeName = product.getProductType().getName();
+//		ProductType productType = productTypeService.findByName(productTypeName);
+//		product.setProductType(productType);
+//		productRepository.save(product);
+//	}
 
 	public Product findOneByName(String name) {
 		return productRepository.findOneByName(name);
@@ -64,7 +64,10 @@ public class ProductService {
 
 	public void save(Product product) {
 		productRepository.save(product);
-		
+	}
+
+	public void delete(int id) {
+		productRepository.delete(id);
 	}
 
 }
