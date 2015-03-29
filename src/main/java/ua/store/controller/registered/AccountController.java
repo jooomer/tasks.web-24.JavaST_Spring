@@ -2,6 +2,8 @@ package ua.store.controller.registered;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,41 +20,46 @@ import ua.store.service.UserService;
 
 @Controller
 public class AccountController {
-	
-	private static final Logger logger = LogManager.getLogger(AccountController.class);
+
+	private static final Logger logger = LogManager
+			.getLogger(AccountController.class);
 
 	@Autowired
 	private UserService userService;
-	
-	@ModelAttribute("user")
+
+	@ModelAttribute("newUser")
 	public User construct() {
 		return new User();
 	}
 
 	/**
-	 * handle request "/account"
-	 * get current user from DB
 	 * call account.jsp to show user detail
 	 */
 	@RequestMapping("/account")
-	public String showAccount(Model model, Principal principal) {
-		
+	public String showAccount(Model model, Principal principal,
+			HttpServletRequest request) {
 		logger.debug("Method showAccount() started.");
-		
+
+		// get current user from DB
 		String name = principal.getName();
-		model.addAttribute("user", userService.findOneWithCarts(name));
-		model.addAttribute("jspPage", "/WEB-INF/view/common/account.jsp");
+//		model.addAttribute("user", userService.findByName(name));
+		request.getSession().setAttribute("user", userService.findByName(name));
+		
+		// show user account
+		model.addAttribute("jspPage", "/WEB-INF/view/registered/account.jsp");
 		return "template";
 	}
-	
+
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
-	public String doAccountUpdate(Model model, Principal principal, @ModelAttribute("user") User newUser) {
-		
+	public String doAccountUpdate(Model model, Principal principal,
+			@ModelAttribute("newUser") User newUser) {
 		logger.debug("Method doAccountUpdate() started.");
 
+		// get current user from DB
 		String name = principal.getName();
 		User user = userService.findOneWithCarts(name);
-		
+
+		// check fields filling
 		if (!newUser.getFirstName().equals("")) {
 			user.setFirstName(newUser.getFirstName());
 		}
@@ -68,14 +75,14 @@ public class AccountController {
 		if (!newUser.getAddress().equals("")) {
 			user.setAddress(newUser.getAddress());
 		}
-		
-		System.out.println(user.getId());
 
+		// update current user with new fields in DB
 		userService.update(user);
-		
+
+		// show user account
 		model.addAttribute("user", user);
-		model.addAttribute("jspPage", "/WEB-INF/view/common/account.jsp");
+		model.addAttribute("jspPage", "/WEB-INF/view/registered/account.jsp");
 		return "template";
 	}
-	
+
 }

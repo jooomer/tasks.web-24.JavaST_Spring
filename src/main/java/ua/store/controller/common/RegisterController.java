@@ -18,7 +18,6 @@ import ua.store.model.entity.User;
 import ua.store.service.UserService;
 
 @Controller
-@RequestMapping("/register")
 public class RegisterController {
 	
 	private static final Logger logger = LogManager.getLogger(LoginController.class);
@@ -34,14 +33,10 @@ public class RegisterController {
 		return new User();
 	}
 	
-	/**
-	 * handle request "/register"
-	 * call register.jsp to show register form
-	 */
-	@RequestMapping
-	public String showRegister(Model model) {
+	@RequestMapping("/register")
+	public String showRegisterForm(Model model) {
 		
-		logger.debug("showRegister() started."); 
+		logger.debug("showRegisterForm() started."); 
 		
 		model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
 		return "template";
@@ -51,7 +46,7 @@ public class RegisterController {
 	 * handle request "/register" with data from register form
 	 * Entity User consists all data from register form
 	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public String doRegister(Model model, @Valid @ModelAttribute("user") User user, BindingResult result) {
 		
 		logger.debug("doRegister() started."); 

@@ -1,4 +1,4 @@
-package ua.store.controller.common;
+package ua.store.controller.registered;
 
 import java.security.Principal;
 import java.util.Date;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ua.store.controller.admin.ProductsController;
+import ua.store.controller.common.ProductsController;
 import ua.store.model.entity.Order;
 import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.User;
@@ -61,6 +61,7 @@ public class OrderController {
 			Principal principal) {
 		logger.debug("showOrder() started.");
 
+		// check user login
 		if (principal == null) {
 			model.addAttribute("jspPage", "/WEB-INF/view/common/login.jsp");
 			return "template";
@@ -69,7 +70,6 @@ public class OrderController {
 		// prepare order and save it to DB
 		HttpSession session = request.getSession();
 		Order order = (Order) session.getAttribute("order");
-		order.setDate(new Date());
 		User user = userService.findByName(principal.getName());
 		order.setUser(user);
 
@@ -123,12 +123,8 @@ public class OrderController {
 			return "template";
 		}
 		
-		System.out.println("--- before: User user = userService.findOneWithOrders(principal.getName());");
-		
 		// get and prepare list of orders to view
 		User user = userService.findOneWithOrders(principal.getName());
-		
-		System.out.println("--- after: User user = userService.findOneWithOrders(principal.getName());");
 
 		// get list of orders from DB and prepate it for view
 		OrdersList ordersList = new OrdersList(user);

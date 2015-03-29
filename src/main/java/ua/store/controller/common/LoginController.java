@@ -13,33 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 	
 	private static final Logger logger = LogManager.getLogger(LoginController.class);
 	
-	/**
-	 * handle request "/login"
-	 * call login.jsp to show login form
-	 */
-	@RequestMapping
+	@RequestMapping(value = "/login")
 	public String login(Model model) {
-		
 		logger.debug("login() started."); 
-		
 		model.addAttribute("jspPage", "/WEB-INF/view/common/login.jsp");
 		return "template";
 	}
 	
-	/**
-	 * handle request "/login" 
-	 * call main.jsp 
-	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public String doLogin(Model model) {
-		
 		logger.debug("doLogin() started."); 
-		
 		model.addAttribute("jspPage", "/WEB-INF/view/common/main.jsp");
 		return "template";
 	}

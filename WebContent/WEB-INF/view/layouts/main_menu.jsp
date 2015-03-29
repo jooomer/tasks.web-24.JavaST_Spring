@@ -5,9 +5,6 @@
 
 <%@ page import="ua.store.model.entity.User"%>
 
-<fmt:setLocale value="${language}" scope="session" />
-<fmt:setBundle basename="ua.store.properties.lang" />
-
 <div id="navigation"> 
 	<ul>
 		<li class="first">

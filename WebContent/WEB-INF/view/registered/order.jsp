@@ -6,17 +6,11 @@
 <fmt:setLocale value="${language}" scope="session" />
 <fmt:setBundle basename="ua.store.properties.lang" />
 
-<%-- <%@ page import="ua.store.model.entity.Product"%> --%>
-
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
-
 <h1>
 	<fmt:message key="order.Order" />
 </h1>
 <br>
 
-<%-- <c:set var="order" value='${sessionScope["order"]}' /> --%>
-<%-- <c:set var="user" value='${principal}' /> --%>
 <pre>
 	<b><fmt:message key="order.Customer" />:</b>	${user.firstName} ${user.lastName}
 

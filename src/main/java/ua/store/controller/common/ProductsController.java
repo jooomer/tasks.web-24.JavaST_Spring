@@ -2,7 +2,7 @@
  * 
  */
 
-package ua.store.controller.admin;
+package ua.store.controller.common;
 
 import java.security.Principal;
 import java.util.List;

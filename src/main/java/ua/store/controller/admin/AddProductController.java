@@ -10,7 +10,6 @@ import javax.validation.Valid;
 
 //import jdk.nashorn.internal.objects.annotations.Constructor;
 
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +30,6 @@ import ua.store.service.UserService;
 import ua.store.tag.ProductMap;
 
 @Controller
-@RequestMapping("/add-product")
 public class AddProductController {
 
 	private static final Logger logger = LogManager
@@ -54,31 +52,24 @@ public class AddProductController {
 		return new Product();
 	}
 
-	/**
-	 * handle request "/add-product" to show add-product form get all product
-	 * types from DB and prepare them for jsp call add-product.jsp
-	 */
-	@RequestMapping
+	@RequestMapping(value = "/add-product")
 	public String showAddProduct(Model model) {
-
 		logger.debug("showAddProduct() started.");
 
+		// get all product types from DB and prepare them for view
 		model.addAttribute("listOfProductTypes", productTypeService.findAll());
 
+		// show add-product form
 		model.addAttribute("jspPage",
 				"/WEB-INF/view/administrator/add-product.jsp");
 		return "template";
-
 	}
 
-	/**
-	 * handle request "/add-product" with data from add-product form
-	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = "/add-product", method = RequestMethod.POST)
 	public String doAddProduct(
 			@Valid @ModelAttribute("product") Product product,
-			BindingResult result, Principal principal, Model model, HttpServletRequest request) {
-
+			BindingResult result, Principal principal, Model model,
+			HttpServletRequest request) {
 		logger.debug("doAddProduct() started.");
 
 		// check data validation from form
@@ -102,14 +93,10 @@ public class AddProductController {
 		ProductMap productMap = new ProductMap(products);
 		request.getSession().setAttribute("productMap", productMap);
 
-		// show product detail by id
-		// set parameter "success" to show message in a product detail page
-
+		// show products list
 		model.addAttribute("jspPage",
 				"/WEB-INF/view/administrator/products.jsp");
 		return "template";
-
-		// return "redirect:/my-products/" + id + "?success=true";
 	}
 
 }

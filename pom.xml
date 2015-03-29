@@ -13,8 +13,14 @@
 		<org.apache.logging.log4j>2.1</org.apache.logging.log4j>
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
 	</properties>
- 
+
 	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
 
 		<!-- Jackson -->
 		<dependency>
@@ -22,7 +28,7 @@
 			<artifactId>jackson-core</artifactId>
 			<version>2.5.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>

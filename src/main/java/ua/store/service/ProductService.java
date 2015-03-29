@@ -63,6 +63,8 @@ public class ProductService {
 	}
 
 	public void save(Product product) {
+		ProductType productType = productTypeService.findByName(product.getProductType().getName());
+		product.setProductType(productType);
 		productRepository.save(product);
 	}
 

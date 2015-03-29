@@ -30,15 +30,14 @@ public class User implements Comparable<User> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
 	private Integer id;
 
-	@Size(min = 3, message = "Name must be at least 3 characters!")
+//	@Size(min = 3, message = "Name must be at least 3 characters!")
 	@Column(length = 100, unique = true, nullable = false)
 	@UniqueUsername(message = "Such username already exists!")
 	private String name;
 
-	@Size(min = 4, message = "Name must be at least 4 characters!")
+//	@Size(min = 4, message = "Name must be at least 4 characters!")
 	@Column(length = 100, nullable = false)
 	private String password;
 
@@ -51,7 +50,7 @@ public class User implements Comparable<User> {
 	private String lastName;
 
 	@Email
-	@Size(min = 1, message = "Invalid email address!")
+//	@Size(min = 1, message = "Invalid email address!")
 	@Column(length = 100)
 	private String email;
 

@@ -19,20 +19,16 @@ public class InitController {
 	@Autowired
 	InitDbService initDbService;
 	
-	@RequestMapping("/initialization")
+	@RequestMapping(value = "/initialization")
 	public String showInitialization(Model model) {
-		
 		logger.debug("Method showInitialization() started");
-		
 		model.addAttribute("jspPage", "/WEB-INF/view/common/initialization.jsp");
 		return "template";
 	}
 
 	@RequestMapping(value = "/initialization", method = RequestMethod.POST)
 	public String doInitialization(Model model) {
-		
 		logger.debug("Method doInitialization() started");
-		
 		initDbService.doInit();
 		
 		model.addAttribute("jspPage", "/WEB-INF/view/common/main.jsp");

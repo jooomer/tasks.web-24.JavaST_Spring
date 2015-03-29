@@ -20,7 +20,6 @@ import ua.store.service.ProductService;
 import ua.store.tag.ProductMap;
 
 @Controller
-@RequestMapping("/products/remove/{id}")
 public class RemoveProductController {
 
 	private static final Logger logger = LogManager
@@ -32,7 +31,7 @@ public class RemoveProductController {
 	/**
 	 * handle request "/products/remove/{id}" to remove current product
 	 */
-	@RequestMapping
+	@RequestMapping("/products/remove/{id}")
 	public String doRemoveProduct(Model model, @PathVariable int id,
 			RedirectAttributes redirectAttributes, HttpServletRequest request) {
 
@@ -54,6 +53,5 @@ public class RemoveProductController {
 		model.addAttribute("jspPage",
 				"/WEB-INF/view/administrator/products.jsp");
 		return "template";
-		// return "redirect:/my-products";
 	}
 }

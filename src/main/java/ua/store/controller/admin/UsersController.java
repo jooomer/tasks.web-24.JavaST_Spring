@@ -21,7 +21,6 @@ import ua.store.service.UserService;
 import ua.store.tag.UserList;
 
 @Controller
-@RequestMapping(value = "/users")
 public class UsersController {
 	
 	private static final Logger logger = LogManager.getLogger(UsersController.class);
@@ -29,12 +28,7 @@ public class UsersController {
 	@Autowired
 	private UserService userService;
 	
-	/**
-	 * handle request "/administrator/users" to show all users
-	 * get all users from DB and prepare them for jsp
-	 * call users.jsp
-	 */
-	@RequestMapping
+	@RequestMapping(value = "/users")
 	public String showUsers(Model model, HttpServletRequest request) {
 		
 		logger.debug("showUsers() started."); 
@@ -51,13 +45,10 @@ public class UsersController {
 		
 	}
 	
-	// handle request "/users/{id}" to show user detail
-	// get one user by id from DB and prepare him for jsp
-	// call user-detail.jsp
-	@RequestMapping(value = "/{id}")
-	public String detail(Model model, @PathVariable int id) {
-		model.addAttribute("user", userService.findOneWithOrders(id));
-		return "user-detail";
-	}
+//	@RequestMapping(value = "/users/{id}")
+//	public String detail(Model model, @PathVariable int id) {
+//		model.addAttribute("user", userService.findOneWithOrders(id));
+//		return "user-detail";
+//	}
 	
 }

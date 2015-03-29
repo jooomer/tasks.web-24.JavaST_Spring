@@ -46,6 +46,9 @@ public class InitDbService {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private ProductService productService;
 
 	@PostConstruct
 	public void init() {
@@ -140,7 +143,7 @@ public class InitDbService {
 		product1.setPrice(600.);
 		product1.setPublishedDate(new Date());
 		product1.setQuantityInStock(14);
-		productRepository.save(product1);
+		productService.save(product1);
 
 		Product product2 = new Product();
 		product2.setName("Sofa");
@@ -149,7 +152,7 @@ public class InitDbService {
 		product2.setPrice(500.);
 		product2.setPublishedDate(new Date());
 		product2.setQuantityInStock(5);
-		productRepository.save(product2);
+		productService.save(product2);
 
 		Product product3 = new Product();
 		product3.setName("Armchair");
@@ -158,7 +161,7 @@ public class InitDbService {
 		product3.setPrice(1000.);
 		product3.setPublishedDate(new Date());
 		product3.setQuantityInStock(29);
-		productRepository.save(product3);
+		productService.save(product3);
 
 		Product product4 = new Product();
 		product4.setName("Tables");
@@ -167,7 +170,7 @@ public class InitDbService {
 		product4.setPrice(3000.);
 		product4.setPublishedDate(new Date());
 		product4.setQuantityInStock(8);
-		productRepository.save(product4);
+		productService.save(product4);
 		
 		// init orders
 		logger.debug("--- init orders started.");
