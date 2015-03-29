@@ -3,7 +3,7 @@
 
 <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
-<%@ page import="ua.store.model.entity.User"%>
+<%-- <%@ page import="ua.store.model.entity.User"%> --%>
 
 <fmt:setLocale value="${language}" scope="session" />
 <fmt:setBundle basename="ua.store.properties.lang" />

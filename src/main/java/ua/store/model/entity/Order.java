@@ -3,6 +3,7 @@
  */
 package ua.store.model.entity;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -14,6 +15,8 @@ import java.util.TreeSet;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +41,8 @@ public class Order {
 	
 	private double amount;
 	
-//	private OrderStatus orderStatus;
+	@Enumerated(EnumType.STRING)
+	private OrderStatus orderStatus;
 
 	private String comments;
 	
@@ -49,12 +53,17 @@ public class Order {
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private Set<OrderItem> orderItems = new LinkedHashSet<>();
 	
+	public Order() {
+		this.date = new Date(Calendar.getInstance().getTimeInMillis());
+	}
+	
 	public void addProduct(Product product) {
 		OrderItem orderItem = new OrderItem();
 		orderItem.setOrder(this);
 		orderItem.setProduct(product);
 		orderItem.setAmount(product.getPrice());
 		orderItems.add(orderItem);
+		this.amount += product.getPrice();
 		
 //		if (orderItems.contains(orderItem)) {
 //			
@@ -151,6 +160,14 @@ public class Order {
 
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 

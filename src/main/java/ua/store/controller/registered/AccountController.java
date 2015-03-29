@@ -1,4 +1,4 @@
-package ua.store.controller.register;
+package ua.store.controller.registered;
 
 import java.security.Principal;
 

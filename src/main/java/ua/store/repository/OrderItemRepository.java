@@ -1,0 +1,16 @@
+package ua.store.repository;
+
+import java.util.Set;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import ua.store.model.entity.Order;
+import ua.store.model.entity.OrderItem;
+
+@Repository
+public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
+
+	Set<OrderItem> findAllByOrder(Order order);
+	
+}

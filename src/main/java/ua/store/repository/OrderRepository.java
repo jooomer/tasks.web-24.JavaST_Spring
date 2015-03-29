@@ -10,6 +10,8 @@ import ua.store.model.entity.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Long> {
 
-	Set<Order> findByUser(User user, PageRequest pageRequest);
+	Set<Order> findAllByUser(User user, PageRequest pageRequest);
+
+	Set<Order> findAllByUser(User user);
 
 }

@@ -18,11 +18,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.store.controller.admin.ProductsController;
 import ua.store.model.entity.Order;
+import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.User;
 import ua.store.repository.OrderRepository;
 import ua.store.repository.UserRepository;
 import ua.store.service.OrderService;
 import ua.store.service.UserService;
+import ua.store.tag.OrdersList;
 import ua.store.tag.ProductMap;
 
 @Controller
@@ -38,17 +40,20 @@ public class OrderController {
 	private UserService userService;
 
 	@RequestMapping("/cart")
-	public String showCart(Model model, HttpServletRequest request) {
+	public String showCart(Model model, HttpServletRequest request, Principal principal) {
 		logger.debug("showCart() started.");
-
+		
 		// prepare ProductMap to show products in a cart page
-		HttpSession session = request.getSession();
-		Order order = (Order) session.getAttribute("order");
+		Order order = (Order) request.getSession().getAttribute("order");
+		if (order == null) {
+			model.addAttribute("message", "Your cart is empty. Please, choose your product.");
+			model.addAttribute("jspPage", "/WEB-INF/view/common/message.jsp");
+			return "template";
+		}
 		ProductMap productMap = new ProductMap(order);
-		session.setAttribute("productMap", productMap);
+		request.getSession().setAttribute("productMap", productMap);
 		model.addAttribute("jspPage", "/WEB-INF/view/common/cart.jsp");
 		return "template";
-
 	}
 
 	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"make_an_order"})
@@ -69,38 +74,71 @@ public class OrderController {
 		order.setUser(user);
 
 		// prepare User and Order to show in an order page
-		model.addAttribute("user", user);
-		model.addAttribute("order", order);
+		session.setAttribute("user", user);
+		session.setAttribute("order", order);
 
-		// prepare ProductMap to show products in an order page
+		// prepare ProductMap to show products in a page
 		ProductMap productMap = new ProductMap(order);
 		session.setAttribute("productMap", productMap);
-		model.addAttribute("jspPage", "/WEB-INF/view/register/order.jsp");
+		model.addAttribute("jspPage", "/WEB-INF/view/registered/order.jsp");
 		return "template";
-
 	}
 
-	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"save_order"})
-	public String doSaveOrder(Model model, HttpServletRequest request,
-			Principal principal, @ModelAttribute("order") Order order) {
-		logger.debug("doSaveOrder() started.");
+	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"save_and_checkout"})
+	public String doSaveAndCheckoutOrder(Model model, HttpServletRequest request,
+			Principal principal, @ModelAttribute("comments") String comments) {
+		logger.debug("doSaveAndCheckoutOrder() started.");
 
-		// prepare order and save it to DB
-		HttpSession session = request.getSession();
-//		Order order = (Order) session.getAttribute("order");
+		// set Comments, OrderStatus and save order into DB
+		Order order = (Order) request.getSession().getAttribute("order");
+		order.setComments(comments);
+		order.setOrderStatus(OrderStatus.WAITING_FOR_PAIMENT);
 		orderService.save(order);
+		
+		// remove Order from session
+		request.getSession().setAttribute("order", null);
 
-		// prepare User and Order to show in an order page
+		// prepare User and Order to show an order in a page
 		User user = userService.findByName(principal.getName());
 		model.addAttribute("user", user);
 		model.addAttribute("order", order);
 
 		// prepare ProductMap to show products in an order page
 		ProductMap productMap = new ProductMap(order);
-		session.setAttribute("productMap", productMap);
-		model.addAttribute("jspPage", "/WEB-INF/view/register/order-created.jsp");
+		request.getSession().setAttribute("productMap", productMap);
+		
+		model.addAttribute("message", "Thank you for your order!");
+		model.addAttribute("jspPage", "/WEB-INF/view/registered/order-created.jsp");
 		return "template";
 
+	}
+	
+	@RequestMapping("/orders")
+	public String showOrders(Model model, Principal principal, HttpServletRequest request) {
+		logger.debug("showOrders() started.");
+		
+		// check user in a session
+		if (principal == null) {
+			model.addAttribute("jspPage", "/WEB-INF/view/common/login.jsp");
+			return "template";
+		}
+		
+		System.out.println("--- before: User user = userService.findOneWithOrders(principal.getName());");
+		
+		// get and prepare list of orders to view
+		User user = userService.findOneWithOrders(principal.getName());
+		
+		System.out.println("--- after: User user = userService.findOneWithOrders(principal.getName());");
+
+		// get list of orders from DB and prepate it for view
+		OrdersList ordersList = new OrdersList(user);
+
+		System.out.println("--- after: OrdersList ordersList = new OrdersList(user);");
+
+		request.getSession().setAttribute("ordersList", ordersList);
+		
+		model.addAttribute("jspPage", "/WEB-INF/view/registered/orders.jsp");
+		return "template";
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ua.store.model.entity.OrderItem;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.Role;
 import ua.store.model.entity.User;
@@ -28,10 +29,20 @@ public class UserService {
 	private UserRepository userRepository;
 	
 	@Autowired
+	private OrderService orderService;
+	
+	@Autowired
+	private OrderItemService orderItemService;
+	
+	@Autowired
 	private OrderRepository orderRepository;
 	
 	@Autowired
 	private RoleRepository roleRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
+	
 	
 	public List<User> findAll() {
 		return userRepository.findAll();
@@ -44,7 +55,8 @@ public class UserService {
 	@Transactional
 	public User findOneWithOrders(int id) {
 		User user = findOne(id);
-		Set<Order> orders = orderRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "date"));
+//		Set<Order> orders = orderRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "date"));
+		Set<Order> orders = orderRepository.findAllByUser(user);
 		user.setOrders(orders);
 		return user;
 	}
@@ -72,6 +84,17 @@ public class UserService {
 
 	public User findByName(String name) {
 		return userRepository.findByName(name);
+	}
+
+	public User findOneWithOrders(String name) {
+		User user = userRepository.findByName(name);
+		Set<Order> orders = orderService.findAllByUser(user);
+		for (Order order : orders) {
+			Set<OrderItem> orderItems = orderItemService.findAllByOrder(order);
+			order.setOrderItems(orderItems);
+		}
+		user.setOrders(orders);
+		return user;
 	}
 
 

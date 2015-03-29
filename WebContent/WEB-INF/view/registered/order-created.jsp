@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
 <fmt:setLocale value="${language}" scope="session" />
 <fmt:setBundle basename="ua.store.properties.lang" />
@@ -16,17 +16,17 @@
 </h1>
 <br>
 
-<h3><c:out value='${requestScope["message"]}' /></h3>
+<h3>${message}</h3>
 <br>
 
-<c:set var="order" value='${sessionScope["order"]}' />
-<c:set var="user" value='${sessionScope["user"]}' />
+<%-- <c:set var="order" value='${sessionScope["order"]}' /> --%>
+<%-- <c:set var="user" value='${sessionScope["user"]}' /> --%>
 <pre>
-	<b><fmt:message key="order_created.orderId" />:</b>	${order.orderId}
+	<b><fmt:message key="order_created.orderId" />:</b>	${order.id}
 
 	<b><fmt:message key="order_created.Customer" />:</b>	${user.firstName} ${user.lastName}
 
-	<b><fmt:message key="order_created.Date" />:</b>		${order.orderDate}
+	<b><fmt:message key="order_created.Date" />:</b>		${order.date}
 
 	<b><fmt:message key="order_created.Amount" />:</b>		${order.amount}
 
@@ -49,9 +49,3 @@
 
 <b><fmt:message key="order_created.Your_comments" />:</b><br>
 ${order.comments}
-<br>
-<br>
-<form action="checkout" method="post">
-	<button type="submit" name="command" value="checkout" ><fmt:message key="order_created.Checkout_button" /></button>
-</form>
-<br>

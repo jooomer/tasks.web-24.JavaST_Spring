@@ -52,6 +52,6 @@
 	<jpa:repositories base-package="ua.store.repository"
 		entity-manager-factory-ref="emf" transaction-manager-ref="transactionManager" />
 		
-		<import resource="security.xml"/>
+	<import resource="security.xml"/>
 
 </beans>

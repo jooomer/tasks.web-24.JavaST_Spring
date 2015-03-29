@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ua.store.model.entity.Order;
+import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductType;
 import ua.store.model.entity.Role;
@@ -173,8 +174,10 @@ public class InitDbService {
 		Order order1 = new Order();
 		order1.setUser(userAdmin);
 		order1.addProduct(product1);
-		order1.addProduct(product1);
+		order1.addProduct(product2);
 		order1.addProduct(product3);
+		order1.setOrderStatus(OrderStatus.DELIVERED);
+		order1.setComments("I wanna get it before Friday, 13");
 		orderService.save(order1);
 		
 		
