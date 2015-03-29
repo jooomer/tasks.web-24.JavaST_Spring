@@ -3,14 +3,6 @@
 
 <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
-<fmt:setLocale value="${language}" scope="session" />
-<fmt:setBundle basename="ua.store.properties.lang" />
-
-<%@ page import="ua.store.model.entity.Product"%>
-<%@ taglib prefix="ulist" uri="/WEB-INF/view/tld/custom.tld"%>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <h1>
 	<fmt:message key="order_created.Order" />
 </h1>
@@ -19,8 +11,6 @@
 <h3>${message}</h3>
 <br>
 
-<%-- <c:set var="order" value='${sessionScope["order"]}' /> --%>
-<%-- <c:set var="user" value='${sessionScope["user"]}' /> --%>
 <pre>
 	<b><fmt:message key="order_created.orderId" />:</b>	${order.id}
 

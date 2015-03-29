@@ -3,9 +3,6 @@
 
 <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
-<fmt:setLocale value="${language}" scope="session" />
-<fmt:setBundle basename="ua.store.properties.lang" />
-
 <h1>
 	<fmt:message key="order.Order" />
 </h1>

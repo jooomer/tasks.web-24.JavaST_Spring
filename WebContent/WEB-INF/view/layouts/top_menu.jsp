@@ -6,7 +6,7 @@
 <c:set var="language" value="${pageContext.response.locale}"/>
 
 <div id="top-navigation">
-	<form method="get">
+	<form method="post">
 		<a title="My Account" href="<spring:url value="/account" />"> <fmt:message
 				key="top_menu.MY_ACCOUNT" />
 		</a> <a class="cart" title="Shopping Cart" href="<spring:url value="/cart" />"> <fmt:message

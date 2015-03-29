@@ -26,6 +26,10 @@ th, td {
     padding: 5px;
 }
 
+table:no-border {
+	    border: 0px;
+}
+ 
 input, textarea, select { font-size: 12px; font-family: arial, sans-serif; }
 
 textarea { overflow: auto; }
@@ -135,3 +139,17 @@ a.order-button { display: block; margin: 28px 0 0 13px; width: 186px; height: 81
 #footer p a { color: #fff; }
 #footer p span { padding: 0 3px 0 4px; }
 #footer .author { float: right; }
+
+#container {
+    display: table;
+    width: 80%;
+    }
+
+#row  {
+    display: table-row;
+    }
+
+#left, #right, #middle {
+    display: table-cell;
+    width: 30%;
+    }

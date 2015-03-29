@@ -3,8 +3,8 @@
 
 <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
-<%@ page import="ua.store.model.entity.Product"%>
-<%@ taglib prefix="ulist" uri="/WEB-INF/view/tld/custom.tld"%>
+<%-- <%@ page import="ua.store.model.entity.Product"%> --%>
+<%-- <%@ taglib prefix="ulist" uri="/WEB-INF/view/tld/custom.tld"%> --%>
 
 <h1>
 	<fmt:message key="cart.Cart" />
@@ -27,10 +27,9 @@
 		</ulist:cart-table>
 		<br>
 
-			<c:set var="cart" value="${sessionScope['cart']}" />
 			<b>
 				<fmt:message key="сart.Amount" />
-			</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${cart.amount}
+			</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${order.amount}
 		<br>
 		<br>
 		<br>

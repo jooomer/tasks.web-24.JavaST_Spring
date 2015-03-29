@@ -13,16 +13,16 @@
 <h3>${message}</h3>
 <br>
 
-<form action="administrator/product" method="post">
-	<fmt:message key="products.Search" />:
-	<input type="text" name="productName" />
-	<button type="submit" name="command" value="search_product_by_productName">
-		<fmt:message key="products.Search_button" />
-	</button>
-</form>
-<br>
+<!-- <form action="administrator/product" method="post"> -->
+<%-- 	<fmt:message key="products.Search" />: --%>
+<!-- 	<input type="text" name="productName" /> -->
+<!-- 	<button type="submit" name="command" value="search_product_by_productName"> -->
+<%-- 		<fmt:message key="products.Search_button" /> --%>
+<!-- 	</button> -->
+<!-- </form> -->
+<!-- <br> -->
 
-<hr/>
+<!-- <hr/> -->
 <br>
 <ulist:product-table rows="${ productMap.size }" >
 	

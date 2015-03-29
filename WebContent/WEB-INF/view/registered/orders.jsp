@@ -3,13 +3,6 @@
 
 <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
-<fmt:setLocale value="${language}" scope="session" />
-<fmt:setBundle basename="ua.store.properties.lang" />
-
-<%-- <%@ page import="ua.store.model.entity.Product"%> --%>
-
-<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> -->
-
 <h1>
 	<fmt:message key="orders.Orders" />
 </h1>
@@ -17,8 +10,6 @@
 
 <h3>${message}</h3>
 <br>
-
-<%-- <c:set var="ordersList" value='${sessionScope["ordersList"]}' /> --%>
 
 <c:choose>
 	<c:when test="${ordersList.size != 0}" >

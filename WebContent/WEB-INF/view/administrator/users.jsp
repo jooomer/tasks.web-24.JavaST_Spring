@@ -10,16 +10,16 @@
 </h1>
 <br>
 
-<form action="administrator/search" method="post">
-	<fmt:message key="users.Search" />:
-	<input type="text" name="userName" />
-	<button type="submit" name="command" value="search_user_by_userName">
-		<fmt:message key="users.Search_button" />
-	</button>
-</form>
-<br>
+<!-- <form action="administrator/search" method="post"> -->
+<%-- 	<fmt:message key="users.Search" />: --%>
+<!-- 	<input type="text" name="userName" /> -->
+<!-- 	<button type="submit" name="command" value="search_user_by_userName"> -->
+<%-- 		<fmt:message key="users.Search_button" /> --%>
+<!-- 	</button> -->
+<!-- </form> -->
+<!-- <br> -->
 
-<hr/>
+<!-- <hr/> -->
 <br>
 <ulist:users-table rows="${ userList.size }" >
 	${ userList.userId } </td><td>

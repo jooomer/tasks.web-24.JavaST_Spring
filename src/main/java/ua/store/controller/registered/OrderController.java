@@ -52,6 +52,7 @@ public class OrderController {
 		}
 		ProductMap productMap = new ProductMap(order);
 		request.getSession().setAttribute("productMap", productMap);
+		request.getSession().setAttribute("order", order);
 		model.addAttribute("jspPage", "/WEB-INF/view/common/cart.jsp");
 		return "template";
 	}
