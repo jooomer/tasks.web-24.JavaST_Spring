@@ -55,7 +55,18 @@ public class RegisterController {
 		// if not valid - call register form again
 		if (result.hasErrors()) {
 			logger.debug("doRegister() - result.hasErrors()"); 
-			model.addAttribute("message", "Sorry. This username is already exists.");
+			model.addAttribute("message", "This is an error. Please, fill the register form correctly.");
+			model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
+			return "template";
+		}
+		
+		// check password confirmation
+		// if not valid - call register form again
+		if (user == null 
+				|| user.getPassword() == null 
+				|| user.getConfirmPassword() == null 
+				|| !user.getPassword().equals(user.getConfirmPassword())) {
+//			model.addAttribute("message", "This is an error. Please, confirm your password correctly.");
 			model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
 			return "template";
 		}

@@ -3,9 +3,6 @@
 
 <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%>
 
-<%-- <%@ page import="ua.store.model.entity.Product"%> --%>
-<%-- <%@ taglib prefix="ulist" uri="/WEB-INF/view/tld/custom.tld"%> --%>
-
 <h1>
 	<fmt:message key="cart.Cart" />
 </h1>
@@ -14,7 +11,7 @@
 <h3>${message}</h3>
 <br>
 
-<c:set var="productMap" value='${sessionScope["productMap"]}' />
+<c:if test="${ !(productMap eq null) }">
 
 <c:choose>
 	<c:when test="${productMap.size != 0}" >
@@ -28,7 +25,7 @@
 		<br>
 
 			<b>
-				<fmt:message key="сart.Amount" />
+				<fmt:message key="cart.Amount" />
 			</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${order.amount}
 		<br>
 		<br>
@@ -36,7 +33,7 @@
 
 			<form action="order" method="post">
 				<button type="submit" name="make_an_order" >
-					<fmt:message key="сart.Make_an_order_button" />
+					<fmt:message key="cart.Make_an_order_button" />
 				</button>
 			</form>
 
@@ -44,11 +41,13 @@
 
 			<form action="cart" method="post">
 				<button type="submit" name="command" >
-					<fmt:message key="сart.Clear_cart_button" />
+					<fmt:message key="cart.Clear_cart_button" />
 				</button>
 			</form>
 	</c:when>
 	<c:otherwise>
-		<fmt:message key="сart.Your_cart_is_empty" />.
+		<fmt:message key="cart.Your_cart_is_empty" />.
 	</c:otherwise>
 </c:choose>
+
+</c:if>

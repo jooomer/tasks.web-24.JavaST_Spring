@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
@@ -32,14 +33,17 @@ public class User implements Comparable<User> {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-//	@Size(min = 3, message = "Name must be at least 3 characters!")
+	@Size(min = 3, message = "Name must be at least 3 characters!")
 	@Column(length = 100, unique = true, nullable = false)
 	@UniqueUsername(message = "Such username already exists!")
 	private String name;
 
-//	@Size(min = 4, message = "Name must be at least 4 characters!")
+	@Size(min = 4, message = "Password must be at least 4 characters!")
 	@Column(length = 100, nullable = false)
 	private String password;
+	
+	@Transient
+	private String confirmPassword;
 
 	private boolean enabled;
 
@@ -50,7 +54,7 @@ public class User implements Comparable<User> {
 	private String lastName;
 
 	@Email
-//	@Size(min = 1, message = "Invalid email address!")
+	@Size(min = 5, message = "Invalid email address!")
 	@Column(length = 100)
 	private String email;
 
@@ -200,6 +204,14 @@ public class User implements Comparable<User> {
 
 	public void setOrders(Set<Order> orders) {
 		this.orders = orders;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 
 }

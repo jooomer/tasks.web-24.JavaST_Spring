@@ -3,6 +3,7 @@ package ua.store.controller.registered;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -55,19 +57,26 @@ public class AccountController {
 
 	@RequestMapping(value = "/account", method = RequestMethod.POST)
 	public String doAccountUpdate(Model model, Principal principal,
-			@ModelAttribute("newUser") User newUser,
+			@Valid @ModelAttribute("newUser") User newUser,
+			BindingResult result,
 			RedirectAttributes redirectAttributes) {
 		logger.debug("Method doAccountUpdate() started.");
 
-		if (newUser == null) {
-			System.out.println("111111111111111111111111111");
-			redirectAttributes.addFlashAttribute("newUser", new User());
-			return "redirect:/account";
+		if (result.hasErrors()) {
+			logger.debug("doAccountUpdate() - result.hasErrors()"); 
+			model.addAttribute("message", "This is an error. Please, fill the account form correctly.");
+			model.addAttribute("jspPage", "/WEB-INF/view/registered/account.jsp");
+			return "template";
 		}
+		
+//		if (newUser == null) {
+//			redirectAttributes.addFlashAttribute("newUser", new User());
+//			return "redirect:/account";
+//		}
 		
 		// get current user from DB
 		String name = principal.getName();
-		User user = userService.findOneWithCarts(name);
+		User user = userService.findByName(name);
 
 		// check fields filling
 		if (newUser.getFirstName() != null && !newUser.getFirstName().equals("")) {

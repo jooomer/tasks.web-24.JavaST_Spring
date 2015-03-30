@@ -47,7 +47,7 @@ public class OrderController {
 		Order order = (Order) request.getSession().getAttribute("order");
 		if (order == null) {
 			model.addAttribute("message", "Your cart is empty. Please, choose your product.");
-			model.addAttribute("jspPage", "/WEB-INF/view/common/message.jsp");
+			model.addAttribute("jspPage", "/WEB-INF/view/common/cart.jsp");
 			return "template";
 		}
 		ProductMap productMap = new ProductMap(order);

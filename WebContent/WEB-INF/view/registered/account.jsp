@@ -8,7 +8,7 @@
 </h1>
 <br>
 
-<form action="account" method="post" accept-charset="UTF-8">
+<form:form commandName="newUser" >
 
 <div id="container">
 	<div id="row">
@@ -69,7 +69,11 @@
 			</p>
 		</div>
 		<div id="right">
-			<p><input type="text" name="email" /></p>
+			<p>
+				<form:input path="email" />
+				<br>
+				<form:errors path="email"/>
+			</p>
 		</div>
 	</div>
 	<div id="row">
@@ -119,7 +123,7 @@
 	</div>
 </div>
 
-</form>
+</form:form>
 <br>
 <fmt:message key="my_account.Go_to" />
 <a href="orders">&nbsp;&nbsp;--- <fmt:message
