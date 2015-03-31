@@ -77,6 +77,10 @@ public class AddProductController {
 		if (result.hasErrors()) {
 			return showAddProduct(model);
 		}
+		
+		if (product == null) {
+			return showAddProduct(model);
+		}
 
 		// set name of user and current date to new product
 		product.setPublishedDate(new Date());

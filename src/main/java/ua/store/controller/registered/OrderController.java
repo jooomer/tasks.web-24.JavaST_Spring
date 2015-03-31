@@ -39,28 +39,86 @@ public class OrderController {
 	@Autowired
 	private UserService userService;
 
+	/**
+	 * just show cart
+	 */
 	@RequestMapping("/cart")
 	public String showCart(Model model, HttpServletRequest request, Principal principal) {
 		logger.debug("showCart() started.");
 		
-		// prepare ProductMap to show products in a cart page
 		Order order = (Order) request.getSession().getAttribute("order");
-		if (order == null) {
+		
+		// check state of order
+		if (order == null
+				|| (request.getSession().getAttribute("orderSaved") != null)
+						&& request.getSession().getAttribute("orderSaved").equals("success")) {
+			logger.debug("showCart() - check state of order=true. "
+					+ "order: " + order 
+					+ "; orderSaved: " + request.getSession().getAttribute("orderSaved"));
+			request.getSession().setAttribute("productMap", null);
+			request.getSession().setAttribute("order", null);
+			request.getSession().setAttribute("orderSaved", null);
 			model.addAttribute("message", "Your cart is empty. Please, choose your product.");
 			model.addAttribute("jspPage", "/WEB-INF/view/common/cart.jsp");
 			return "template";
 		}
+
+		// prepare ProductMap to show products in a cart page
 		ProductMap productMap = new ProductMap(order);
 		request.getSession().setAttribute("productMap", productMap);
 		request.getSession().setAttribute("order", order);
+		
 		model.addAttribute("jspPage", "/WEB-INF/view/common/cart.jsp");
 		return "template";
 	}
-
-	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"make_an_order"})
+	
+	/**
+	 * just show order
+	 */
+	@RequestMapping(value = "/order")
 	public String showOrder(Model model, HttpServletRequest request,
 			Principal principal) {
 		logger.debug("showOrder() started.");
+
+		// check user login
+		if (principal == null) {
+			model.addAttribute("jspPage", "/WEB-INF/view/common/login.jsp");
+			return "template";
+		}
+
+		// prepare order 
+		HttpSession session = request.getSession();
+		Order order = (Order) session.getAttribute("order");
+		User user = userService.findByName(principal.getName());
+
+		
+		// prepare User and Order to show in an order page
+		session.setAttribute("user", user);
+		session.setAttribute("order", order);
+
+		// prepare ProductMap to show products in a page
+		ProductMap productMap = new ProductMap(order);
+		session.setAttribute("productMap", productMap);
+		
+		// check if order already saved
+		if (session.getAttribute("orderSaved") != null
+				&& session.getAttribute("orderSaved").equals("success")) {
+			model.addAttribute("jspPage", "/WEB-INF/view/registered/order-created.jsp");
+			return "template";
+		}
+		
+		
+		model.addAttribute("jspPage", "/WEB-INF/view/registered/order.jsp");
+		return "template";
+	}
+
+	/**
+	 * response to the "Make an order" button
+	 */
+	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"make_an_order"})
+	public String doMakeOrder(Model model, HttpServletRequest request,
+			Principal principal) {
+		logger.debug("doMakeOrder() started.");
 
 		// check user login
 		if (principal == null) {
@@ -85,6 +143,9 @@ public class OrderController {
 		return "template";
 	}
 
+	/**
+	 * response to the "Save and checkout" button
+	 */
 	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"save_and_checkout"})
 	public String doSaveAndCheckoutOrder(Model model, HttpServletRequest request,
 			Principal principal, @ModelAttribute("comments") String comments) {
@@ -95,14 +156,17 @@ public class OrderController {
 		order.setComments(comments);
 		order.setOrderStatus(OrderStatus.WAITING_FOR_PAIMENT);
 		orderService.save(order);
+		request.getSession().setAttribute("orderSaved", "success");
 		
 		// remove Order from session
-		request.getSession().setAttribute("order", null);
+//		request.getSession().setAttribute("order", null);
 
 		// prepare User and Order to show an order in a page
 		User user = userService.findByName(principal.getName());
-		model.addAttribute("user", user);
-		model.addAttribute("order", order);
+//		model.addAttribute("user", user);
+//		model.addAttribute("order", order);
+		request.getSession().setAttribute("user", user);
+//		request.getSession().setAttribute("order", order);
 
 		// prepare ProductMap to show products in an order page
 		ProductMap productMap = new ProductMap(order);
@@ -114,6 +178,9 @@ public class OrderController {
 
 	}
 	
+	/**
+	 * just show list of orders
+	 */
 	@RequestMapping("/orders")
 	public String showOrders(Model model, Principal principal, HttpServletRequest request) {
 		logger.debug("showOrders() started.");

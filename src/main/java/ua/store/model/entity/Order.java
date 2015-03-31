@@ -7,6 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
@@ -51,7 +53,8 @@ public class Order {
 	private User user;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-	private Set<OrderItem> orderItems = new LinkedHashSet<>();
+//	private Set<OrderItem> orderItems = new LinkedHashSet<>();
+	private List<OrderItem> orderItems = new LinkedList<>();
 	
 	public Order() {
 		this.date = new Date(Calendar.getInstance().getTimeInMillis());
@@ -146,11 +149,11 @@ public class Order {
 		this.name = name;
 	}
 
-	public Set<OrderItem> getOrderItems() {
+	public List<OrderItem> getOrderItems() {
 		return orderItems;
 	}
 
-	public void setOrderItems(Set<OrderItem> orderItems) {
+	public void setOrderItems(List<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
 

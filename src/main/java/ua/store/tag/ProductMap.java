@@ -61,7 +61,8 @@ public class ProductMap {
 
 		// get list of products from order
 		
-		Set<OrderItem> orderItems = order.getOrderItems();
+//		Set<OrderItem> orderItems = order.getOrderItems();
+		List<OrderItem> orderItems = order.getOrderItems();
 		this.productMap = new TreeMap<Product, Integer>();
 		 
 		for (OrderItem orderItem : orderItems) {

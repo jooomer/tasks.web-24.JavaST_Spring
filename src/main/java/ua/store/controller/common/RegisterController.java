@@ -60,13 +60,23 @@ public class RegisterController {
 			return "template";
 		}
 		
+		// check locale changing to avoid password confirmation checking
+		// if not valid - call register form again
+		if (user == null 
+				|| user.getConfirmPassword() == null) {
+			logger.debug("doRegister() - just locale changes"); 
+			model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
+			return "template";
+		}
+
 		// check password confirmation
 		// if not valid - call register form again
 		if (user == null 
 				|| user.getPassword() == null 
 				|| user.getConfirmPassword() == null 
 				|| !user.getPassword().equals(user.getConfirmPassword())) {
-//			model.addAttribute("message", "This is an error. Please, confirm your password correctly.");
+			logger.debug("doRegister() - incorrect password confirmation"); 
+			model.addAttribute("message", "This is an error. Please, confirm your password correctly.");
 			model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
 			return "template";
 		}

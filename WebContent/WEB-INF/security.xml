@@ -13,6 +13,7 @@
 		<intercept-url pattern="/users/**" access="hasRole('ROLE_ADMIN')" />
 		<intercept-url pattern="/account**" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/add-product**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/order**" access="hasRole('ROLE_USER')" />
 		<form-login login-page="/login" />
 		<logout logout-url="/logout" />
 	</http>
