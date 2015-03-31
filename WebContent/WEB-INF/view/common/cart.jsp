@@ -40,7 +40,7 @@
 		<br>
 
 			<form action="cart" method="post">
-				<button type="submit" name="command" >
+				<button type="submit" name="clear_cart" >
 					<fmt:message key="cart.Clear_cart_button" />
 				</button>
 			</form>

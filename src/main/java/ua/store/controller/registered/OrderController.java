@@ -72,6 +72,13 @@ public class OrderController {
 		return "template";
 	}
 	
+	@RequestMapping(value = "/cart", method = RequestMethod.POST, params = {"clear_cart"})
+	public String doClearCart(Model model, HttpServletRequest request) {
+		logger.debug("doClearCart() started.");
+		request.getSession().setAttribute("order", null);
+		return "redirect:/cart";
+	}
+	
 	/**
 	 * just show order
 	 */

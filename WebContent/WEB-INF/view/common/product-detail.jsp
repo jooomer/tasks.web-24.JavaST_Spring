@@ -34,7 +34,7 @@
 <form:form>
 	<input type="submit" name="send-to-cart" value="<fmt:message key="common_product.Send_to_cart_button" />" />
 	<security:authorize access="isAuthenticated() and hasRole('ROLE_ADMIN')">
-		<input type="submit" name="update" value="Update product" />
+<!-- 		<input type="submit" name="update" value="Update product" /> -->
 		<input type="submit" name="delete" value="Delete product" />
 	</security:authorize>
 </form:form>

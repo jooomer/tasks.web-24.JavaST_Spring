@@ -33,7 +33,7 @@
 	</pre>
 
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	<button type="submit" name="command" value="update_product" >Update product</button>
+<!-- 	<button type="submit" name="command" value="update_product" >Update product</button> -->
 
 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<button type="submit" name="command" value="delete_product">Delete
