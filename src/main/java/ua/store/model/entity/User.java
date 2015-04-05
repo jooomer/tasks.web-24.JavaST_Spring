@@ -23,49 +23,56 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import ua.store.annotation.PhoneField;
 import ua.store.annotation.UniqueUsername;
 import ua.store.annotation.ConfirmPassword;
 
 @Entity
 @Table(name = "user")
-//@ConfirmPassword(message = "Password confirmation is not valid.")
+@ConfirmPassword(message = "Passwords do not match.")
 public class User implements Comparable<User> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Size(min = 3, message = "Name must be at least 3 characters!")
+	@Size(min = 3, max = 20, message = "Name must be at least 3 and no more 20 characters!")
 	@Column(length = 100, unique = true, nullable = false)
 	@UniqueUsername(message = "Such username already exists!")
 	private String name;
 
-	@Size(min = 3, message = "Password must be at least 3 characters!")
+	@Size(min = 3, max = 100, message = "Password must be at least 3 and no more 100 characters!")
 	@Column(length = 100, nullable = false)
 	private String password;
 	
 	@Transient
 	private String confirmPassword;
-
+	
 	private boolean enabled;
 
+	@Size(max = 20, message = "First name must be no more 20 characters!")
 	@Column(name = "first_name", length = 100)
 	private String firstName;
 
+	@Size(max = 20, message = "Last name must be no more 20 characters!")
 	@Column(name = "last_name", length = 100)
 	private String lastName;
 
-	@Email
-	@Size(min = 3, message = "Invalid email address!")
-	@Column(length = 100)
+	@Email(message = "Invalid email address!")
+	@Size(min = 1, message = "Invalid email address!")
+	@Column(length = 100, nullable = false)
 	private String email;
 
+	@PhoneField(message = "Phone must contain just numbers!")
+	@Size(max = 20, message = "Phone can be no more 20 characters!")
 	@Column(length = 20)
 	private String phone;
 
+	@Size(max = 50, message = "Address must be no more 50 characters!")
 	@Column(length = 100)
 	private String address;
 	
+	@Size(max = 100, message = "Comments must be no more 100 characters!")
 	@Column(length = 1000)
 	private String comments;
 	

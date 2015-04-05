@@ -29,20 +29,12 @@ public class UsersController {
 	private UserService userService;
 	
 	@RequestMapping(value = "/users")
-	public String showUsers(Model model, HttpServletRequest request) {
-		
+	public String showUsers(Model model) {
 		logger.debug("showUsers() started."); 
 		
 		// get list of all users from DB
-		List<User> users = userService.findAll();
-		UserList userList = new UserList();
-		userList.createUserList(users);
-		
-		request.getSession().setAttribute("userList", userList);
-		
-		model.addAttribute("jspPage", "/WEB-INF/view/administrator/users.jsp");
-		return "template";
-		
+		model.addAttribute("users", userService.findAll());
+		return "users";
 	}
 	
 //	@RequestMapping(value = "/users/{id}")

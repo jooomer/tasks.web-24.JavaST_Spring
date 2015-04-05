@@ -54,35 +54,14 @@ public class RegisterController {
 		if (result.hasErrors()) {
 			logger.debug("doRegister() - result.hasErrors()"); 
 			model.addAttribute("error", true);
+			System.out.println("---------------- " + result.getFieldError());
 			return "register";
 		}
-		
-		// check locale changing to avoid password confirmation checking
-		// if not valid - call register form again
-//		if (user == null 
-//				|| user.getConfirmPassword() == null) {
-//			logger.debug("doRegister() - just locale changes"); 
-//			return "redirect:/register";
-//		}
-
-		// check password confirmation
-		// if not valid - call register form again
-//		if (user == null 
-//				|| user.getPassword() == null 
-//				|| user.getConfirmPassword() == null 
-//				|| !user.getPassword().equals(user.getConfirmPassword())) {
-//			logger.debug("doRegister() - incorrect password confirmation"); 
-//			redirectAttributes.addFlashAttribute("message", "This is an error. Please, confirm your password correctly.");
-//			return "redirect:/register";
-//		}
-		
+				
 		// save user in DB
 		userService.save(user);
+		logger.debug("userService.save(user) is done");
 		
-		// show greeting message
-//		model.addAttribute("message", "Congratulations! You are successfully registered! Now you can sign in.");
-//		return "message";
-
 		// set attribute "success" to show success message 
 		redirectAttributes.addFlashAttribute("register_success", true);
 		
@@ -92,3 +71,4 @@ public class RegisterController {
 	}
 
 }
+

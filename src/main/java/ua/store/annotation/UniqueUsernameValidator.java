@@ -26,9 +26,15 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
 		logger.debug("isValid() started");
 		
 		if (userRepository == null) {
+			logger.debug("userRepository == null");
 			return true;
 		}
-		return userRepository.findByName(username) == null;
+		
+		boolean result = userRepository.findByName(username) == null;
+		
+		logger.debug("user \"" + username + "\" == " + result + "; (if false - then exists)");
+		
+		return result;
 	}
 
 }

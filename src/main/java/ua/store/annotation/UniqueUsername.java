@@ -16,7 +16,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = { UniqueUsernameValidator.class })
 public @interface UniqueUsername {
 
-	String message();
+	String message() default "This name already exists.";
 
 	Class<?>[] groups() default {};
 
