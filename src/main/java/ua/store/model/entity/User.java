@@ -24,9 +24,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import ua.store.annotation.UniqueUsername;
+import ua.store.annotation.ConfirmPassword;
 
 @Entity
 @Table(name = "user")
+//@ConfirmPassword(message = "Password confirmation is not valid.")
 public class User implements Comparable<User> {
 
 	@Id
@@ -38,7 +40,7 @@ public class User implements Comparable<User> {
 	@UniqueUsername(message = "Such username already exists!")
 	private String name;
 
-	@Size(min = 4, message = "Password must be at least 4 characters!")
+	@Size(min = 3, message = "Password must be at least 3 characters!")
 	@Column(length = 100, nullable = false)
 	private String password;
 	
@@ -54,7 +56,7 @@ public class User implements Comparable<User> {
 	private String lastName;
 
 	@Email
-	@Size(min = 5, message = "Invalid email address!")
+	@Size(min = 3, message = "Invalid email address!")
 	@Column(length = 100)
 	private String email;
 

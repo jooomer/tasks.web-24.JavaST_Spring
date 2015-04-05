@@ -20,34 +20,32 @@ import ua.store.service.UserService;
 @Controller
 public class RegisterController {
 	
-	private static final Logger logger = LogManager.getLogger(LoginController.class);
+	private static final Logger logger = LogManager.getLogger(RegisterController.class);
 
 	@Autowired
 	private UserService userService;
 	
 	/**
-	 * prepare entity User for registration form
+	 * prepare entity User for registration form 
 	 */
 	@ModelAttribute("user")
 	public User construct() {
 		return new User();
 	}
 	
-	@RequestMapping("/register")
-	public String showRegisterForm(Model model) {
-		
+	@RequestMapping("/register**")
+	public String showRegisterForm() {
 		logger.debug("showRegisterForm() started."); 
-		
-		model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
-		return "template";
+		return "register";
 	}
 	
 	/**
-	 * handle request "/register" with data from register form
-	 * Entity User consists all data from register form
+	 * Receives user data from registration form
+	 * and saves it into DB
 	 */
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public String doRegister(Model model, @Valid @ModelAttribute("user") User user, BindingResult result) {
+	@RequestMapping(value = "/register**", method = RequestMethod.POST)
+	public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult result,
+			RedirectAttributes redirectAttributes, Model model) {
 		
 		logger.debug("doRegister() started."); 
 
@@ -55,39 +53,41 @@ public class RegisterController {
 		// if not valid - call register form again
 		if (result.hasErrors()) {
 			logger.debug("doRegister() - result.hasErrors()"); 
-			model.addAttribute("message", "This is an error. Please, fill the register form correctly.");
-			model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
-			return "template";
+			model.addAttribute("error", true);
+			return "register";
 		}
 		
 		// check locale changing to avoid password confirmation checking
 		// if not valid - call register form again
-		if (user == null 
-				|| user.getConfirmPassword() == null) {
-			logger.debug("doRegister() - just locale changes"); 
-			model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
-			return "template";
-		}
+//		if (user == null 
+//				|| user.getConfirmPassword() == null) {
+//			logger.debug("doRegister() - just locale changes"); 
+//			return "redirect:/register";
+//		}
 
 		// check password confirmation
 		// if not valid - call register form again
-		if (user == null 
-				|| user.getPassword() == null 
-				|| user.getConfirmPassword() == null 
-				|| !user.getPassword().equals(user.getConfirmPassword())) {
-			logger.debug("doRegister() - incorrect password confirmation"); 
-			model.addAttribute("message", "This is an error. Please, confirm your password correctly.");
-			model.addAttribute("jspPage", "/WEB-INF/view/common/register.jsp");
-			return "template";
-		}
+//		if (user == null 
+//				|| user.getPassword() == null 
+//				|| user.getConfirmPassword() == null 
+//				|| !user.getPassword().equals(user.getConfirmPassword())) {
+//			logger.debug("doRegister() - incorrect password confirmation"); 
+//			redirectAttributes.addFlashAttribute("message", "This is an error. Please, confirm your password correctly.");
+//			return "redirect:/register";
+//		}
 		
 		// save user in DB
 		userService.save(user);
 		
 		// show greeting message
-		model.addAttribute("message", "Congratulations! You are successfully registered! Now you can sign in.");
-		model.addAttribute("jspPage", "/WEB-INF/view/common/message.jsp");
-		return "template";
+//		model.addAttribute("message", "Congratulations! You are successfully registered! Now you can sign in.");
+//		return "message";
+
+		// set attribute "success" to show success message 
+		redirectAttributes.addFlashAttribute("register_success", true);
+		
+		// call index.jsp
+		return "redirect:/";
 
 	}
 

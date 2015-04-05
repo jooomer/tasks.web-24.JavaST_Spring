@@ -13,20 +13,9 @@
 	<entity>
 		<entity-name>ua.store.model.entity.User</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>366</entity-height>
+		<entity-height>386</entity-height>
 		<entity-X-Coordinate>38</entity-X-Coordinate>
 		<entity-Y-Coordinate>158</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>ua.store.model.entity.OrderItem</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>186</entity-height>
-		<entity-X-Coordinate>590</entity-X-Coordinate>
-		<entity-Y-Coordinate>79</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -44,11 +33,11 @@
 	</entity>
 
 	<entity>
-		<entity-name>ua.store.model.entity.Order</entity-name>
+		<entity-name>ua.store.model.entity.OrderItem</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>246</entity-height>
-		<entity-X-Coordinate>297</entity-X-Coordinate>
-		<entity-Y-Coordinate>73</entity-Y-Coordinate>
+		<entity-height>186</entity-height>
+		<entity-X-Coordinate>590</entity-X-Coordinate>
+		<entity-Y-Coordinate>79</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -60,6 +49,17 @@
 		<entity-height>246</entity-height>
 		<entity-X-Coordinate>860</entity-X-Coordinate>
 		<entity-Y-Coordinate>125</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>ua.store.model.entity.Order</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>246</entity-height>
+		<entity-X-Coordinate>297</entity-X-Coordinate>
+		<entity-Y-Coordinate>73</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

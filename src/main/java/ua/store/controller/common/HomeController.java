@@ -21,11 +21,10 @@ public class HomeController {
 	 * handle request "/"
 	 * call template.jsp to show home page
 	 */
-	@RequestMapping("/")
-	public String viewMainPage(Model model) {
+	@RequestMapping("/**")
+	public String viewMainPage() {
 		logger.debug("viewMainPage() started."); 
-		model.addAttribute("jspPage", "/WEB-INF/view/common/main.jsp");
-		return "template";
+		return "index";
 	}
 	
 	
