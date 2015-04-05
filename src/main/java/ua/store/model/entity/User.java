@@ -92,6 +92,21 @@ public class User implements Comparable<User> {
 		roles.add(role);
 		userType = role.getName();
 	}
+	
+	@Override
+	public String toString() {
+		return "User ------------------------------- \n" 
+				+ "Id:              " + id + "\n" 
+				+ "name:            " + name + "\n"
+				+ "firstName:       " + firstName + "\n"
+				+ "lastName:        " + lastName + "\n"
+				+ "Email:           " + email + "\n"
+				+ "Phone:           " + phone + "\n"
+				+ "Address:         " + address + "\n"
+				+ "Password:        " + password + "\n"
+				+ "ConfirmPassword: " + confirmPassword + "\n"
+				+ "roles:           " + userType + "\n";
+	}
 
 	public Integer getId() {
 		return id;
@@ -194,11 +209,6 @@ public class User implements Comparable<User> {
 		return this.id - user.getId();
 	}
 	
-	@Override
-	public String toString() {
-		return "User - Id: " + id + "; name: " + name + "; roles: "; 
-	}
-
 	public String getUserType() {
 		return userType;
 	}

@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -32,15 +33,15 @@ public class AccountController {
 	@Autowired
 	private UserService userService;
 
-	@ModelAttribute("newUser")
-	public User construct() {
-		return new User();
-	}
+//	@ModelAttribute("updatedUser")
+//	public User construct() {
+//		return new User();
+//	}
 
 	/**
 	 * call account.jsp to show user detail
 	 */
-	@RequestMapping("/account")
+	@RequestMapping("/account**")
 	public String showAccount(Model model, Principal principal,
 			HttpServletRequest request) {
 		logger.debug("Method showAccount() started.");
@@ -51,23 +52,45 @@ public class AccountController {
 		request.getSession().setAttribute("user", userService.findByName(name));
 		
 		// show user account
-		model.addAttribute("jspPage", "/WEB-INF/view/registered/account.jsp");
-		return "template";
+		return "account";
 	}
 
-	@RequestMapping(value = "/account", method = RequestMethod.POST)
-	public String doAccountUpdate(Model model, Principal principal,
-			@Valid @ModelAttribute("newUser") User newUser,
+	/**
+	 * just shows account with update form
+	 */
+	@RequestMapping("/update-account**")
+	public String showUpdateAccount(Model model, Principal principal,
+			HttpServletRequest request) {
+		logger.debug("Method showUpdateAccount() started.");
+		User user = (User) request.getSession().getAttribute("user");
+		user.setConfirmPassword(user.getPassword());
+		System.out.println(user.toString());
+		model.addAttribute("updatedUser", user);
+		
+		// show user account with update form
+		return "account-update";
+	}
+
+	/**
+	 * receives a new user account data, validates it and update to DB
+	 */
+	@RequestMapping(value = "/account**", method = RequestMethod.POST)
+	public String doUpdateAccount(Model model, Principal principal,
+			@Valid @ModelAttribute("updatedUser") User updatedUser,
 			BindingResult result,
 			RedirectAttributes redirectAttributes) {
-		logger.debug("Method doAccountUpdate() started.");
+		logger.debug("doUpdateAccount() started.");
+
+		System.out.println("updatedUser: " + updatedUser.toString());
 
 		if (result.hasErrors()) {
-			logger.debug("doAccountUpdate() - result.hasErrors()"); 
-			model.addAttribute("message", "This is an error. Please, fill the account form correctly.");
-			model.addAttribute("jspPage", "/WEB-INF/view/registered/account.jsp");
-			return "template";
+			logger.debug("doUpdateAccount() - result.hasErrors()"
+					+ "; result: " + result.getFieldError("name")); 
+			
+			model.addAttribute("error", true);
+			return "account-update";
 		}
+		
 		
 //		if (newUser == null) {
 //			redirectAttributes.addFlashAttribute("newUser", new User());
@@ -79,29 +102,28 @@ public class AccountController {
 		User user = userService.findByName(name);
 
 		// check fields filling
-		if (newUser.getFirstName() != null && !newUser.getFirstName().equals("")) {
-			user.setFirstName(newUser.getFirstName());
-		}
-		if (newUser.getLastName() != null && !newUser.getLastName().equals("")) {
-			user.setLastName(newUser.getLastName());
-		}
-		if (newUser.getEmail() != null && !newUser.getEmail().equals("")) {
-			user.setEmail(newUser.getEmail());
-		}
-		if (newUser.getPhone() != null && !newUser.getPhone().equals("")) {
-			user.setPhone(newUser.getPhone());
-		}
-		if (newUser.getAddress() != null && !newUser.getAddress().equals("")) {
-			user.setAddress(newUser.getAddress());
-		}
+//		if (updatedUser.getFirstName() != null && !updatedUser.getFirstName().equals("")) {
+//			user.setFirstName(updatedUser.getFirstName());
+//		}
+//		if (updatedUser.getLastName() != null && !updatedUser.getLastName().equals("")) {
+//			user.setLastName(updatedUser.getLastName());
+//		}
+//		if (updatedUser.getEmail() != null && !updatedUser.getEmail().equals("")) {
+//			user.setEmail(updatedUser.getEmail());
+//		}
+//		if (updatedUser.getPhone() != null && !updatedUser.getPhone().equals("")) {
+//			user.setPhone(updatedUser.getPhone());
+//		}
+//		if (updatedUser.getAddress() != null && !updatedUser.getAddress().equals("")) {
+//			user.setAddress(updatedUser.getAddress());
+//		}
 
 		// update current user with new fields in DB
 		userService.update(user);
 
 		// show user account
 		model.addAttribute("user", user);
-		model.addAttribute("jspPage", "/WEB-INF/view/registered/account.jsp");
-		return "template";
+		return "account";
 	}
 
 }

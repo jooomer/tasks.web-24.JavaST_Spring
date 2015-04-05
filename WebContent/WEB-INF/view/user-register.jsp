@@ -17,56 +17,56 @@
 			<label for="name" class="col-sm-2 control-label">Name (*):</label>
 			<div class="col-sm-10">
 				<form:input path="name" cssClass="form-control"/>
-				<form:errors path="name" />
+				<form:errors path="name" class="text-danger" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="firstName" class="col-sm-2 control-label">First name:</label>
 			<div class="col-sm-10">
 				<form:input path="firstName" cssClass="form-control"/>
-				<form:errors path="firstName" />
+				<form:errors path="firstName" class="text-danger" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="lastName" class="col-sm-2 control-label">Last name:</label>
 			<div class="col-sm-10">
 				<form:input path="lastName" cssClass="form-control"/>
-				<form:errors path="lastName" />
+				<form:errors path="lastName" class="text-danger" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="email" class="col-sm-2 control-label">Email (*):</label>
 			<div class="col-sm-10">
 				<form:input path="email" cssClass="form-control"/>
-				<form:errors path="email" />
+				<form:errors path="email" class="text-danger" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="phone" class="col-sm-2 control-label">Phone:</label>
 			<div class="col-sm-10">
 				<form:input path="phone" cssClass="form-control"/>
-				<form:errors path="phone" />
+				<form:errors path="phone" class="text-danger" />
 			</div>
 		</div>
 			<div class="form-group">
 			<label for="address" class="col-sm-2 control-label">Address:</label>
 			<div class="col-sm-10">
 				<form:input path="address" cssClass="form-control"/>
-				<form:errors path="address" />
+				<form:errors path="address" class="text-danger" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="password" class="col-sm-2 control-label">Password (*):</label>
 			<div class="col-sm-10">
 				<form:password path="password" cssClass="form-control"/>
-				<form:errors path="password" />
+				<form:errors path="password" class="text-danger" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="password_confirm" class="col-sm-2 control-label">Confirm password (*):</label>
 			<div class="col-sm-10">
 				<form:password path="confirmPassword" cssClass="form-control"/>
-				<form:errors />
+				<form:errors class="text-danger" />
 			</div>
 		</div>
 		<div class="form-group">

@@ -20,17 +20,15 @@ public class ConfirmPasswordValidator implements ConstraintValidator<ConfirmPass
 
 	@Override
 	public boolean isValid(User user, ConstraintValidatorContext arg1) {
-		logger.debug("isValid() started. Password: " + user.getPassword() 
-				+ "; ConfirmPassword: " + user.getConfirmPassword());
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		logger.debug("--- started");
+//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 //		String confirmPassword = encoder.encode(user.getConfirmPassword());
-		String confirmPassword = user.getConfirmPassword();
-
+//		String confirmPassword = user.getConfirmPassword();
+		boolean result = user.getPassword().equals(user.getConfirmPassword());
 		logger.debug("Password: " + user.getPassword() 
-				+ "; ConfirmPassword: " + confirmPassword 
-				+ "; equals: " + user.getPassword().equals(confirmPassword));
-
-		return user.getPassword().equals(confirmPassword);
+				+ "; ConfirmPassword: " + user.getConfirmPassword() 
+				+ "; Validation result: " + result);
+		return result;
 	}
 
 

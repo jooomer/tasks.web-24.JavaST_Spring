@@ -21,19 +21,14 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
 	}
 
 	@Override
-	public boolean isValid(String username, ConstraintValidatorContext context) {
-		
-		logger.debug("isValid() started");
-		
+	public boolean isValid(String userName, ConstraintValidatorContext context) {
+		logger.debug("--- started");
 		if (userRepository == null) {
 			logger.debug("userRepository == null");
 			return true;
 		}
-		
-		boolean result = userRepository.findByName(username) == null;
-		
-		logger.debug("user \"" + username + "\" == " + result + "; (if false - then exists)");
-		
+		boolean result = (userRepository.findByName(userName) == null);
+		logger.debug("userName: " + userName + "; Validation result: " + result);
 		return result;
 	}
 
