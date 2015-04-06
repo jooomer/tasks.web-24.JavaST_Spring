@@ -14,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ua.store.model.dto.UserRegisterDto;
+import ua.store.model.entity.Role;
+import ua.store.model.entity.RoleType;
 import ua.store.model.entity.User;
+import ua.store.service.RoleService;
 import ua.store.service.UserService;
 
 @Controller
@@ -25,12 +29,15 @@ public class RegisterController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private RoleService roleService;
+	
 	/**
 	 * prepare entity User for registration form 
 	 */
-	@ModelAttribute("user")
-	public User construct() {
-		return new User();
+	@ModelAttribute("userRegisterDto")
+	public UserRegisterDto construct() {
+		return new UserRegisterDto();
 	}
 	
 	@RequestMapping("/register**")
@@ -44,7 +51,7 @@ public class RegisterController {
 	 * and saves it into DB
 	 */
 	@RequestMapping(value = "/register**", method = RequestMethod.POST)
-	public String doRegister(@Valid @ModelAttribute("user") User user, BindingResult result,
+	public String doRegister(@Valid @ModelAttribute("userRegisterDto") UserRegisterDto userRegisterDto, BindingResult result,
 			RedirectAttributes redirectAttributes, Model model) {
 		
 		logger.debug("doRegister() started."); 
@@ -59,6 +66,16 @@ public class RegisterController {
 		}
 				
 		// save user in DB
+		User user = new User();
+		user.setName(userRegisterDto.getName());
+		user.setFirstName(userRegisterDto.getFirstName());
+		user.setLastName(userRegisterDto.getLastName());
+		user.setEmail(userRegisterDto.getEmail());
+		user.setPhone(userRegisterDto.getPhone());
+		user.setAddress(userRegisterDto.getAddress());
+		user.setPassword(userRegisterDto.getPassword());
+		Role role = roleService.findByName(RoleType.ROLE_USER);
+		user.addRole(role);
 		userService.save(user);
 		logger.debug("userService.save(user) is done");
 		

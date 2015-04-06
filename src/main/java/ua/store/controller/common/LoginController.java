@@ -27,21 +27,24 @@ public class LoginController {
 	public String showLoginForm(RedirectAttributes redirectAttributes,
 			@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "success", required = false) String success) {
-		logger.debug("showLoginForm() started."); 
+		logger.debug("--- started."); 
 		
 		// check login error 
 		if (error != null) {
+			logger.debug("login_error = true"); 
 			redirectAttributes.addFlashAttribute("login_error", true);
 			return "redirect:/login";
 		}
 		
 		// check login success
 		if (success != null) {
+			logger.debug("login_success = true"); 
 			redirectAttributes.addFlashAttribute("login_success", true);
 			return "redirect:/";
 		}
 		
 		// refresh login page
+		logger.debug("jast refresh login page"); 
 		return "login";
 	}
 	

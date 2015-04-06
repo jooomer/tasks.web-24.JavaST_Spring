@@ -29,50 +29,50 @@ import ua.store.annotation.ConfirmPassword;
 
 @Entity
 @Table(name = "user")
-@ConfirmPassword(message = "Passwords do not match.")
+//@ConfirmPassword(message = "Passwords do not match.")
 public class User implements Comparable<User> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Size(min = 3, max = 20, message = "Name must be at least 3 and no more 20 characters!")
+//	@Size(min = 3, max = 20, message = "Name must be at least 3 and no more 20 characters!")
+//	@UniqueUsername(message = "Such username already exists!")
 	@Column(length = 100, unique = true, nullable = false)
-	@UniqueUsername(message = "Such username already exists!")
 	private String name;
 
-	@Size(min = 3, max = 100, message = "Password must be at least 3 and no more 100 characters!")
+//	@Size(min = 3, max = 100, message = "Password must be at least 3 and no more 100 characters!")
 	@Column(length = 100, nullable = false)
 	private String password;
 	
-	@Transient
-	private String confirmPassword;
-	
+//	@Transient
+//	private String confirmPassword;
+//	
 	private boolean enabled;
 
-	@Size(max = 20, message = "First name must be no more 20 characters!")
+//	@Size(max = 20, message = "First name must be no more 20 characters!")
 	@Column(name = "first_name", length = 100)
 	private String firstName;
 
-	@Size(max = 20, message = "Last name must be no more 20 characters!")
+//	@Size(max = 20, message = "Last name must be no more 20 characters!")
 	@Column(name = "last_name", length = 100)
 	private String lastName;
 
-	@Email(message = "Invalid email address!")
+//	@Email(message = "Invalid email address!")
 	@Size(min = 1, message = "Invalid email address!")
 	@Column(length = 100, nullable = false)
 	private String email;
 
-	@PhoneField(message = "Phone must contain just numbers!")
-	@Size(max = 20, message = "Phone can be no more 20 characters!")
+//	@PhoneField(message = "Phone must contain just numbers!")
+//	@Size(max = 20, message = "Phone can be no more 20 characters!")
 	@Column(length = 20)
 	private String phone;
 
-	@Size(max = 50, message = "Address must be no more 50 characters!")
+//	@Size(max = 50, message = "Address must be no more 50 characters!")
 	@Column(length = 100)
 	private String address;
 	
-	@Size(max = 100, message = "Comments must be no more 100 characters!")
+//	@Size(max = 100, message = "Comments must be no more 100 characters!")
 	@Column(length = 1000)
 	private String comments;
 	
@@ -90,12 +90,13 @@ public class User implements Comparable<User> {
 	
 	public void addRole(Role role) {
 		roles.add(role);
-		userType = role.getName();
+		userType = role.getName().toString();
 	}
 	
 	@Override
 	public String toString() {
-		return "User ------------------------------- \n" 
+		return "\n"
+				+ "User ------------------------------- \n" 
 				+ "Id:              " + id + "\n" 
 				+ "name:            " + name + "\n"
 				+ "firstName:       " + firstName + "\n"
@@ -104,7 +105,7 @@ public class User implements Comparable<User> {
 				+ "Phone:           " + phone + "\n"
 				+ "Address:         " + address + "\n"
 				+ "Password:        " + password + "\n"
-				+ "ConfirmPassword: " + confirmPassword + "\n"
+//				+ "ConfirmPassword: " + confirmPassword + "\n"
 				+ "roles:           " + userType + "\n";
 	}
 
@@ -225,12 +226,12 @@ public class User implements Comparable<User> {
 		this.orders = orders;
 	}
 
-	public String getConfirmPassword() {
+/*	public String getConfirmPassword() {
 		return confirmPassword;
 	}
 
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
-
+*/
 }

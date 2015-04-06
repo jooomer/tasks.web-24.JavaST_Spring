@@ -1,6 +1,7 @@
 package ua.store.controller.registered;
 
 import java.security.Principal;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -20,11 +21,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.store.controller.common.LoginController;
+import ua.store.model.dto.UserAccountDto;
 import ua.store.model.entity.User;
 import ua.store.service.UserService;
 
 @Controller
-//@SessionAttributes("user")
+@SessionAttributes("user")
 public class AccountController {
 
 	private static final Logger logger = LogManager
@@ -62,10 +64,18 @@ public class AccountController {
 	public String showUpdateAccount(Model model, Principal principal,
 			HttpServletRequest request) {
 		logger.debug("Method showUpdateAccount() started.");
+		
 		User user = (User) request.getSession().getAttribute("user");
-		user.setConfirmPassword(user.getPassword());
-		System.out.println(user.toString());
-		model.addAttribute("updatedUser", user);
+		logger.debug(user.toString());
+		
+		UserAccountDto userAccountDto = new UserAccountDto();
+		userAccountDto.setFirstName(user.getFirstName());
+		userAccountDto.setLastName(user.getLastName());
+		userAccountDto.setEmail(user.getEmail());
+		userAccountDto.setPhone(user.getPhone());
+		userAccountDto.setAddress(user.getAddress());
+		
+		model.addAttribute("userAccountDto", userAccountDto);
 		
 		// show user account with update form
 		return "account-update";
@@ -76,48 +86,29 @@ public class AccountController {
 	 */
 	@RequestMapping(value = "/account**", method = RequestMethod.POST)
 	public String doUpdateAccount(Model model, Principal principal,
-			@Valid @ModelAttribute("updatedUser") User updatedUser,
-			BindingResult result,
-			RedirectAttributes redirectAttributes) {
+			@Valid @ModelAttribute("userAccountDto") UserAccountDto userAccountDto,
+			BindingResult bindingResult,
+			RedirectAttributes redirectAttributes,
+			HttpServletRequest request) {
 		logger.debug("doUpdateAccount() started.");
-
-		System.out.println("updatedUser: " + updatedUser.toString());
-
-		if (result.hasErrors()) {
-			logger.debug("doUpdateAccount() - result.hasErrors()"
-					+ "; result: " + result.getFieldError("name")); 
+		logger.debug(userAccountDto.toString());
+		
+		if (bindingResult.hasErrors()) {
+			logger.debug("result.hasErrors() = true"
+					+ "; result: " + bindingResult); 
 			
 			model.addAttribute("error", true);
 			return "account-update";
 		}
-		
-		
-//		if (newUser == null) {
-//			redirectAttributes.addFlashAttribute("newUser", new User());
-//			return "redirect:/account";
-//		}
-		
-		// get current user from DB
-		String name = principal.getName();
-		User user = userService.findByName(name);
 
-		// check fields filling
-//		if (updatedUser.getFirstName() != null && !updatedUser.getFirstName().equals("")) {
-//			user.setFirstName(updatedUser.getFirstName());
-//		}
-//		if (updatedUser.getLastName() != null && !updatedUser.getLastName().equals("")) {
-//			user.setLastName(updatedUser.getLastName());
-//		}
-//		if (updatedUser.getEmail() != null && !updatedUser.getEmail().equals("")) {
-//			user.setEmail(updatedUser.getEmail());
-//		}
-//		if (updatedUser.getPhone() != null && !updatedUser.getPhone().equals("")) {
-//			user.setPhone(updatedUser.getPhone());
-//		}
-//		if (updatedUser.getAddress() != null && !updatedUser.getAddress().equals("")) {
-//			user.setAddress(updatedUser.getAddress());
-//		}
-
+		User user = (User) request.getSession().getAttribute("user");
+		user.setFirstName(userAccountDto.getFirstName());
+		user.setLastName(userAccountDto.getLastName());
+		user.setEmail(userAccountDto.getEmail());
+		user.setPhone(userAccountDto.getPhone());
+		user.setAddress(userAccountDto.getAddress());
+		logger.debug(user.toString());
+		
 		// update current user with new fields in DB
 		userService.update(user);
 

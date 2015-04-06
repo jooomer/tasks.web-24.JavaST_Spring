@@ -16,6 +16,7 @@ import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductType;
 import ua.store.model.entity.Role;
+import ua.store.model.entity.RoleType;
 import ua.store.model.entity.User;
 import ua.store.repository.OrderRepository;
 import ua.store.repository.ProductRepository;
@@ -33,16 +34,19 @@ public class InitDbService {
 	private RoleRepository roleRepository;
 
 	@Autowired
-	private UserRepository userRepository;
+	private RoleService roleService;
 
 	@Autowired
-	private ProductRepository productRepository;
+	private UserService userService;
+
+//	@Autowired
+//	private ProductRepository productRepository;
 
 	@Autowired
-	private ProductTypeRepository productTypeRepository;
+	private ProductTypeService productTypeService;
 	
-	@Autowired
-	private OrderRepository orderRepository;
+//	@Autowired
+//	private OrderRepository orderRepository;
 	
 	@Autowired
 	private OrderService orderService;
@@ -55,7 +59,7 @@ public class InitDbService {
 		
 		logger.debug("--- init() started.");
 		
-		if (roleRepository.findByName("ROLE_ADMIN") != null) {
+		if (roleService.findByName(RoleType.ROLE_ADMIN) != null) {
 			return;
 		}
 		
@@ -74,12 +78,12 @@ public class InitDbService {
 		// init roles
 		logger.debug("--- init roles started.");
 		Role roleUser = new Role();
-		roleUser.setName("ROLE_USER");
-		roleRepository.save(roleUser);
+		roleUser.setName(RoleType.ROLE_USER);
+		roleService.save(roleUser);
 
 		Role roleAdmin = new Role();
-		roleAdmin.setName("ROLE_ADMIN");
-		roleRepository.save(roleAdmin);
+		roleAdmin.setName(RoleType.ROLE_ADMIN);
+		roleService.save(roleAdmin);
 
 		// init first user "admin"
 		logger.debug("--- init first user 'admin' started.");
@@ -88,16 +92,17 @@ public class InitDbService {
 		userAdmin.setEmail("freddy@krugger.com");
 		userAdmin.setFirstName("Freddy");
 		userAdmin.setLastName("Krugger");
-		userAdmin.setPhone("(103) 501-23-92");
+		userAdmin.setPhone("(103)501-23-92");
 		userAdmin.setAddress("45, First str, New York, USA");
 		userAdmin.setComments("This user is an administrator");
 		userAdmin.setInBlackList(false);
-		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-		userAdmin.setPassword(encoder.encode("admin"));
+//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//		userAdmin.setPassword(encoder.encode("admin"));
+		userAdmin.setPassword("admin");
 		userAdmin.setEnabled(true);
 		userAdmin.addRole(roleUser);
 		userAdmin.addRole(roleAdmin);
-		userRepository.save(userAdmin);
+		userService.save(userAdmin);
 
 		// init second user "user"
 		logger.debug("--- init first user 'user' started.");
@@ -106,33 +111,34 @@ public class InitDbService {
 		userUser.setEmail("mike@tyson.com");
 		userUser.setFirstName("Mike");
 		userUser.setLastName("Tyson");
-		userUser.setPhone("(103) 694-03-85");
+		userUser.setPhone("(103)694-03-85");
 		userUser.setAddress("196, Second str, San Francisco, USA");
 		userUser.setComments("This user is a bad boy");
 		userUser.setInBlackList(true);
-		encoder = new BCryptPasswordEncoder();
-		userUser.setPassword(encoder.encode("user"));
+//		encoder = new BCryptPasswordEncoder();
+//		userUser.setPassword(encoder.encode("user"));
+		userUser.setPassword("user");
 		userUser.setEnabled(true);
 		userUser.addRole(roleUser);
-		userRepository.save(userUser);
+		userService.save(userUser);
 
 		// init product types
 		logger.debug("--- init product types started.");
 		ProductType productTypeCabinets = new ProductType();
 		productTypeCabinets.setName("Cabinets");
-		productTypeRepository.save(productTypeCabinets);
+		productTypeService.save(productTypeCabinets);
 
 		ProductType productTypeSofas = new ProductType();
 		productTypeSofas.setName("Sofas");
-		productTypeRepository.save(productTypeSofas);
+		productTypeService.save(productTypeSofas);
 
 		ProductType productTypeArmchairs = new ProductType();
 		productTypeArmchairs.setName("Armchairs");
-		productTypeRepository.save(productTypeArmchairs);
+		productTypeService.save(productTypeArmchairs);
 
 		ProductType productTypeTables = new ProductType();
 		productTypeTables.setName("Tables");
-		productTypeRepository.save(productTypeTables);
+		productTypeService.save(productTypeTables);
 
 		// init products
 		logger.debug("--- init products started.");

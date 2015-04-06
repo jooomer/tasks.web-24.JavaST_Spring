@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,7 +21,8 @@ public class Role {
 	private Integer id;
 	
 	@Column(length = 100)
-	private String name;
+	@Enumerated(EnumType.STRING)
+	private RoleType name;
 	
 	@ManyToMany(mappedBy = "roles")
 	private List<User> users = new ArrayList<>();
@@ -36,11 +39,11 @@ public class Role {
 		this.id = id;
 	}
 
-	public String getName() {
+	public RoleType getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setName(RoleType name) {
 		this.name = name;
 	}
 

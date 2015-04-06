@@ -7,17 +7,17 @@
 	<div class="alert alert-danger">Please fill out account fields correctly.</div>
 </c:if>
 
-<form:form commandName="updatedUser" action="account" class="form-horizontal">
+<form:form commandName="userAccountDto" action="account" class="form-horizontal">
  
 	<div class="form-group">
 		<label class="col-sm-2 control-label"></label>
 		<div style="padding-top: 7px;" class="col-sm-10">
 			<h2><spring:message text="${user.name}" /></h2>
-			<form:input path="id" type="hidden" />
-			<form:input path="name" type="hidden" />
-			<form:input path="password" type="hidden" />
-			<form:input path="confirmPassword" type="hidden" />
-			<form:input path="userType" type="hidden" />
+<%-- 			<form:input path="id" type="hidden" /> --%>
+<%-- 			<form:input path="name" type="hidden" /> --%>
+<%-- 			<form:input path="password" type="hidden" /> --%>
+<%-- 			<form:input path="confirmPassword" type="hidden" /> --%>
+<%-- 			<form:input path="userType" type="hidden" /> --%>
 		</div>
 	</div>
 	<div class="form-group">
@@ -35,7 +35,7 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label for="email" class="col-sm-2 control-label">Email:</label>
+		<label for="email" class="col-sm-2 control-label">Email (*):</label>
 		<div style="padding-top: 7px;" class="col-sm-10">
 			<form:input path="email" cssClass="form-control" placeholder="${user.email}" />
 			<form:errors path="email" class="text-danger" />
@@ -55,7 +55,12 @@
 			<form:errors path="address" class="text-danger" />
 		</div>
 	</div>
-	
+	<div class="form-group">
+		<label class="col-sm-2 control-label"> </label>
+		<div class="col-sm-10">
+			<strong>(*) - required fields</strong>
+		</div>
+	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label"></label>
 		<div class="col-sm-10">

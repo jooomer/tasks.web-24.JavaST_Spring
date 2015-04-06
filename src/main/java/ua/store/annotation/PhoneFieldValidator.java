@@ -17,7 +17,7 @@ public class PhoneFieldValidator implements ConstraintValidator<PhoneField, Stri
 
 	private Pattern pattern;
 	private Matcher matcher;
-	private static final String PHONE_PATTERN = "[0-9]*";
+	private static final String PHONE_PATTERN = "[0-9()-]*";
 	
 	@Override
 	public void initialize(PhoneField arg0) {

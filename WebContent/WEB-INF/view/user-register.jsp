@@ -7,7 +7,7 @@
 	<div class="alert alert-danger">Please fill out the register form correctly.</div>
 </c:if>
 
-<form:form commandName="user" cssClass="form-horizontal">
+<form:form commandName="userRegisterDto" cssClass="form-horizontal">
 
 	<c:if test="${success eq true }">
 		<div class="alert alert-success">Congratulations! You are successfully registered. Now you can sign in.</div>
