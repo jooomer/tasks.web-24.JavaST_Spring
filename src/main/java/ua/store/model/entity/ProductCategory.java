@@ -16,9 +16,9 @@ import javax.persistence.Table;
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "product_type")
+@Table(name = "product_category")
 //@JsonIgnoreProperties(ignoreUnknown = true)
-public class ProductType {
+public class ProductCategory {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +28,7 @@ public class ProductType {
 //	@Column(length = 10)
 	private String name;
 	
-	@OneToMany(mappedBy = "productType")
+	@OneToMany(mappedBy = "productCategory")
 	private List<Product> products;
 	
 	public void addProduct(Product product) {

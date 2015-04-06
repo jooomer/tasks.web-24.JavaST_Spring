@@ -9,6 +9,7 @@
       <div class="list-group">
         <a href='<spring:url value="/users" />' class="list-group-item">All users</a>
         <a href='<spring:url value="/products" />' class="list-group-item">All products</a>
+        <a href='<spring:url value="/add-product" />' class="list-group-item">Add new product</a>
         <a href='<spring:url value="/product-types" />' class="list-group-item">All product types</a>
       </div>
       <br>

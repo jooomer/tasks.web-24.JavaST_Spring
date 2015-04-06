@@ -1,6 +1,8 @@
 package ua.store.service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -8,21 +10,15 @@ import javax.transaction.Transactional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ua.store.model.entity.Order;
 import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.Product;
-import ua.store.model.entity.ProductType;
+import ua.store.model.entity.ProductCategory;
 import ua.store.model.entity.Role;
 import ua.store.model.entity.RoleType;
 import ua.store.model.entity.User;
-import ua.store.repository.OrderRepository;
-import ua.store.repository.ProductRepository;
-import ua.store.repository.ProductTypeRepository;
-import ua.store.repository.RoleRepository;
-import ua.store.repository.UserRepository;
 
 @Transactional
 @Service
@@ -31,22 +27,13 @@ public class InitDbService {
 	private static final Logger logger = LogManager.getLogger(InitDbService.class);
 
 	@Autowired
-	private RoleRepository roleRepository;
-
-	@Autowired
 	private RoleService roleService;
 
 	@Autowired
 	private UserService userService;
 
-//	@Autowired
-//	private ProductRepository productRepository;
-
 	@Autowired
-	private ProductTypeService productTypeService;
-	
-//	@Autowired
-//	private OrderRepository orderRepository;
+	private ProductCategoryService productCategoryService;
 	
 	@Autowired
 	private OrderService orderService;
@@ -124,28 +111,28 @@ public class InitDbService {
 
 		// init product types
 		logger.debug("--- init product types started.");
-		ProductType productTypeCabinets = new ProductType();
-		productTypeCabinets.setName("Cabinets");
-		productTypeService.save(productTypeCabinets);
+		ProductCategory productCategoryCabinets = new ProductCategory();
+		productCategoryCabinets.setName("Cabinets");
+		productCategoryService.save(productCategoryCabinets);
 
-		ProductType productTypeSofas = new ProductType();
-		productTypeSofas.setName("Sofas");
-		productTypeService.save(productTypeSofas);
+		ProductCategory productCategorySofas = new ProductCategory();
+		productCategorySofas.setName("Sofas");
+		productCategoryService.save(productCategorySofas);
 
-		ProductType productTypeArmchairs = new ProductType();
-		productTypeArmchairs.setName("Armchairs");
-		productTypeService.save(productTypeArmchairs);
+		ProductCategory productCategoryArmchairs = new ProductCategory();
+		productCategoryArmchairs.setName("Armchairs");
+		productCategoryService.save(productCategoryArmchairs);
 
-		ProductType productTypeTables = new ProductType();
-		productTypeTables.setName("Tables");
-		productTypeService.save(productTypeTables);
+		ProductCategory productCategoryTables = new ProductCategory();
+		productCategoryTables.setName("Tables");
+		productCategoryService.save(productCategoryTables);
 
 		// init products
 		logger.debug("--- init products started.");
 		Product product1 = new Product();
 		product1.setName("Cabinet");
 		product1.setDescription("This cabinet has a modern design.");
-		product1.setProductType(productTypeCabinets);
+		product1.setProductCategory(productCategoryCabinets);
 		product1.setPrice(600.);
 		product1.setPublishedDate(new Date());
 		product1.setQuantityInStock(14);
@@ -154,7 +141,7 @@ public class InitDbService {
 		Product product2 = new Product();
 		product2.setName("Sofa");
 		product2.setDescription("This sofa is very soft.");
-		product2.setProductType(productTypeSofas);
+		product2.setProductCategory(productCategorySofas);
 		product2.setPrice(500.);
 		product2.setPublishedDate(new Date());
 		product2.setQuantityInStock(5);
@@ -163,7 +150,7 @@ public class InitDbService {
 		Product product3 = new Product();
 		product3.setName("Armchair");
 		product3.setDescription("This armchair has a good price.");
-		product3.setProductType(productTypeArmchairs);
+		product3.setProductCategory(productCategoryArmchairs);
 		product3.setPrice(1000.);
 		product3.setPublishedDate(new Date());
 		product3.setQuantityInStock(29);
@@ -172,11 +159,13 @@ public class InitDbService {
 		Product product4 = new Product();
 		product4.setName("Tables");
 		product4.setDescription("This table has a circle surface.");
-		product4.setProductType(productTypeTables);
+		product4.setProductCategory(productCategoryTables);
 		product4.setPrice(3000.);
 		product4.setPublishedDate(new Date());
 		product4.setQuantityInStock(8);
 		productService.save(product4);
+		
+		initManyProducts();
 		
 		// init orders
 		logger.debug("--- init orders started.");
@@ -190,6 +179,24 @@ public class InitDbService {
 		orderService.save(order1);
 		
 		
+	}
+
+	private void initManyProducts() {
+		logger.debug("--- started");
+		
+		int numberOfProducts = 50;
+		List<Product> products = new ArrayList<>();
+		List<ProductCategory> productCategories = productCategoryService.findAll();
+		
+		// create list of products
+		for (int i = 0; i < numberOfProducts; i++) {
+			Product product = new Product();
+			product.setName("Product " + i);
+			product.setProductCategory(productCategories.get(0));
+			products.add(product);
+		}
+		
+		productService.save(products);
 	}
 
 }

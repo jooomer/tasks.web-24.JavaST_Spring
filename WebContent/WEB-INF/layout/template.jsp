@@ -50,8 +50,8 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li class="${current == 'index' ? 'active' : ''}"><a href='<spring:url value="/" />'>Home</a>
-							</li>
+							<li class="${current == 'index' ? 'active' : ''}"><a href='<spring:url value="/" />'>Home</a></li>
+							<li class="${current == 'catalog' ? 'active' : ''}"><a href='<spring:url value="/catalog" />'>Catalog</a></li>
 						</ul>
 					 	<ul class="nav navbar-nav navbar-right">
 							<security:authorize access="!isAuthenticated()">
@@ -62,8 +62,7 @@
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
 									data-toggle="dropdown" role="button" aria-expanded="false">
 										<security:authentication property="principal.username" /> 
-										<span class="caret"></span>
-								</a>
+										<span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
 										<li><a href="<spring:url value="/account"/>">My account</a></li>
 										<li class="divider"></li>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ include file="../layout/taglib.jsp"%>
+<%@ include file="/WEB-INF/layout/taglib.jsp"%>
 
 <c:if test="${param.success eq true }">
 	<div class="alert alert-success">Congratulations! Your product was successfully submitted.</div>
@@ -33,9 +33,9 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">Product type:</label>
+		<label class="col-sm-2 control-label">Product category:</label>
 		<div style="padding-top: 7px;" class="col-sm-10">
-			${product.productType.name}
+			${product.productCategory.name}
 		</div>
 	</div>
 	<div class="form-group">

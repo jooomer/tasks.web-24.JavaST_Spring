@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import ua.store.model.entity.Product;
-import ua.store.model.entity.ProductType;
+import ua.store.model.entity.ProductCategory;
 import ua.store.model.entity.User;
 import ua.store.repository.ProductRepository;
 
@@ -25,7 +25,7 @@ public class ProductService {
 	private UserService userService;
 	
 	@Autowired
-	private ProductTypeService productTypeService;
+	private ProductCategoryService productCategoryService;
 	
 	public List<Product> findAll() {
 		return productRepository.findAll();
@@ -58,18 +58,25 @@ public class ProductService {
 		productRepository.delete(product);
 	}
 
-	public List<Product> findAllByProductType(ProductType productType) {
-		return productRepository.findByProductType(productType);
+	public List<Product> findAllByProductCategory(ProductCategory productCategory) {
+		return productRepository.findByProductCategory(productCategory);
 	}
 
 	public void save(Product product) {
-		ProductType productType = productTypeService.findByName(product.getProductType().getName());
-		product.setProductType(productType);
+		ProductCategory productCategory = productCategoryService.findByName(product.getProductCategory().getName());
+		product.setProductCategory(productCategory);
 		productRepository.save(product);
 	}
 
 	public void delete(int id) {
 		productRepository.delete(id);
+	}
+
+	public void save(List<Product> products) {
+		for (Product product : products) {
+			productRepository.save(product);
+		}
+		
 	}
 
 }

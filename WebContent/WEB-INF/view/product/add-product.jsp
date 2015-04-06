@@ -3,16 +3,16 @@
 
 <%@ include file="/WEB-INF/layout/taglib.jsp"%>
 
-<form:form commandName="product" cssClass="form-horizontal">
+<form:form commandName="addProductDto" cssClass="form-horizontal">
 
 		<div class="form-group">
-			<label for="productType" class="col-sm-2 control-label">Product type:</label>
+			<label for="productCategory" class="col-sm-2 control-label">Product category:</label>
 			<div class="col-sm-10">
-				<form:select path="productType.name" cssClass="form-control">
-					<form:option value="">-- SELECT TYPE OF PRODUCT --</form:option>
-					<form:options items="${listOfProductTypes}" itemValue="name" itemLabel="name" />
+				<form:select path="productCategory.name" cssClass="form-control">
+					<form:option value="">--- SELECT PRODUCT CATEGORY ---</form:option>
+					<form:options items="${listOfProductCategories}" itemValue="name" itemLabel="name" />
 				</form:select>
-				<form:errors path="productType.name" />
+				<form:errors path="productCategory.name" />
 			</div>
 		</div>
 		<div class="form-group">
@@ -26,12 +26,14 @@
 			<label for="description" class="col-sm-2 control-label">Description:</label>
 			<div class="col-sm-10">
 				<form:input path="description" cssClass="form-control"/>
+				<form:errors path="description" />
 			</div>
 		</div>
 		<div class="form-group">
 			<label for="price" class="col-sm-2 control-label">Price:</label>
 			<div class="col-sm-10">
 				<form:input path="price" cssClass="form-control"/>
+				<form:errors path="price" />
 			</div>
 		</div>
 		<div class="form-group">

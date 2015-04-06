@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ua.store.model.dto.ProductCategoryCatalogDto;
 import ua.store.model.entity.Order;
 import ua.store.model.entity.Product;
-import ua.store.model.entity.ProductType;
+import ua.store.model.entity.ProductCategory;
 import ua.store.service.ProductService;
-import ua.store.service.ProductTypeService;
+import ua.store.service.ProductCategoryService;
 import ua.store.service.UserService;
 import ua.store.tag.ProductMap;
 
@@ -40,7 +41,18 @@ public class ProductsController {
 	private UserService userService;
 
 	@Autowired
-	private ProductTypeService productTypeService;
+	private ProductCategoryService productCategoryService;
+	
+	@RequestMapping("/catalog")
+	public String showCatalog(Model model) {
+		logger.debug("--- started");
+		List<ProductCategory> listOfProductCategories = productCategoryService.findAll();
+		List<Product> listOfProducts = productService.findAll();
+		model.addAttribute("listOfProductCategories", listOfProductCategories);
+		model.addAttribute("listOfProducts", listOfProducts);
+		model.addAttribute("ProductCategory", new ProductCategoryCatalogDto());
+		return "catalog";
+	}
 
 	@RequestMapping("/categories/{type}")
 	public String showProductsByType(Model model, HttpServletRequest request,
@@ -49,9 +61,9 @@ public class ProductsController {
 				+ "\"");
 		
 		// get products list by product type
-		ProductType productType = productTypeService.findByName(type);
+		ProductCategory productCategory = productCategoryService.findByName(type);
 		List<Product> products = productService
-				.findAllByProductType(productType);
+				.findAllByProductCategory(productCategory);
 		
 		// prepare products for view
 		ProductMap productMap = new ProductMap(products);
@@ -68,16 +80,14 @@ public class ProductsController {
 		logger.debug("showProducts() started.");
 		
 		// get list of all products from DB
-		List<Product> products = productService.findAll();
+		List<Product> listOfProducts = productService.findAll();
 		
-		// prepare products for view 
-		ProductMap productMap = new ProductMap(products);
-		request.getSession().setAttribute("productMap", productMap);
+		// prepare list of products for view 
+//		request.getSession().setAttribute("listOfProducts", listOfProducts);
+		model.addAttribute("listOfProducts", listOfProducts);
 		
 		// show list of products
-		model.addAttribute("jspPage",
-				"/WEB-INF/view/administrator/products.jsp");
-		return "template";
+		return "products";
 	}
 
 	@RequestMapping("/products/{id}")
@@ -89,8 +99,7 @@ public class ProductsController {
 		model.addAttribute("product", productService.findOne(id));
 		
 		// show product detail
-		model.addAttribute("jspPage", "/WEB-INF/view/common/product-detail.jsp");
-		return "template";
+		return "product-detail";
 	}
 
 	@RequestMapping(value = "/products/{id}", method = RequestMethod.POST, params = {"delete"})

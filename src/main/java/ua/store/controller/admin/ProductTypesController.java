@@ -17,19 +17,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ua.store.model.entity.ProductType;
-import ua.store.service.ProductTypeService;
+import ua.store.model.entity.ProductCategory;
+import ua.store.service.ProductCategoryService;
 
 @Controller
 public class ProductTypesController {
 	
 	@Autowired
-	private ProductTypeService productTypeService;
+	private ProductCategoryService productCategoryService;
 	
 	// prepare entity ProductType for add-product-type form
 	@ModelAttribute("productType")
-	public ProductType construct() {
-		return new ProductType();
+	public ProductCategory construct() {
+		return new ProductCategory();
 	}
 
 	@RequestMapping(value = "/add-product-type")
@@ -39,7 +39,7 @@ public class ProductTypesController {
 
 	@RequestMapping(value = "/add-product-type", method = RequestMethod.POST)
 	public String doAddProductType(
-			@Valid @ModelAttribute("productType") ProductType productType,
+			@Valid @ModelAttribute("productType") ProductCategory productCategory,
 			BindingResult result, Principal principal, Model model,
 			RedirectAttributes redirectAttributes) {
 
@@ -50,7 +50,7 @@ public class ProductTypesController {
 		}
 
 		// save new product type in DB
-		productTypeService.save(productType);
+		productCategoryService.save(productCategory);
 
 		// set attribute "success" to show success message
 		redirectAttributes.addFlashAttribute("success", true);
@@ -64,7 +64,7 @@ public class ProductTypesController {
 	
 	@RequestMapping(value = "/product-types")
 	public String showProductTypes(Model model) {
-		model.addAttribute("productTypes", productTypeService.findAll());
+		model.addAttribute("productTypes", productCategoryService.findAll());
 		return "product-types";
 		
 	}
@@ -73,8 +73,8 @@ public class ProductTypesController {
 	public String doDeleteProductType(Model model, @PathVariable int id, RedirectAttributes redirectAttributes) {
 		
 		// delete product type from DB by id
-		ProductType productType = productTypeService.findOne(id);
-		productTypeService.delete(productType);
+		ProductCategory productCategory = productCategoryService.findOne(id);
+		productCategoryService.delete(productCategory);
 		
 		// prepare message and show all product types with message
 		redirectAttributes.addFlashAttribute("message", "Congratulations! Product type was successfully deleted.");

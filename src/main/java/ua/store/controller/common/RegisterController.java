@@ -23,48 +23,51 @@ import ua.store.service.UserService;
 
 @Controller
 public class RegisterController {
-	
-	private static final Logger logger = LogManager.getLogger(RegisterController.class);
+
+	private static final Logger logger = LogManager
+			.getLogger(RegisterController.class);
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private RoleService roleService;
-	
+
 	/**
-	 * prepare entity User for registration form 
+	 * prepare entity User for registration form
 	 */
 	@ModelAttribute("userRegisterDto")
 	public UserRegisterDto construct() {
 		return new UserRegisterDto();
 	}
-	
+
 	@RequestMapping("/register**")
 	public String showRegisterForm() {
-		logger.debug("showRegisterForm() started."); 
+		logger.debug("showRegisterForm() started.");
 		return "register";
 	}
-	
+
 	/**
-	 * Receives user data from registration form
-	 * and saves it into DB
+	 * Receives user data from registration form and saves it into DB
 	 */
 	@RequestMapping(value = "/register**", method = RequestMethod.POST)
-	public String doRegister(@Valid @ModelAttribute("userRegisterDto") UserRegisterDto userRegisterDto, BindingResult result,
-			RedirectAttributes redirectAttributes, Model model) {
-		
-		logger.debug("doRegister() started."); 
+	public String doRegister(
+			Model model,
+			RedirectAttributes redirectAttributes,
+			@Valid @ModelAttribute("userRegisterDto") UserRegisterDto userRegisterDto,
+			BindingResult bindingResult) {
+
+		logger.debug("doRegister() started.");
 
 		// check validation of data from register form
 		// if not valid - call register form again
-		if (result.hasErrors()) {
-			logger.debug("doRegister() - result.hasErrors()"); 
+		if (bindingResult.hasErrors()) {
+			logger.debug("bindingResult.hasErrors() = true"
+					+ "; bindingResult: " + bindingResult);
 			model.addAttribute("error", true);
-			System.out.println("---------------- " + result.getFieldError());
 			return "register";
 		}
-				
+
 		// save user in DB
 		User user = new User();
 		user.setName(userRegisterDto.getName());
@@ -78,14 +81,13 @@ public class RegisterController {
 		user.addRole(role);
 		userService.save(user);
 		logger.debug("userService.save(user) is done");
-		
-		// set attribute "success" to show success message 
+
+		// set attribute "success" to show success message
 		redirectAttributes.addFlashAttribute("register_success", true);
-		
+
 		// call index.jsp
 		return "redirect:/";
 
 	}
 
 }
-

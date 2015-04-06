@@ -38,13 +38,13 @@
 
   <definition name="products" extends="common">
     <put-attribute name="title" value="Products" />
-    <put-attribute name="body" value="/WEB-INF/view/products.jsp" />
+    <put-attribute name="body" value="/WEB-INF/view/product/products.jsp" />
     <put-attribute name="current" value="products" />
   </definition>
 
   <definition name="product-detail" extends="common">
     <put-attribute name="title" value="Product detail" />
-    <put-attribute name="body" value="/WEB-INF/view/product-detail.jsp" />
+    <put-attribute name="body" value="/WEB-INF/view/product/product-detail.jsp" />
     <put-attribute name="current" value="product-detail" />
   </definition>
 
@@ -56,7 +56,7 @@
 
   <definition name="add-product" extends="common">
     <put-attribute name="title" value="Add new product" />
-    <put-attribute name="body" value="/WEB-INF/view/add-product.jsp" />
+    <put-attribute name="body" value="/WEB-INF/view/product/add-product.jsp" />
     <put-attribute name="current" value="add-product" />
   </definition>
 
@@ -90,11 +90,11 @@
     <put-attribute name="current" value="search" />
   </definition>
 
-<!--   <definition name="search" extends="common"> -->
-<!--     <put-attribute name="title" value="Search" /> -->
-<!--     <put-attribute name="body" value="/WEB-INF/view/search.jsp" /> -->
-<!--     <put-attribute name="current" value="search" /> -->
-<!--   </definition> -->
+  <definition name="catalog" extends="common">
+    <put-attribute name="title" value="Catalog" />
+    <put-attribute name="body" value="/WEB-INF/view/product/catalog.jsp" />
+    <put-attribute name="current" value="catalog" />
+  </definition>
 
   <definition name="login" template="/WEB-INF/view/login.jsp">
     <put-attribute name="title" value="Login" />

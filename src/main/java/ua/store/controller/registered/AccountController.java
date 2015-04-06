@@ -35,10 +35,10 @@ public class AccountController {
 	@Autowired
 	private UserService userService;
 
-//	@ModelAttribute("updatedUser")
-//	public User construct() {
-//		return new User();
-//	}
+	// @ModelAttribute("updatedUser")
+	// public User construct() {
+	// return new User();
+	// }
 
 	/**
 	 * call account.jsp to show user detail
@@ -50,9 +50,9 @@ public class AccountController {
 
 		// get current user from DB
 		String name = principal.getName();
-//		model.addAttribute("user", userService.findByName(name));
+		// model.addAttribute("user", userService.findByName(name));
 		request.getSession().setAttribute("user", userService.findByName(name));
-		
+
 		// show user account
 		return "account";
 	}
@@ -64,19 +64,19 @@ public class AccountController {
 	public String showUpdateAccount(Model model, Principal principal,
 			HttpServletRequest request) {
 		logger.debug("Method showUpdateAccount() started.");
-		
+
 		User user = (User) request.getSession().getAttribute("user");
 		logger.debug(user.toString());
-		
+
 		UserAccountDto userAccountDto = new UserAccountDto();
 		userAccountDto.setFirstName(user.getFirstName());
 		userAccountDto.setLastName(user.getLastName());
 		userAccountDto.setEmail(user.getEmail());
 		userAccountDto.setPhone(user.getPhone());
 		userAccountDto.setAddress(user.getAddress());
-		
+
 		model.addAttribute("userAccountDto", userAccountDto);
-		
+
 		// show user account with update form
 		return "account-update";
 	}
@@ -85,18 +85,18 @@ public class AccountController {
 	 * receives a new user account data, validates it and update to DB
 	 */
 	@RequestMapping(value = "/account**", method = RequestMethod.POST)
-	public String doUpdateAccount(Model model, Principal principal,
+	public String doUpdateAccount(
+			Model model,
+			Principal principal,
 			@Valid @ModelAttribute("userAccountDto") UserAccountDto userAccountDto,
-			BindingResult bindingResult,
-			RedirectAttributes redirectAttributes,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes,
 			HttpServletRequest request) {
 		logger.debug("doUpdateAccount() started.");
 		logger.debug(userAccountDto.toString());
-		
+
 		if (bindingResult.hasErrors()) {
-			logger.debug("result.hasErrors() = true"
-					+ "; result: " + bindingResult); 
-			
+			logger.debug("bindingResult.hasErrors() = true"
+					+ "; bindingResult: " + bindingResult);
 			model.addAttribute("error", true);
 			return "account-update";
 		}
@@ -108,7 +108,7 @@ public class AccountController {
 		user.setPhone(userAccountDto.getPhone());
 		user.setAddress(userAccountDto.getAddress());
 		logger.debug(user.toString());
-		
+
 		// update current user with new fields in DB
 		userService.update(user);
 

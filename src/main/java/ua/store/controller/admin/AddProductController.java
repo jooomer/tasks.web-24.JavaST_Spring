@@ -10,6 +10,9 @@ import javax.validation.Valid;
 
 //import jdk.nashorn.internal.objects.annotations.Constructor;
 
+
+
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +23,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ua.store.model.dto.AddProductDto;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.User;
 import ua.store.repository.ProductRepository;
 import ua.store.service.ProductService;
-import ua.store.service.ProductTypeService;
+import ua.store.service.ProductCategoryService;
 import ua.store.service.UserService;
 import ua.store.tag.ProductMap;
 
@@ -39,7 +44,7 @@ public class AddProductController {
 	private ProductService productService;
 
 	@Autowired
-	private ProductTypeService productTypeService;
+	private ProductCategoryService productCategoryService;
 
 	@Autowired
 	private UserService userService;
@@ -54,53 +59,46 @@ public class AddProductController {
 
 	@RequestMapping(value = "/add-product")
 	public String showAddProduct(Model model) {
-		logger.debug("showAddProduct() started.");
+		logger.debug("--- started");
 
 		// get all product types from DB and prepare them for view
-		model.addAttribute("listOfProductTypes", productTypeService.findAll());
+		model.addAttribute("listOfProductCategories", productCategoryService.findAll());
 
+		// prepare product DTO
+		model.addAttribute("addProductDto", new AddProductDto());
+		
 		// show add-product form
-		model.addAttribute("jspPage",
-				"/WEB-INF/view/administrator/add-product.jsp");
-		return "template";
+		return "add-product";
 	}
 
 	@RequestMapping(value = "/add-product", method = RequestMethod.POST)
 	public String doAddProduct(
-			@Valid @ModelAttribute("product") Product product,
-			BindingResult result, Principal principal, Model model,
-			HttpServletRequest request) {
+			@Valid @ModelAttribute("addProductDto") AddProductDto addProductDto,
+			BindingResult bindingResult, Principal principal, Model model,
+			HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		logger.debug("doAddProduct() started.");
 
 		// check data validation from form
 		// if not valid - show add-product form again
-		if (result.hasErrors()) {
-			return showAddProduct(model);
+		if (bindingResult.hasErrors()) {
+			logger.debug("bindingResult.hasErrors() = true"
+					+ "; bindingResult: " + bindingResult); 
+			model.addAttribute("error", true);
+			return "add-product";
 		}
 		
-		if (product == null) {
-			return showAddProduct(model);
-		}
-
+		// create a new product with the received fields
+		Product product = addProductDto.setFieldsFromDto(new Product());
+		
 		// set name of user and current date to new product
 		product.setPublishedDate(new Date());
 
 		// save new product in DB
 		productService.save(product);
 
-		// get this product from DB to get its id
-		product = productService.findOneByName(product.getName());
-		int id = product.getId();
-
-		// prepare products for display
-		List<Product> products = productService.findAll();
-		ProductMap productMap = new ProductMap(products);
-		request.getSession().setAttribute("productMap", productMap);
-
-		// show products list
-		model.addAttribute("jspPage",
-				"/WEB-INF/view/administrator/products.jsp");
-		return "template";
+//		model.addAttribute("success", true);
+		redirectAttributes.addFlashAttribute("success", true);
+		return "redirect:products/" + product.getId();
 	}
 
 }

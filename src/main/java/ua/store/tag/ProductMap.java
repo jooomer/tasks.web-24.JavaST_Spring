@@ -18,7 +18,7 @@ import ua.store.controller.admin.UsersController;
 import ua.store.model.entity.Order;
 import ua.store.model.entity.OrderItem;
 import ua.store.model.entity.Product;
-import ua.store.model.entity.ProductType;
+import ua.store.model.entity.ProductCategory;
 
 /**
  * @author Sergey
@@ -43,7 +43,7 @@ public class ProductMap {
 //		this.iterator = this.productMap.entrySet().iterator();
 	}
 
-	public ProductMap(ProductType productType) {
+	public ProductMap(ProductCategory productCategory) {
 
 		logger.debug("Constructor ProductMap(ProductType productType) created");
 
@@ -95,7 +95,7 @@ public class ProductMap {
 //		this.iterator = this.productMap.entrySet().iterator();
 	}
 	
-	public void createProductMap(ProductType productType) {
+	public void createProductMap(ProductCategory productCategory) {
 
 		logger.debug("createProductMap(ProductType productType) started");
 
@@ -130,7 +130,7 @@ public class ProductMap {
 
 	public String getProductType() {
 		if (product != null) {
-			return this.product.getProductType().getName();
+			return this.product.getProductCategory().getName();
 		} else {
 			return null;
 		}

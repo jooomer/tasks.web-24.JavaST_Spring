@@ -22,7 +22,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 
-import ua.store.service.ProductTypeService;
+import ua.store.service.ProductCategoryService;
 
 @Entity
 @Table(name = "products")
@@ -51,9 +51,9 @@ public class Product implements Comparable<Product> {
 	private Date publishedDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_type_id")
+	@JoinColumn(name = "product_category_id")
 	@Enumerated(EnumType.STRING)
-	private ProductType productType;
+	private ProductCategory productCategory;
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private Set<OrderItem> orderItems = new LinkedHashSet<>();
@@ -90,12 +90,12 @@ public class Product implements Comparable<Product> {
 		this.publishedDate = publishedDate;
 	}
 
-	public ProductType getProductType() {
-		return productType;
+	public ProductCategory getProductCategory() {
+		return productCategory;
 	}
 
-	public void setProductType(ProductType productType) {
-		this.productType = productType;
+	public void setProductCategory(ProductCategory productCategory) {
+		this.productCategory = productCategory;
 	}
 
 	public Double getPrice() {
