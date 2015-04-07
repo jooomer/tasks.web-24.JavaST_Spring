@@ -1,6 +1,8 @@
 - regex for email validation
 - add and remove roles
 - check urls directly
+- handle wrong url
+- control setting state of order
 
 -------------------------
 - Менеджер (не адмн) должен иметь возможность редактировать заказы, менять статус и тп
@@ -24,8 +26,11 @@
 - Убрать id из таблицы
 - отрабатывать ввод букв в url при выборе товара
 - upload images for user and product
+?- Page by page users output
+?- Page by page categories output
 
 + поставить * возле обязательных полей + ссылка подсказка
 + Спрятать пассворд
 + Confirm password
++ Page by page products output
  

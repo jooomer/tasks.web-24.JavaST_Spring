@@ -5,6 +5,8 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,14 @@ public class ProductService {
 	
 	public List<Product> findAll() {
 		return productRepository.findAll();
+	}
+
+	public List<Product> findAllByPage(int page) {
+		return productRepository.findAll(new PageRequest(page, 10, Direction.ASC, "id")).getContent();
+	}
+
+	public int getTotalPages() {
+		return productRepository.findAll(new PageRequest(0, 10)).getTotalPages();
 	}
 
 	public Product findOne(int id) {
@@ -78,5 +88,6 @@ public class ProductService {
 		}
 		
 	}
+
 
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ua.store.controller.common.ProductsController;
+import ua.store.controller.product.ProductsController;
 import ua.store.model.entity.Order;
 import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.User;

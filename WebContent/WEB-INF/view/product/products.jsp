@@ -20,3 +20,14 @@
 	</tbody>
 
 </table>
+
+<nav>
+  <ul class="pager">
+  	<c:if test="${page > 1}">
+    	<li><a href="<spring:url value="/category/${catId}/products/page/${page - 1}" />">Previous</a></li>
+  	</c:if>
+  	<c:if test="${page < totalPages}">
+    	<li><a href="<spring:url value="/category/${catId}/products/page/${page + 1}" />">Next</a></li>
+  	</c:if>
+  </ul>
+</nav>

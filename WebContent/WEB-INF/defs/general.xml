@@ -42,6 +42,12 @@
     <put-attribute name="current" value="products" />
   </definition>
 
+  <definition name="products-by-category" extends="common">
+    <put-attribute name="title" value="Products by category" />
+    <put-attribute name="body" value="/WEB-INF/view/product/catalog.jsp" />
+    <put-attribute name="current" value="catalog" />
+  </definition>
+
   <definition name="product-detail" extends="common">
     <put-attribute name="title" value="Product detail" />
     <put-attribute name="body" value="/WEB-INF/view/product/product-detail.jsp" />
