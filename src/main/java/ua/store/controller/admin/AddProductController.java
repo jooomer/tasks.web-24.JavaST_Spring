@@ -88,7 +88,7 @@ public class AddProductController {
 		}
 		
 		// create a new product with the received fields
-		Product product = addProductDto.setFieldsFromDto(new Product());
+		Product product = addProductDto.getAllFields(new Product());
 		
 		// set name of user and current date to new product
 		product.setPublishedDate(new Date());

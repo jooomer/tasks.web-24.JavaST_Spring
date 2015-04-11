@@ -65,13 +65,15 @@ public class ProductsController {
 		
 		// get category Id and name from URL and check Id
 		int catId = parsePathVariable(catIdStr);
-		String categoryName = categoryName = listOfProductCategories.get(catId - 1).getName();
+		String categoryName = null;
 		if (catId < 1 || catId > listOfProductCategories.size()) {
 			logger.debug("catId < 1 || catId > category number");
 			// just show products for all categories
 			catId = 0;
 			categoryName = "All categories";
-		} 
+		} else {
+			categoryName = listOfProductCategories.get(catId - 1).getName();
+		}
 
 		// get page number from URL and total of pages from DB
 		int page = parsePathVariable(pageStr);

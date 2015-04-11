@@ -36,7 +36,7 @@ public class AddProductDto {
 	
 	private ProductCategory productCategory;
 	
-	public Product setFieldsFromDto(Product product) {
+	public Product getAllFields(Product product) {
 		product.setName(name);
 		product.setDescription(description);
 		product.setPrice(price);
