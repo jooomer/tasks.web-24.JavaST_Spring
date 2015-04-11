@@ -7,13 +7,13 @@
 	${msg}
 </c:if>
 
-<%-- <form:form> --%>
+<form:form commandName="category">
 	<form:select path="ProductCategory.name" cssClass="form-control" onchange="submit()" >
 		<form:option value="">--- SELECT PRODUCT CATEGORY ---</form:option>
 		<form:option value="All products" />
 		<form:options items="${listOfProductCategories}" itemValue="name" itemLabel="name" />
 	</form:select>
-<%-- </form:form> --%>
+</form:form>
 <br>
 
 <h2>${categoryName}</h2>
