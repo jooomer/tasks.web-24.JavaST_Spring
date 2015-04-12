@@ -14,12 +14,13 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ua.store.model.dto.ProductCategoryCatalogDto;
+import ua.store.model.dto.SelectProductCategoryDto;
 import ua.store.model.entity.Order;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductCategory;
@@ -43,6 +44,14 @@ public class ProductsController {
 	@Autowired
 	private ProductCategoryService productCategoryService;
 	
+	@ModelAttribute("category")
+	public SelectProductCategoryDto construct() {
+		return new SelectProductCategoryDto();
+	}
+	
+	/**
+	 * just shows first page of list of product
+	 */
 	@RequestMapping("/catalog")
 	public String showCatalog(Model model) {
 		logger.debug("--- started");
@@ -51,45 +60,83 @@ public class ProductsController {
 		return "redirect:category/0/products/page/1";
 	}
 
+	/**
+	 * shows list of products by selected category (page-by-page)
+	 */
 	@RequestMapping("/category/{catIdStr}/products/page/{pageStr}")
 	public String showProductsByCategory(
 			Model model, 
 			RedirectAttributes redirectAttributes,
 			@PathVariable String catIdStr, 
-			@PathVariable String pageStr) {
+			@PathVariable String pageStr,
+			@ModelAttribute("category") SelectProductCategoryDto selectProductCategoryDto) {
 		logger.debug("--- started");
 		logger.debug("URL: /category/" + catIdStr + "/products/page/" + pageStr);
 		
-		// get all categories from DB
-		List<ProductCategory> listOfProductCategories = productCategoryService.findAll();
+		int totalPages = 0;
+
+		// ---------------------------------
+		// handle selected category 
+		// ---------------------------------
+		if (selectProductCategoryDto.getProductCategory() != null) {
+			logger.debug("Selected category: " + selectProductCategoryDto.getProductCategory().getName());
+			
+			// get catId from DTO and reload page
+			int catId = getCatIdFromDto(selectProductCategoryDto);
+			return "redirect:/category/" + catId + "/products/page/1";
+		}
+		
+		// ---------------------------------
+		// handle {catIdStr}
+		// ---------------------------------
 		
 		// get category Id and name from URL and check Id
 		int catId = parsePathVariable(catIdStr);
+		List<ProductCategory> listOfProductCategories = productCategoryService.findAll();
 		String categoryName = null;
-		if (catId < 1 || catId > listOfProductCategories.size()) {
-			logger.debug("catId < 1 || catId > category number");
+		
+		// check min/max category request
+		if (catId < 0 || catId > listOfProductCategories.size()) {
+			logger.debug("catId < 0 or catId > category number; catId = " + catId);
+			return "redirect:/category/" + 0 + "/products/page/" + pageStr;
+		} 
+		if (catId == 0) {
+			logger.debug("catId == 0 ; catId = " + catId);
+			
 			// just show products for all categories
-			catId = 0;
 			categoryName = "All categories";
+			catId = 0;
+			totalPages = productService.getTotalPages();
 		} else {
+			logger.debug("catId is between 0 and category number; catId = " + catId);
+			
+			// get category name
 			categoryName = listOfProductCategories.get(catId - 1).getName();
+			totalPages = productService.getTotalPagesByCategory(categoryName);
 		}
 
-		// get page number from URL and total of pages from DB
+		// ---------------------------------
+		// handle {pageStr}
+		// ---------------------------------
+		
+		// get page number from URL
 		int page = parsePathVariable(pageStr);
-		int totalPages = productService.getTotalPages();
 
 		// check min/max page request
 		if (page < 1) {
-			logger.debug("page < 1; catId=" + catId);
+			logger.debug("page < 1; page = " + page);
 			return "redirect:/category/" + catId + "/products/page/1";
 		} else if (page > totalPages) {
 			logger.debug("page > totalPages");
 			return "redirect:/category/" + catId + "/products/page/" + (totalPages);
 		}
 
+		// ---------------------------------
+		// handle parameters to show 
+		// ---------------------------------
+		
 		// prepare DTO to get particular category from a form
-		model.addAttribute("ProductCategory", new ProductCategoryCatalogDto());
+//		model.addAttribute("ProductCategory", new ProductCategoryCatalogDto());
 		model.addAttribute("categoryName", categoryName);
 		model.addAttribute("catId", catId);
 		
@@ -97,7 +144,14 @@ public class ProductsController {
 		model.addAttribute("listOfProductCategories", listOfProductCategories);
 
 		// prepare list of products for view 
-		List<Product> listOfProducts = productService.findAllByPage(page - 1);
+		List<Product> listOfProducts = null;
+		if (catId == 0) {
+			listOfProducts = productService.findAllByPage(page - 1);
+		} else {
+			listOfProducts = productService.findByCategoryByPage(categoryName, page - 1);
+		}
+		
+		// prepare some patameters
 		model.addAttribute("listOfProducts", listOfProducts);
 		model.addAttribute("page", page);
 		model.addAttribute("totalPages", totalPages);
@@ -105,60 +159,19 @@ public class ProductsController {
 		return "products-by-category";
 	}
 	
-//	@RequestMapping("/categories/{type}")
-//	public String showProductsByType(Model model, HttpServletRequest request,
-//			@PathVariable String type) {
-//		logger.debug("showProductsByType() started. Product type is \"" + type
-//				+ "\"");
-//		
-//		// get products list by product type
-//		ProductCategory productCategory = productCategoryService.findByName(type);
-//		List<Product> products = productService
-//				.findAllByProductCategory(productCategory);
-//		
-//		// prepare products for view
-//		ProductMap productMap = new ProductMap(products);
-//		request.getSession().setAttribute("productMap", productMap);
-//		
-//		// show list of products
-//		model.addAttribute("jspPage",
-//				"/WEB-INF/view/administrator/products.jsp");
-//		return "template";
-//	}
+	/**
+	 * gets category Id that user selected
+	 */
+	private int getCatIdFromDto(SelectProductCategoryDto selectProductCategoryDto) {
+		String productCategoryName = selectProductCategoryDto.getProductCategory().getName();
+		ProductCategory productCategory = productCategoryService.findByName(productCategoryName);
+		if (productCategory != null) {
+			return productCategory.getId();
+		} else {
+			return 0;
+		}
+	}
 
-//	@RequestMapping("/products")
-//	public String showProducts() {
-//		logger.debug("showProducts() started.");
-//		return "redirect:products/page-0";
-//	}
-//
-//	@RequestMapping("/products/page-{pageStr}")
-//	public String showProducts(Model model, HttpServletRequest request, @PathVariable String pageStr) {
-//		logger.debug("showProducts() started.");
-//		
-//		// parse PathVariable
-//		int page = parsePathVariable(pageStr);
-//		
-//		int totalPages = productService.getTotalPages();
-//		
-//		// check min/max page request
-//		if (page < 1) {
-//			return "redirect:/products/page-1";
-//		} else if (page > totalPages) {
-//			return "redirect:/products/page-" + (totalPages);
-//		}
-//		
-//		// get list of all products from DB
-//		List<Product> listOfProducts = productService.findAllByPage(page - 1);
-//		
-//		// prepare list of products for view 
-//		model.addAttribute("listOfProducts", listOfProducts);
-//		model.addAttribute("page", page);
-//		model.addAttribute("totalPages", totalPages);
-//		
-//		// show list of products
-//		return "products";
-//	}
 
 	@RequestMapping("/products/{id}")
 	public String showProductDetail(Model model, @PathVariable int id) {
@@ -233,11 +246,65 @@ public class ProductsController {
 		} catch (NumberFormatException e) {
 //			throw new WrongUrlException(e);
 			// just show first
-			number = 0;
+			number = -1;
 		}
 		return number;
 	}
 
+//	@RequestMapping("/categories/{type}")
+//	public String showProductsByType(Model model, HttpServletRequest request,
+//			@PathVariable String type) {
+//		logger.debug("showProductsByType() started. Product type is \"" + type
+//				+ "\"");
+//		
+//		// get products list by product type
+//		ProductCategory productCategory = productCategoryService.findByName(type);
+//		List<Product> products = productService
+//				.findAllByProductCategory(productCategory);
+//		
+//		// prepare products for view
+//		ProductMap productMap = new ProductMap(products);
+//		request.getSession().setAttribute("productMap", productMap);
+//		
+//		// show list of products
+//		model.addAttribute("jspPage",
+//				"/WEB-INF/view/administrator/products.jsp");
+//		return "template";
+//	}
+
+//	@RequestMapping("/products")
+//	public String showProducts() {
+//		logger.debug("showProducts() started.");
+//		return "redirect:products/page-0";
+//	}
+//
+//	@RequestMapping("/products/page-{pageStr}")
+//	public String showProducts(Model model, HttpServletRequest request, @PathVariable String pageStr) {
+//		logger.debug("showProducts() started.");
+//		
+//		// parse PathVariable
+//		int page = parsePathVariable(pageStr);
+//		
+//		int totalPages = productService.getTotalPages();
+//		
+//		// check min/max page request
+//		if (page < 1) {
+//			return "redirect:/products/page-1";
+//		} else if (page > totalPages) {
+//			return "redirect:/products/page-" + (totalPages);
+//		}
+//		
+//		// get list of all products from DB
+//		List<Product> listOfProducts = productService.findAllByPage(page - 1);
+//		
+//		// prepare list of products for view 
+//		model.addAttribute("listOfProducts", listOfProducts);
+//		model.addAttribute("page", page);
+//		model.addAttribute("totalPages", totalPages);
+//		
+//		// show list of products
+//		return "products";
+//	}
 
 
 }

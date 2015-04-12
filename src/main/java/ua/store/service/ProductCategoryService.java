@@ -48,7 +48,7 @@ public class ProductCategoryService {
 	}
 
 	public void delete(ProductCategory productCategory) {
-		List<Product> products = productService.findAllByProductCategory(productCategory);
+		List<Product> products = productService.findAllByCategory(productCategory);
 		for (Product product : products) {
 			product.setProductCategory(null);
 			productService.save(product);

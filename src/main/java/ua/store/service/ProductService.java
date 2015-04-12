@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductCategory;
 import ua.store.model.entity.User;
+import ua.store.repository.ExtendedProductRepository;
 import ua.store.repository.ProductRepository;
 
 @Service
@@ -22,6 +23,9 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private ExtendedProductRepository extendedProductRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -68,7 +72,7 @@ public class ProductService {
 		productRepository.delete(product);
 	}
 
-	public List<Product> findAllByProductCategory(ProductCategory productCategory) {
+	public List<Product> findAllByCategory(ProductCategory productCategory) {
 		return productRepository.findByProductCategory(productCategory);
 	}
 
@@ -88,6 +92,18 @@ public class ProductService {
 		}
 		
 	}
+
+	public List<Product> findByCategoryByPage(String categoryName, int page) {
+		ProductCategory productCategory = productCategoryService.findByName(categoryName);
+		return extendedProductRepository.findByProductCategoryByPage(productCategory, page, 10, Direction.ASC, "id");
+//		return productRepository.findByProductCategory(productCategory);
+	}
+
+	public int getTotalPagesByCategory(String categoryName) {
+		ProductCategory productCategory = productCategoryService.findByName(categoryName);
+		return extendedProductRepository.getTotalPagesByCategory(productCategory, 0, 10);
+	}
+
 
 
 }

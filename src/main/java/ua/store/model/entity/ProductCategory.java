@@ -35,6 +35,13 @@ public class ProductCategory {
 		products.add(product);
 	}
 	
+	@Override
+	public String toString() {
+		return "ProductCategory: -------------- \n"
+				+ "Id: " + id + "\n"
+				+ "name: " + name;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

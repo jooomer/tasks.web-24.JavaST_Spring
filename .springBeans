@@ -9,8 +9,6 @@
 	<configs>
 	</configs>
 	<autoconfigs>
-		<config>WebContent/WEB-INF/applicationContext.xml</config>
-		<config>WebContent/WEB-INF/dispatcher-servlet.xml</config>
 	</autoconfigs>
 	<configSets>
 	</configSets>
