@@ -23,45 +23,47 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
+
 	@Autowired
 	private ExtendedProductRepository extendedProductRepository;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private ProductCategoryService productCategoryService;
-	
+
 	public List<Product> findAll() {
 		return productRepository.findAll();
 	}
 
-	public List<Product> findAllByPage(int page) {
-		return productRepository.findAll(new PageRequest(page, 10, Direction.ASC, "id")).getContent();
+	public List<Product> findAllByPage(int page, int itemsOnPage, Direction direction) {
+		return productRepository.findAll(
+				new PageRequest(page, itemsOnPage, direction, "id")).getContent();
 	}
 
 	public int getTotalPages() {
-		return productRepository.findAll(new PageRequest(0, 10)).getTotalPages();
+		return productRepository.findAll(new PageRequest(0, 10))
+				.getTotalPages();
 	}
 
 	public Product findOne(int id) {
 		return productRepository.findOne(id);
 	}
 
-//	public List<Product> findAllByUserName(String name) {
-//		List<Product> myProducts = productRepository.findAllByUserName(name);
-//		return myProducts;
-//	}
+	// public List<Product> findAllByUserName(String name) {
+	// List<Product> myProducts = productRepository.findAllByUserName(name);
+	// return myProducts;
+	// }
 
-//	public void save(Product product, String name) {
-//		User user = userService.findOneWithCarts(name);
-//		product.setUser(user);
-//		String productTypeName = product.getProductType().getName();
-//		ProductType productType = productTypeService.findByName(productTypeName);
-//		product.setProductType(productType);
-//		productRepository.save(product);
-//	}
+	// public void save(Product product, String name) {
+	// User user = userService.findOneWithCarts(name);
+	// product.setUser(user);
+	// String productTypeName = product.getProductType().getName();
+	// ProductType productType = productTypeService.findByName(productTypeName);
+	// product.setProductType(productType);
+	// productRepository.save(product);
+	// }
 
 	public Product findOneByName(String name) {
 		return productRepository.findOneByName(name);
@@ -77,7 +79,8 @@ public class ProductService {
 	}
 
 	public void save(Product product) {
-		ProductCategory productCategory = productCategoryService.findByName(product.getProductCategory().getName());
+		ProductCategory productCategory = productCategoryService
+				.findByName(product.getProductCategory().getName());
 		product.setProductCategory(productCategory);
 		productRepository.save(product);
 	}
@@ -90,20 +93,22 @@ public class ProductService {
 		for (Product product : products) {
 			productRepository.save(product);
 		}
-		
+
 	}
 
-	public List<Product> findByCategoryByPage(String categoryName, int page) {
-		ProductCategory productCategory = productCategoryService.findByName(categoryName);
-		return extendedProductRepository.findByProductCategoryByPage(productCategory, page, 10, Direction.ASC, "id");
-//		return productRepository.findByProductCategory(productCategory);
+	public List<Product> findByCategoryByPage(String categoryName, int page,
+			int itemsOnPage, Direction direction) {
+		ProductCategory productCategory = productCategoryService
+				.findByName(categoryName);
+		return extendedProductRepository.findByProductCategoryByPage(
+				productCategory, page, itemsOnPage,	direction, "id");
 	}
 
-	public int getTotalPagesByCategory(String categoryName) {
-		ProductCategory productCategory = productCategoryService.findByName(categoryName);
-		return extendedProductRepository.getTotalPagesByCategory(productCategory, 0, 10);
+	public int getTotalPagesByCategory(String categoryName, int itemsOnPage) {
+		ProductCategory productCategory = productCategoryService
+				.findByName(categoryName);
+		return extendedProductRepository.getTotalPagesByCategory(
+				productCategory, 0, itemsOnPage);
 	}
-
-
 
 }

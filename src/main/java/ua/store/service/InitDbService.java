@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
@@ -189,8 +190,8 @@ public class InitDbService {
 		
 		String comments = "Completely synergize resource sucking relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. ";
 
-		int numberOfOrders = 100;
-		for (int i = 0; i < numberOfOrders; i++) {
+		int numberOfOrders = 1000;
+		for (int i = 1; i < numberOfOrders + 1; i++) {
 			Order order1 = new Order();
 			order1.setUser(userService.findOne(1));
 			order1.setName("Order A/" + i);
@@ -240,16 +241,17 @@ public class InitDbService {
 		
 		String description = "Interactively procrastinate high-payoff content without backward-compatible data. Quickly cultivate optimal processes and tactical architectures. Completely iterate covalent strategic theme areas via accurate e-markets.";
 		
-		int numberOfProducts = 55;
+		int numberOfProducts = 1000;
 		List<Product> products = new ArrayList<>();
+		Random random = new Random();
 		
 		// create list of products
-		for (int i = 0; i < numberOfProducts; i++) {
+		for (int i = 1; i < numberOfProducts + 1; i++) {
 			Product cabinet = new Product();
 			cabinet.setName("Cabinet " + i);
 			cabinet.setProductCategory(productCategoryService.findByName("Cabinets"));
 			cabinet.setDescription(description);
-			cabinet.setPrice(600.);
+			cabinet.setPrice((double)(random.nextInt(100)) * 10);
 			cabinet.setPublishedDate(new Date(new GregorianCalendar(2014, 2, 25).getTimeInMillis()));
 			cabinet.setQuantityInStock(14);
 			products.add(cabinet);
@@ -258,7 +260,7 @@ public class InitDbService {
 			sofa.setName("Sofa " + i);
 			sofa.setProductCategory(productCategoryService.findByName("Sofas"));
 			sofa.setDescription(description);
-			sofa.setPrice(400.);
+			sofa.setPrice((double)(random.nextInt(100)) * 10);
 			sofa.setPublishedDate(new Date(new GregorianCalendar(2013, 5, 22).getTimeInMillis()));
 			sofa.setQuantityInStock(10);
 			products.add(sofa);
@@ -267,7 +269,7 @@ public class InitDbService {
 			armchair.setName("Armchair " + i);
 			armchair.setProductCategory(productCategoryService.findByName("Armchairs"));
 			armchair.setDescription(description);
-			armchair.setPrice(200.);
+			armchair.setPrice((double)(random.nextInt(100)) * 10);
 			armchair.setPublishedDate(new Date(new GregorianCalendar(2012, 8, 5).getTimeInMillis()));
 			armchair.setQuantityInStock(20);
 			products.add(armchair);
@@ -276,7 +278,7 @@ public class InitDbService {
 			table.setName("Table " + i);
 			table.setProductCategory(productCategoryService.findByName("Tables"));
 			table.setDescription(description);
-			table.setPrice(300.);
+			table.setPrice((double)(random.nextInt(100)) * 10);
 			table.setPublishedDate(new Date(new GregorianCalendar(2011, 10, 15).getTimeInMillis()));
 			table.setQuantityInStock(5);
 			products.add(table);

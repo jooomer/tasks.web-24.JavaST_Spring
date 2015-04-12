@@ -16,12 +16,39 @@
 </form:form>
 <br>
 
-<h2>${categoryName}</h2>
+<h2>Category "${categoryName}"</h2>
+<br>
 
+<form:form commandName="selectSortBy" class="form-inline">
+  <div class="form-group">
+  Group by:
+	<form:select path="itemsOnPage" cssClass="form-control input-sm" onchange="submit()" >
+		<option value="5" ${catalog_itemsOnPage == 5 ? 'selected' : ''}>5 items on a page</option>
+		<option value="10" ${catalog_itemsOnPage == 10 ? 'selected' : ''}>10 items on a page</option>
+		<option value="15" ${catalog_itemsOnPage == 15 ? 'selected' : ''}>15 items on a page</option>
+		<option value="20" ${catalog_itemsOnPage == 20 ? 'selected' : ''}>20 items on a page</option>
+	</form:select>
+  </div>
+  <div class="form-group">
+ 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+  <div class="form-group">
+  Sort by:
+	<form:select path="sortDirection" cssClass="form-control input-sm" onchange="submit()" >
+		<option value="ASC" ${catalog_direction == 'ASC' ? 'selected' : ''}>Low to High</option>
+		<option value="DESC" ${catalog_direction == 'DESC' ? 'selected' : ''}>High to Low</option>
+	</form:select>
+  </div>
+</form:form>
+<br>
 <table class="table table-bordered table-hover table-stripped">
 	<thead>
 		<tr>
 			<th>Product name</th>
+			<th>Category</th>
+			<th>Price</th>
+			<th>Description</th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -29,6 +56,18 @@
 			<tr>
 				<td>
 					<a href='<spring:url value="/products/${product.id}" />'>${product.name}</a>
+				</td>
+				<td>
+					${product.productCategory.name}
+				</td>
+				<td>
+					${product.price}
+				</td>
+				<td>
+					${product.description}
+				</td>
+				<td>
+					Add to cart
 				</td>
 			</tr>
 		</c:forEach>
