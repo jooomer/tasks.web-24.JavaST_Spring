@@ -30,13 +30,12 @@ import ua.store.model.entity.ProductCategory;
 import ua.store.service.ProductService;
 import ua.store.service.ProductCategoryService;
 import ua.store.service.UserService;
-import ua.store.tag.ProductMap;
 
 @Controller
-public class ProductsController {
+public class CatalogController {
 
 	private static final Logger logger = LogManager
-			.getLogger(ProductsController.class);
+			.getLogger(CatalogController.class);
 
 	@Autowired
 	private ProductService productService;
@@ -197,7 +196,7 @@ public class ProductsController {
 		model.addAttribute("page", page);
 		model.addAttribute("totalPages", totalPages);
 
-		return "products-by-category";
+		return "catalog";
 	}
 
 	/**
@@ -214,81 +213,6 @@ public class ProductsController {
 		} else {
 			return 0;
 		}
-	}
-
-	/**
-	 * shows product detail
-	 */
-	@RequestMapping("/products/{id}")
-	public String showProductDetail(Model model, @PathVariable int id) {
-		logger.debug("showProductDetail() started. Product Id is \"" + id
-				+ "\"");
-
-		// get Product from DB
-		model.addAttribute("product", productService.findOne(id));
-
-		// show product detail
-		return "product-detail";
-	}
-
-	/**
-	 * deletes product
-	 */
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.POST, params = { "delete" })
-	public String doDeleteProduct(Model model, @PathVariable int id,
-			RedirectAttributes redirectAttributes) {
-		logger.debug("doUpdateProduct() started. Product Id is \"" + id + "\"");
-
-		// delete Product by id
-		productService.delete(id);
-
-		// prepare message
-		redirectAttributes.addFlashAttribute("message",
-				"Congratulations! You've just successfully deleted a product.");
-
-		// show list of products again
-		return "redirect:/products";
-	}
-
-	/**
-	 * 
-	 */
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.POST, params = { "send-to-cart" })
-	public String doSendToCart(Model model, @PathVariable int id,
-			Principal principal, RedirectAttributes redirectAttributes,
-			HttpServletRequest request) {
-		logger.debug("doSendToCart() started. Product Id is \"" + id + "\"");
-
-		// get Product from DB
-		Product product = productService.findOne(id);
-		if (product == null) {
-			model.addAttribute("message",
-					"Error! Product is unavailable. Please, choose another one.");
-			model.addAttribute("jspPage", "/WEB-INF/view/common/message.jsp");
-			return "template";
-		}
-
-		// get Order from session
-		// if absent, then get new one
-		Order order = (Order) request.getSession().getAttribute("order");
-		if (order == null) {
-			order = new Order();
-		}
-
-		// add Product to Order
-		order.addProduct(product);
-
-		// save Order to session
-		request.getSession().setAttribute("order", order);
-
-		// prepare ProductMap to show products in a cart page
-		ProductMap productMap = new ProductMap(order);
-		request.getSession().setAttribute("productMap", productMap);
-
-		// show cart.jsp
-		redirectAttributes.addFlashAttribute("message",
-				"Product is successfully added to your cart.");
-		return "redirect:/cart";
 	}
 
 	/**

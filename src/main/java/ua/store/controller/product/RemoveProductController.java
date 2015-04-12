@@ -1,4 +1,4 @@
-package ua.store.controller.admin;
+package ua.store.controller.product;
 
 import java.util.List;
 import java.util.Map;

@@ -14,7 +14,7 @@ import java.util.TreeSet;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.store.controller.admin.UsersController;
+import ua.store.controller.user.UsersController;
 import ua.store.model.entity.Order;
 import ua.store.model.entity.OrderItem;
 import ua.store.model.entity.Product;

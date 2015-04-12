@@ -1,4 +1,4 @@
-package ua.store.controller.registered;
+package ua.store.controller.user;
 
 import java.security.Principal;
 import java.util.Arrays;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ua.store.controller.common.LoginController;
 import ua.store.model.dto.UserAccountDto;
 import ua.store.model.entity.User;
 import ua.store.service.UserService;

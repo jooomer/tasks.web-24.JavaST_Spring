@@ -12,7 +12,7 @@ import javax.servlet.jsp.tagext.BodyTagSupport;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.store.controller.registered.OrderController;
+import ua.store.controller.order.OrderController;
 import ua.store.tag.OrdersList;
 
 /**

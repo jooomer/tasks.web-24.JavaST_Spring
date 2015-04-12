@@ -1,4 +1,4 @@
-package ua.store.controller.admin;
+package ua.store.controller.user;
 
 import java.security.Principal;
 import java.util.List;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ua.store.controller.common.LoginController;
 import ua.store.model.entity.User;
 import ua.store.service.UserService;
 import ua.store.tag.UserList;

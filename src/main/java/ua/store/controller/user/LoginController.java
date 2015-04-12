@@ -1,4 +1,4 @@
-package ua.store.controller.common;
+package ua.store.controller.user;
 
 import java.security.Principal;
 

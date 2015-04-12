@@ -1,4 +1,4 @@
-package ua.store.controller.admin;
+package ua.store.controller.product;
 
 import java.security.Principal;
 import java.util.Date;

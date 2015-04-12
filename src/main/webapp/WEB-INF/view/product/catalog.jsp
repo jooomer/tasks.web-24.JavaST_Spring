@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/layout/taglib.jsp" %>
 
 <c:if test="${not empty msg}" >
-	${msg}
+	<div class="alert alert-info" role="alert">${msg}</div>
 </c:if>
 
 <form:form commandName="category">
@@ -67,7 +67,9 @@
 					${product.description}
 				</td>
 				<td>
-					Add to cart
+					<form  action="${pageContext.request.contextPath}/products/${product.id}" method="post">
+						<input type="submit" name="send-to-cart" value="Send to cart" class="btn btn-primary btn-sm"/>
+					</form>
 				</td>
 			</tr>
 		</c:forEach>

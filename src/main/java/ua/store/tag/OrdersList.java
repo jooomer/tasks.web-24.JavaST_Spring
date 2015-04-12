@@ -17,7 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import ua.store.controller.registered.OrderController;
+import ua.store.controller.order.OrderController;
 import ua.store.model.entity.Order;
 import ua.store.model.entity.OrderItem;
 import ua.store.model.entity.Product;
