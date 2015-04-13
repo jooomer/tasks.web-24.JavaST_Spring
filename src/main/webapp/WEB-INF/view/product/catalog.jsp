@@ -44,10 +44,10 @@
 <table class="table table-bordered table-hover table-stripped">
 	<thead>
 		<tr>
-			<th>Product name</th>
 			<th>Category</th>
-			<th>Price</th>
+			<th>Product name</th>
 			<th>Description</th>
+			<th>Price</th>
 			<th>Action</th>
 		</tr>
 	</thead>
@@ -55,16 +55,16 @@
 		<c:forEach items="${listOfProducts}" var="product">
 			<tr>
 				<td>
-					<a href='<spring:url value="/products/${product.id}" />'>${product.name}</a>
-				</td>
-				<td>
 					${product.productCategory.name}
 				</td>
 				<td>
-					${product.price}
+					<a href='<spring:url value="/products/${product.id}" />'>${product.name}</a>
 				</td>
 				<td>
 					${product.description}
+				</td>
+				<td>
+					${product.price}
 				</td>
 				<td>
 					<form  action="${pageContext.request.contextPath}/products/${product.id}" method="post">

@@ -1,6 +1,11 @@
 package ua.store.controller.order;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,11 +14,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.store.model.entity.Order;
+import ua.store.model.entity.OrderItem;
+import ua.store.model.entity.Product;
 import ua.store.service.OrderService;
+import ua.store.service.ProductService;
 import ua.store.service.UserService;
 import ua.store.tag.ProductMap;
 
@@ -28,13 +37,16 @@ public class CartController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	public ProductService productService;
 
 	/**
 	 * just show cart
 	 */
 	@RequestMapping("/cart")
 	public String showCart(Model model, HttpServletRequest request, Principal principal) {
-		logger.debug("showCart() started.");
+		logger.debug("--- started");
 		
 		Order order = (Order) request.getSession().getAttribute("order");
 		
@@ -49,22 +61,19 @@ public class CartController {
 			request.getSession().setAttribute("order", null);
 			request.getSession().setAttribute("orderSaved", null);
 			model.addAttribute("message", "Your cart is empty. Please, choose your product.");
-			model.addAttribute("jspPage", "/WEB-INF/view/common/cart.jsp");
-			return "template";
+			return "cart";
 		}
 
-		// prepare ProductMap to show products in a cart page
-		ProductMap productMap = new ProductMap(order);
-		request.getSession().setAttribute("productMap", productMap);
-		request.getSession().setAttribute("order", order);
+		// prepare list of orderItems to show products in a cart page
+		Set<OrderItem> listOfOrderItems = order.getOrderItems();
+		model.addAttribute("listOfOrderItems", listOfOrderItems);
 		
-		model.addAttribute("jspPage", "/WEB-INF/view/common/cart.jsp");
-		return "template";
+		return "cart";
 	}
 	
-	@RequestMapping(value = "/cart", method = RequestMethod.POST, params = {"clear_cart"})
+	@RequestMapping(value = "/cart", method = RequestMethod.POST, params = {"clean_cart"})
 	public String doClearCart(Model model, HttpServletRequest request) {
-		logger.debug("doClearCart() started.");
+		logger.debug("--- started");
 		request.getSession().setAttribute("order", null);
 		return "redirect:/cart";
 	}

@@ -54,6 +54,7 @@
 							<li class="${current == 'catalog' ? 'active' : ''}"><a href='<spring:url value="/catalog" />'>Catalog</a></li>
 						</ul>
 					 	<ul class="nav navbar-nav navbar-right">
+							<li class="${current == 'cart' ? 'active' : ''}"><a href='<spring:url value="/cart" />'>Cart</a></li>
 							<security:authorize access="!isAuthenticated()">
 								<li class="${current == 'register' ? 'active' : ''}"><a href='<spring:url value="/register" />'>Register</a></li>
 								<li class="${current == 'login' ? 'active' : ''}"><a href='<spring:url value="/login" />'>Sign in</a></li>

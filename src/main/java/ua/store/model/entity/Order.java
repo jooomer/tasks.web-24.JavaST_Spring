@@ -3,9 +3,11 @@
  */
 package ua.store.model.entity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -53,30 +55,61 @@ public class Order {
 	private User user;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-//	private Set<OrderItem> orderItems = new LinkedHashSet<>();
-	private List<OrderItem> orderItems = new LinkedList<>();
+	private Set<OrderItem> orderItems = new LinkedHashSet<>();
+//	private Map<OrderItem, Integer> orderItems = new LinkedHashMap<>();
+//	private List<OrderItem> orderItems = new LinkedList<>();
 	
 	public Order() {
 		this.date = new Date(Calendar.getInstance().getTimeInMillis());
 	}
 	
-	public void addProduct(Product product) {
-		OrderItem orderItem = new OrderItem();
-		orderItem.setOrder(this);
-		orderItem.setProduct(product);
-		orderItem.setAmount(product.getPrice());
-		orderItems.add(orderItem);
-		this.amount += product.getPrice();
+	public void addProduct(Product product, int quantity) {
 		
-//		if (orderItems.contains(orderItem)) {
-//			
-//		} else {
-//			orderItems.add(orderItem);
-//			amount += product.getPrice();
-//		}
+		// check if this product already exists
+		for (OrderItem orderItem : orderItems) {
+			if (orderItem.getProduct().getId().equals(product.getId())) {
+				int newQuantity = orderItem.getProductsQuantity() + quantity;
+				orderItem.setProductsQuantity(newQuantity);
+				double newItemOrderAmount = orderItem.getAmount() + product.getPrice() * quantity;
+				orderItem.setAmount(newItemOrderAmount);
+				amount += orderItem.getProductPrice() * quantity;
+				return;
+			} 
+		}
 		
+		// do following if it's a new product
+		OrderItem newOrderItem = new OrderItem();
+		newOrderItem.setProduct(product);
+		newOrderItem.setOrder(this);
+		newOrderItem.setProductPrice(product.getPrice());
+		newOrderItem.setProductsQuantity(quantity);
+		newOrderItem.setAmount(product.getPrice() * quantity);
+		amount += product.getPrice() * quantity;
+		orderItems.add(newOrderItem);
 	}
 		
+	/**
+	 * @return the mapOfProducts
+	 */
+	public Map<Product, Integer> getMapOfProducts() {
+		Map<Product, Integer> mapOfProducts = new LinkedHashMap<>();
+		for (OrderItem orderItem : orderItems) {
+			mapOfProducts.put(orderItem.getProduct(), orderItem.getProductsQuantity());
+		}
+		return mapOfProducts;
+	}
+
+	/**
+	 * @return the listOfProducts
+	 */
+	public List<Product> getListOfProducts() {
+		List<Product> listOfProducts = new ArrayList<>();
+		for (OrderItem orderItem : orderItems) {
+			listOfProducts.add(orderItem.getProduct());
+		}
+		return listOfProducts;
+	}
+
 //	public boolean deleteProduct(Product product, Integer quantity) {
 //		if (productMap.containsKey(product)) { 
 //			Integer q = productMap.get(product);
@@ -99,13 +132,6 @@ public class Order {
 //		return productMap.size();
 //	}
 //
-//	/**
-//	 * @return the productList
-//	 */
-//	public Map<Product, Integer> getProductMap() {
-//		return productMap;
-//	}
-
 	/**
 	 * @return the amount
 	 */
@@ -149,14 +175,6 @@ public class Order {
 		this.name = name;
 	}
 
-	public List<OrderItem> getOrderItems() {
-		return orderItems;
-	}
-
-	public void setOrderItems(List<OrderItem> orderItems) {
-		this.orderItems = orderItems;
-	}
-
 	public String getComments() {
 		return comments;
 	}
@@ -171,6 +189,14 @@ public class Order {
 
 	public void setOrderStatus(OrderStatus orderStatus) {
 		this.orderStatus = orderStatus;
+	}
+
+	public Set<OrderItem> getOrderItems() {
+		return orderItems;
+	}
+
+	public void setOrderItems(Set<OrderItem> orderItems) {
+		this.orderItems = orderItems;
 	}
 
 

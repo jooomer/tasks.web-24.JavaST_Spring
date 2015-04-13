@@ -17,9 +17,11 @@ public class OrderItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private Double amount;
+	private Double productPrice;
 	
-	private Integer quantity;
+	private Integer productsQuantity;
+	
+	private Double amount;
 	
 	@ManyToOne
 	@JoinColumn(name = "product_id")
@@ -29,35 +31,20 @@ public class OrderItem {
 	@JoinColumn(name = "order_id")
 	private Order order;
 	
-	public OrderItem() {}
-	
-	public OrderItem(Product product, Integer quantity) {
-		this.quantity = quantity;
-		this.product = product;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (!this.getClass().equals(obj.getClass())) return false;
+		if (!this.product.equals(((OrderItem) obj).getProduct())) return false;
+		return true;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Double getAmount() {
-		return amount;
-	}
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-	public Integer getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(Integer quantity) {
-		this.quantity = quantity;
 	}
 
 	public Product getProduct() {
@@ -75,6 +62,31 @@ public class OrderItem {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+
+	public Double getProductPrice() {
+		return productPrice;
+	}
+
+	public void setProductPrice(Double productPrice) {
+		this.productPrice = productPrice;
+	}
+
+	public Integer getProductsQuantity() {
+		return productsQuantity;
+	}
+
+	public void setProductsQuantity(Integer productsQuantity) {
+		this.productsQuantity = productsQuantity;
+	}
+
+	public Double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+
 
 //	@Override
 //	public boolean equals(Object o) {

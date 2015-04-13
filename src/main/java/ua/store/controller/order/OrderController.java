@@ -1,6 +1,7 @@
 package ua.store.controller.order;
 
 import java.security.Principal;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import ua.store.model.entity.Order;
+import ua.store.model.entity.OrderItem;
 import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.User;
 import ua.store.service.OrderService;
@@ -77,7 +79,7 @@ public class OrderController {
 	/**
 	 * response to the "Make an order" button
 	 */
-	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"make_an_order"})
+	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"make_order"})
 	public String doMakeOrder(Model model, HttpServletRequest request,
 			Principal principal) {
 		logger.debug("doMakeOrder() started.");
@@ -91,6 +93,8 @@ public class OrderController {
 		// prepare order and save it to DB
 		HttpSession session = request.getSession();
 		Order order = (Order) session.getAttribute("order");
+		
+		
 		User user = userService.findByName(principal.getName());
 		order.setUser(user);
 
@@ -98,11 +102,11 @@ public class OrderController {
 		session.setAttribute("user", user);
 		session.setAttribute("order", order);
 
-		// prepare ProductMap to show products in a page
-		ProductMap productMap = new ProductMap(order);
-		session.setAttribute("productMap", productMap);
-		model.addAttribute("jspPage", "/WEB-INF/view/registered/order.jsp");
-		return "template";
+		// prepare list of orderItems to show products in a cart page
+		Set<OrderItem> listOfOrderItems = order.getOrderItems();
+		model.addAttribute("listOfOrderItems", listOfOrderItems);
+		
+		return "order";
 	}
 
 	/**
@@ -130,13 +134,12 @@ public class OrderController {
 		request.getSession().setAttribute("user", user);
 //		request.getSession().setAttribute("order", order);
 
-		// prepare ProductMap to show products in an order page
-		ProductMap productMap = new ProductMap(order);
-		request.getSession().setAttribute("productMap", productMap);
+		// prepare list of orderItems to show products in a cart page
+		Set<OrderItem> listOfOrderItems = order.getOrderItems();
+		model.addAttribute("listOfOrderItems", listOfOrderItems);
 		
 		model.addAttribute("message", "Thank you for your order!");
-		model.addAttribute("jspPage", "/WEB-INF/view/registered/order-created.jsp");
-		return "template";
+		return "order-created";
 
 	}
 	

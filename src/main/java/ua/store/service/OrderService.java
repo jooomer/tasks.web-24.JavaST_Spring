@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ua.store.model.entity.Order;
+import ua.store.model.entity.Product;
 import ua.store.model.entity.User;
 import ua.store.repository.OrderRepository;
 

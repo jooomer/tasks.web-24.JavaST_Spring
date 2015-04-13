@@ -16,8 +16,8 @@ public class OrderItemService {
 	@Autowired
 	private OrderItemRepository orderItemRepository;
 	
-//	public Set<OrderItem> findAllByOrder(Order order) {
-	public List<OrderItem> findAllByOrder(Order order) {
+	public Set<OrderItem> findAllByOrder(Order order) {
+//	public List<OrderItem> findAllByOrder(Order order) {
 		return orderItemRepository.findAllByOrder(order);
 	}
 

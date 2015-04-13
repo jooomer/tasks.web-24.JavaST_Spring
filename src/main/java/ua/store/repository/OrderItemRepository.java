@@ -12,7 +12,7 @@ import ua.store.model.entity.OrderItem;
 @Repository
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
 
-//	Set<OrderItem> findAllByOrder(Order order);
-	List<OrderItem> findAllByOrder(Order order);
+	Set<OrderItem> findAllByOrder(Order order);
+//	List<OrderItem> findAllByOrder(Order order);
 	
 }

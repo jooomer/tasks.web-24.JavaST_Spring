@@ -58,6 +58,32 @@ public class Product implements Comparable<Product> {
 	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
 	private Set<OrderItem> orderItems = new LinkedHashSet<>();
 	
+	@Override
+	public String toString() {
+		return "Product --------------------- \n"
+				+ "id:              " + id + "\n"
+				+ "name:            " + name + "\n"
+				+ "price:           " + price + "\n"
+				+ "quantityInStock: " + quantityInStock + "\n"
+				+ "publishedDate:   " + publishedDate + "\n"
+				+ "productCategory: " + productCategory.getName() + "\n"
+				+ "description:     " + description + "\n";
+//				+ "orderItems size: " + orderItems.size() + "\n";
+	}
+	
+	@Override
+	public int compareTo(Product product) {
+		return this.id - product.getId();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) return false;
+		if (!obj.getClass().equals(this.getClass())) return false;
+		if (!((Product) obj).getId().equals(this.id)) return false;
+		return true;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -114,10 +140,6 @@ public class Product implements Comparable<Product> {
 		this.quantityInStock = quantityInStock;
 	}
 
-	@Override
-	public int compareTo(Product product) {
-		return this.id - product.getId();
-	}
 
 	public Set<OrderItem> getOrderItems() {
 		return orderItems;

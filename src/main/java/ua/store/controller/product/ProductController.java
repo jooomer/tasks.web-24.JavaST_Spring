@@ -105,7 +105,7 @@ public class ProductController {
 			logger.debug("ERROR! Wrong product id: " + idStr);
 			return "error-page";
 		}
-		
+				
 		// get Product from DB
 		Product product = productService.findOne(id);
 		if (product == null) {
@@ -121,19 +121,15 @@ public class ProductController {
 		}
 
 		// add Product to Order
-		order.addProduct(product);
+		order.addProduct(product, 1);
 
 		// save Order to session
 		request.getSession().setAttribute("order", order);
 
-		// prepare ProductMap to show products in a cart page
-//		ProductMap productMap = new ProductMap(order);
-//		request.getSession().setAttribute("productMap", productMap);
-
 		// show cart.jsp
-		redirectAttributes.addFlashAttribute("msg",
+		redirectAttributes.addFlashAttribute("message",
 				"Product is successfully added to your cart.");
-		return "redirect:/cart";
+		return "redirect:/products/" + id;
 	}
 
 	/**

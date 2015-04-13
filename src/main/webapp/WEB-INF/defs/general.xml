@@ -90,6 +90,18 @@
     <put-attribute name="current" value="cart" />
   </definition>
 
+  <definition name="order" extends="common">
+    <put-attribute name="title" value="Order" />
+    <put-attribute name="body" value="/WEB-INF/view/order/order.jsp" />
+    <put-attribute name="current" value="cart" />
+  </definition>
+
+  <definition name="order-created" extends="common">
+    <put-attribute name="title" value="Order created" />
+    <put-attribute name="body" value="/WEB-INF/view/order/order-created.jsp" />
+    <put-attribute name="current" value="cart" />
+  </definition>
+
   <definition name="error-page" extends="common">
     <put-attribute name="title" value="Error page" />
     <put-attribute name="body" value="/WEB-INF/view/common/error-page.jsp" />

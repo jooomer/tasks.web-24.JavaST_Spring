@@ -62,13 +62,13 @@ public class ProductMap {
 		// get list of products from order
 		
 //		Set<OrderItem> orderItems = order.getOrderItems();
-		List<OrderItem> orderItems = order.getOrderItems();
+//		List<OrderItem> orderItems = order.getOrderItems();
 		this.productMap = new TreeMap<Product, Integer>();
 		 
-		for (OrderItem orderItem : orderItems) {
-			Product product = orderItem.getProduct();
-			this.productMap.put(product, product.getQuantityInStock());
-		}
+//		for (OrderItem orderItem : orderItems) {
+//			Product product = orderItem.getProduct();
+//			this.productMap.put(product, product.getQuantityInStock());
+//		}
 		this.iterator = productMap.entrySet().iterator();
 	}
 

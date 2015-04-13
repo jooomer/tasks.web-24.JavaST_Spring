@@ -3,8 +3,8 @@
 
 <%@ include file="/WEB-INF/layout/taglib.jsp"%>
 
-<c:if test="${param.success eq true }">
-	<div class="alert alert-success">Congratulations! Your product was successfully submitted.</div>
+<c:if test="${not empty message}">
+	<div class="alert alert-success">${message}</div>
 </c:if>
 
 <div class="form-horizontal">
@@ -44,7 +44,18 @@
 			${product.description}
 		</div>
 	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label"></label>
+		<div style="padding-top: 7px;" class="col-sm-10">
+			<form  method="post">
+				<input type="submit" name="send-to-cart" value="Send to cart" class="btn btn-primary btn-lg"/>
+			</form>
+		</div>
+	</div>
 </div>
+
+<br>
+
 
 <c:if test="${success eq true}" >
 	<a href="<spring:url value="/my-products/update/${product.id}" />" class="btn btn-primary">Update product</a>

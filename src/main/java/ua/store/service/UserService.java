@@ -89,8 +89,8 @@ public class UserService {
 		User user = userRepository.findByName(name);
 		Set<Order> orders = orderService.findAllByUser(user);
 		for (Order order : orders) {
-//			Set<OrderItem> orderItems = orderItemService.findAllByOrder(order);
-			List<OrderItem> orderItems = orderItemService.findAllByOrder(order);
+			Set<OrderItem> orderItems = orderItemService.findAllByOrder(order);
+//			List<OrderItem> orderItems = orderItemService.findAllByOrder(order);
 			order.setOrderItems(orderItems);
 		}
 		user.setOrders(orders);
