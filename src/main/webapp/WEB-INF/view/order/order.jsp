@@ -19,7 +19,7 @@
 		</tr>
 		<tr>
 			<th>Ship address:</th>
-			<td>${user.address}</td>
+			<td><c:out value="${user.address}" /></td>
 		</tr>
 	</tbody>
 </table>

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.store.model.dto.SelectSortByDto;
@@ -67,6 +68,57 @@ public class CatalogController {
 		return "redirect:category/0/products/page/1";
 	}
 
+	/**
+	 * sends product to cart from catalog
+	 */
+	@RequestMapping(value = "/category/{catIdStr}/products/page/{pageStr}", method = RequestMethod.POST, params = {"send_to_cart"})
+	public String doSendToCart(
+			Model model,
+			HttpServletRequest request,
+			RedirectAttributes redirectAttributes,
+			@RequestParam("send_to_cart") Integer id,
+			@PathVariable String catIdStr,
+			@PathVariable String pageStr) {
+		logger.debug("--- started");
+		
+		System.out.println("Id: " + id);
+		
+		// get Product from DB
+		Product product = productService.findOne(id);
+		if (product == null) {
+			logger.debug("Product is not found in DB");
+			model.addAttribute("message", "Error! Product is unavailable. Please, choose another one.");
+			return "message";
+		}
+		logger.debug("Product is found in DB. Product id: " + product.getId());
+		
+		// get Order from session
+		// if absent, then get new one
+		Order order = (Order) request.getSession().getAttribute("order");
+		if (order == null) {
+			order = new Order();
+		}
+		
+		// add Product to Order
+		order.addProduct(product, 1);
+
+		// save Order to session
+		request.getSession().setAttribute("order", order);
+
+		// show cart.jsp
+		redirectAttributes.addFlashAttribute("message_success",
+				"Product is successfully added to your cart.");
+
+		
+		
+		return "redirect:/category/" + catIdStr + "/products/page/" + pageStr;
+	}
+		
+	
+	
+
+	
+	
 	/**
 	 * shows list of products by selected category (page-by-page)
 	 */
@@ -229,5 +281,6 @@ public class CatalogController {
 		}
 		return number;
 	}
+
 
 }

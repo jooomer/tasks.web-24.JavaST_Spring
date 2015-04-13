@@ -23,7 +23,7 @@
 		</tr>
 		<tr>
 			<th>Ship address:</th>
-			<td>${user.address}</td>
+			<td><c:out value="${user.address}" /></td>
 		</tr>
 		<tr>
 			<th>Order status:</th>
@@ -31,7 +31,7 @@
 		</tr>
 		<tr>
 			<th>Your comments:</th>
-			<td>${order.comments}</td>
+			<td><c:out value="${order.comments}" /></td>
 		</tr>
 	</tbody>
 </table>

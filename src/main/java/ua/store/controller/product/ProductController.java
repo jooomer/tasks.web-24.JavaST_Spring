@@ -89,11 +89,11 @@ public class ProductController {
 		// show list of products again
 		return "redirect:/products";
 	}
-
+	
 	/**
-	 * sends product to cart and shows cart
+	 * sends product to cart from product detail
 	 */
-	@RequestMapping(value = "/products/{idStr}", method = RequestMethod.POST, params = { "send-to-cart" })
+	@RequestMapping(value = "/products/{idStr}", method = RequestMethod.POST, params = { "send_to_cart" })
 	public String doSendToCart(Model model, @PathVariable String idStr,
 			Principal principal, RedirectAttributes redirectAttributes,
 			HttpServletRequest request) {

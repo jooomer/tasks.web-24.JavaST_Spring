@@ -48,7 +48,7 @@
 		<label class="col-sm-2 control-label"></label>
 		<div style="padding-top: 7px;" class="col-sm-10">
 			<form  method="post">
-				<input type="submit" name="send-to-cart" value="Send to cart" class="btn btn-primary btn-lg"/>
+				<input type="submit" name="send_to_cart" value="Send to cart" class="btn btn-primary btn-lg"/>
 			</form>
 		</div>
 	</div>

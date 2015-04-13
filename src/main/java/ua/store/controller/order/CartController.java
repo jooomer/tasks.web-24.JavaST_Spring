@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ua.store.model.entity.Order;
 import ua.store.model.entity.OrderItem;
@@ -57,7 +58,7 @@ public class CartController {
 			logger.debug("showCart() - check state of order=true. "
 					+ "order: " + order 
 					+ "; orderSaved: " + request.getSession().getAttribute("orderSaved"));
-			request.getSession().setAttribute("productMap", null);
+			request.getSession().setAttribute("listOfOrderItems", null);
 			request.getSession().setAttribute("order", null);
 			request.getSession().setAttribute("orderSaved", null);
 			model.addAttribute("message", "Your cart is empty. Please, choose your product.");
@@ -69,6 +70,26 @@ public class CartController {
 		model.addAttribute("listOfOrderItems", listOfOrderItems);
 		
 		return "cart";
+	}
+	
+	@RequestMapping(value = "/cart", method = RequestMethod.POST, params = {"remove_from_cart"})
+	public String doRemoveFromCart(
+			Model model, 
+			HttpServletRequest request,
+			@RequestParam("remove_from_cart") Integer id) {
+		logger.debug("--- started");
+		logger.debug("Product id to remove: " + id);
+		
+		Order order = (Order) request.getSession().getAttribute("order");
+		if (order == null) {
+			logger.debug("An order doesn't exist in a session.");
+			return "redirect:/cart";
+		}
+		logger.debug("An order exists in a session.");
+		
+		order.deleteProduct(id);
+		
+		return "redirect:/cart";
 	}
 	
 	@RequestMapping(value = "/cart", method = RequestMethod.POST, params = {"clean_cart"})

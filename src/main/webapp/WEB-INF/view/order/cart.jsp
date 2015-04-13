@@ -48,7 +48,10 @@
 						${orderItem.amount}
 					</td>
 					<td>
-						Remove
+						<form:form>
+<!-- 							<input type="submit" name="remove_from_cart" value="Remove" class="btn btn-primary btn-sm" /> -->
+						 	<button type="submit" name="remove_from_cart" value="${orderItem.product.id}" class="btn btn-danger btn-sm">Remove</button>
+						</form:form>
 					</td>
 				</tr>
 			</c:forEach>
@@ -57,8 +60,8 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td></td>
-					<td><strong>${order.amount}</strong></td>
+					<th>Summary</th>
+					<th>${order.amount}</th>
 					<td></td>
 				</tr>
 		</tbody>
@@ -66,12 +69,12 @@
 	
 	<form:form>
 		<p class="text-right" >
-			<input type="submit" name="clean_cart" value="Clean a cart" class="btn btn-primary btn-lg" />
+			<input type="submit" name="clean_cart" value="Clean cart" class="btn btn-primary btn-lg" />
 		</p>
 	</form:form>
 	<form:form action="order">
 		<p class="text-right" >
-			<input type="submit" name="make_order" value="Make an order" class="btn btn-success btn-lg" />
+			<input type="submit" name="make_order" value="Make order" class="btn btn-success btn-lg" />
 		</p>
 	</form:form>
 	

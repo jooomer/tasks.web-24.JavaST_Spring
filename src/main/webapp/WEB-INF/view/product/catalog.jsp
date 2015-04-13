@@ -3,9 +3,15 @@
 
 <%@ include file="/WEB-INF/layout/taglib.jsp" %>
 
-<c:if test="${not empty msg}" >
-	<div class="alert alert-info" role="alert">${msg}</div>
+<c:if test="${not empty message_info}" >
+	<div class="alert alert-info" role="alert">${message_info}</div>
 </c:if>
+
+<c:if test="${not empty message_success}">
+	<div class="alert alert-success">${message_success}</div>
+</c:if>
+
+
 
 <form:form commandName="category">
 	<form:select path="ProductCategory.name" cssClass="form-control" onchange="submit()" >
@@ -67,8 +73,8 @@
 					${product.price}
 				</td>
 				<td>
-					<form  action="${pageContext.request.contextPath}/products/${product.id}" method="post">
-						<input type="submit" name="send-to-cart" value="Send to cart" class="btn btn-primary btn-sm"/>
+					<form method="post">
+					 	<button type="submit" name="send_to_cart" value="${product.id}" class="btn btn-primary btn-sm">Send to cart</button>
 					</form>
 				</td>
 			</tr>

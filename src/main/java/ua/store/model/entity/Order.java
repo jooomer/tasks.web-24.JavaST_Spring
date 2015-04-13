@@ -43,7 +43,7 @@ public class Order {
 	
 	private Date date;
 	
-	private double amount;
+	private Double amount;
 	
 	@Enumerated(EnumType.STRING)
 	private OrderStatus orderStatus;
@@ -60,6 +60,7 @@ public class Order {
 //	private List<OrderItem> orderItems = new LinkedList<>();
 	
 	public Order() {
+		this.amount = 0.;
 		this.date = new Date(Calendar.getInstance().getTimeInMillis());
 	}
 	
@@ -109,33 +110,22 @@ public class Order {
 		}
 		return listOfProducts;
 	}
-
-//	public boolean deleteProduct(Product product, Integer quantity) {
-//		if (productMap.containsKey(product)) { 
-//			Integer q = productMap.get(product);
-//			if (q >= quantity) {
-//				q -= quantity;
-//				productMap.put(product, q);
-//				amount += product.getPrice() * quantity;
-//				return true;
-//			} 
-//		}
-//		return false;
-//	}
 	
-//	public void clearCart() {
-//		productMap.clear();
-//		amount = 0;
-//	}
-//	
-//	public int size() {
-//		return productMap.size();
-//	}
-//
+	public void deleteProduct(Integer id) {
+		for (Iterator<OrderItem> i = orderItems.iterator(); i.hasNext();) {
+			OrderItem orderItem = i.next();
+			if (orderItem.getProduct().getId().equals(id)) {
+				System.out.println("---------------");
+				amount -= orderItem.getAmount();
+				i.remove();
+			}
+		}
+	}
+
 	/**
 	 * @return the amount
 	 */
-	public double getAmount() {
+	public Double getAmount() {
 		return amount;
 	}
 
@@ -147,7 +137,7 @@ public class Order {
 		this.user = user;
 	}
 
-	public void setAmount(double amount) {
+	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
 
@@ -198,6 +188,7 @@ public class Order {
 	public void setOrderItems(Set<OrderItem> orderItems) {
 		this.orderItems = orderItems;
 	}
+
 
 
 

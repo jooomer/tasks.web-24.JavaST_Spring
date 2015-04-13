@@ -94,7 +94,6 @@ public class OrderController {
 		HttpSession session = request.getSession();
 		Order order = (Order) session.getAttribute("order");
 		
-		
 		User user = userService.findByName(principal.getName());
 		order.setUser(user);
 
@@ -115,7 +114,7 @@ public class OrderController {
 	@RequestMapping(value = "/order", method = RequestMethod.POST, params = {"save_and_checkout"})
 	public String doSaveAndCheckoutOrder(Model model, HttpServletRequest request,
 			Principal principal, @ModelAttribute("comments") String comments) {
-		logger.debug("doSaveAndCheckoutOrder() started.");
+		logger.debug("--- started");
 
 		// set Comments, OrderStatus and save order into DB
 		Order order = (Order) request.getSession().getAttribute("order");
@@ -124,15 +123,9 @@ public class OrderController {
 		orderService.save(order);
 		request.getSession().setAttribute("orderSaved", "success");
 		
-		// remove Order from session
-//		request.getSession().setAttribute("order", null);
-
 		// prepare User and Order to show an order in a page
 		User user = userService.findByName(principal.getName());
-//		model.addAttribute("user", user);
-//		model.addAttribute("order", order);
 		request.getSession().setAttribute("user", user);
-//		request.getSession().setAttribute("order", order);
 
 		// prepare list of orderItems to show products in a cart page
 		Set<OrderItem> listOfOrderItems = order.getOrderItems();
@@ -140,7 +133,6 @@ public class OrderController {
 		
 		model.addAttribute("message", "Thank you for your order!");
 		return "order-created";
-
 	}
 	
 	/**
