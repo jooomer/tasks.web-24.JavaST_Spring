@@ -190,7 +190,7 @@ public class InitDbService {
 		
 		String comments = "Completely synergize resource sucking relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. ";
 
-		int numberOfOrders = 1000;
+		int numberOfOrders = 10;
 		for (int i = 1; i < numberOfOrders + 1; i++) {
 			Order order1 = new Order();
 			order1.setUser(userService.findOne(1));

@@ -81,8 +81,6 @@ public class CatalogController {
 			@PathVariable String pageStr) {
 		logger.debug("--- started");
 		
-		System.out.println("Id: " + id);
-		
 		// get Product from DB
 		Product product = productService.findOne(id);
 		if (product == null) {

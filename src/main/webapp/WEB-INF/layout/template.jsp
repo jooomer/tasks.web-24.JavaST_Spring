@@ -39,22 +39,17 @@
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
-						<button type="button" class="navbar-toggle collapsed"
-							data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-							aria-controls="navbar">
-							<span class="sr-only">Toggle navigation</span> <span
-								class="icon-bar"></span> <span class="icon-bar"></span> <span
-								class="icon-bar"></span>
-						</button>
-						<a class="navbar-brand" href='<spring:url value="/" />'>BOUTIQUE FurnitureStore</a>
+
+					<a class="navbar-brand" href='<spring:url value="/" />'>
+					  <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
+					</a>
+
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li class="${current == 'index' ? 'active' : ''}"><a href='<spring:url value="/" />'>Home</a></li>
 							<li class="${current == 'catalog' ? 'active' : ''}"><a href='<spring:url value="/catalog" />'>Catalog</a></li>
 						</ul>
 					 	<ul class="nav navbar-nav navbar-right">
-							<li class="${current == 'cart' ? 'active' : ''}"><a href='<spring:url value="/cart" />'>Cart</a></li>
 							<security:authorize access="!isAuthenticated()">
 								<li class="${current == 'register' ? 'active' : ''}"><a href='<spring:url value="/register" />'>Register</a></li>
 								<li class="${current == 'login' ? 'active' : ''}"><a href='<spring:url value="/login" />'>Sign in</a></li>
@@ -68,12 +63,12 @@
 										<li><a href="<spring:url value="/account"/>">My account</a></li>
 										<li class="divider"></li>
 										<li class="dropdown-header">Products</li>
-										<li><a href="<spring:url value="/my-products"/>">My products for rent</a></li>
-										<li><a href="<spring:url value="/add-product"/>">Add new product</a></li>
+										<li><a href="<spring:url value="/orders"/>">My orders</a></li>
 									</ul>
 								</li>
 								<li><a href='<spring:url value="/logout" />'>Logout</a></li>
 							</security:authorize>
+							<li class="${current == 'cart' ? 'active' : ''}"><a href='<spring:url value="/cart" />'>Cart</a></li>
 							<li class="${current == 'search' ? 'active' : ''}"><a href='<spring:url value="/search" />'>Search</a></li>
 	          			</ul>
 	          			

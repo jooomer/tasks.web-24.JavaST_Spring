@@ -19,11 +19,13 @@
 		</tr>
 		<tr>
 			<th>Customer:</th>
-			<td>${user.firstName}&nbsp;${user.lastName}</td>
+<%-- 			<td>${user.firstName}&nbsp;${user.lastName}</td> --%>
+			<td>${order.user.firstName}&nbsp;${order.user.lastName}</td>
 		</tr>
 		<tr>
 			<th>Ship address:</th>
-			<td><c:out value="${user.address}" /></td>
+<%-- 			<td><c:out value="${user.address}" /></td> --%>
+			<td><c:out value="${order.user.address}" /></td>
 		</tr>
 		<tr>
 			<th>Order status:</th>
@@ -49,7 +51,8 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="orderItem" items="${listOfOrderItems}">
+<%-- 			<c:forEach var="orderItem" items="${listOfOrderItems}"> --%>
+			<c:forEach var="orderItem" items="${order.orderItems}">
 				<tr>
 					<td>${orderItem.product.productCategory.name}</td>
 					<td><a

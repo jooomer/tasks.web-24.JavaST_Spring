@@ -6,11 +6,7 @@
 <table class="table table-hover">
 	<tbody>
 		<tr>
-			<th width="20%">Order #:</th>
-			<td>${order.id}</td>
-		</tr>
-		<tr>
-			<th>Date:</th>
+			<th width="20%">Date:</th>
 			<td>${order.date}</td>
 		</tr>
 		<tr>

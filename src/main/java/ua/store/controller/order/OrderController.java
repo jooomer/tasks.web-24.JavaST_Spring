@@ -1,6 +1,7 @@
 package ua.store.controller.order;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -39,41 +41,41 @@ public class OrderController {
 	/**
 	 * just show order
 	 */
-	@RequestMapping(value = "/order")
+	@RequestMapping(value = "/orders/{idStr}")
 	public String showOrder(Model model, HttpServletRequest request,
-			Principal principal) {
-		logger.debug("showOrder() started.");
+			Principal principal,
+			@PathVariable String idStr) {
+		logger.debug("--- started");
 
 		// check user login
 		if (principal == null) {
-			model.addAttribute("jspPage", "/WEB-INF/view/common/login.jsp");
-			return "template";
+			return "login";
 		}
-
-		// prepare order 
-		HttpSession session = request.getSession();
-		Order order = (Order) session.getAttribute("order");
+		
+		// get user
 		User user = userService.findByName(principal.getName());
 
-		
-		// prepare User and Order to show in an order page
-		session.setAttribute("user", user);
-		session.setAttribute("order", order);
-
-		// prepare ProductMap to show products in a page
-		ProductMap productMap = new ProductMap(order);
-		session.setAttribute("productMap", productMap);
-		
-		// check if order already saved
-		if (session.getAttribute("orderSaved") != null
-				&& session.getAttribute("orderSaved").equals("success")) {
-			model.addAttribute("jspPage", "/WEB-INF/view/registered/order-created.jsp");
-			return "template";
+		// get and check order Id 
+		long id = parsePathVariable(idStr);
+		if (id < 1) {
+			logger.debug("ERROR! Wrong order number.");
+			model.addAttribute("message_danger", "ERROR! Wrong order number.");
+			return "message";
 		}
 		
+		// prepare order 
+		Order order = orderService.findOneByIdWithProducts(id);
+		if (order == null) {
+			logger.debug("ERROR! Order with this number doesn't exist.");
+			model.addAttribute("message_danger", "ERROR! Order with this number doesn't exist.");
+			return "message";
+		}
+
+		logger.debug("Order is found. Order #: " + id);
 		
-		model.addAttribute("jspPage", "/WEB-INF/view/registered/order.jsp");
-		return "template";
+		model.addAttribute("order", order);
+
+		return "order-created";
 	}
 
 	/**
@@ -139,27 +141,38 @@ public class OrderController {
 	 * just show list of orders
 	 */
 	@RequestMapping("/orders")
-	public String showOrders(Model model, Principal principal, HttpServletRequest request) {
-		logger.debug("showOrders() started.");
+	public String showOrders(Model model, Principal principal) {
+		logger.debug("--- started");
 		
 		// check user in a session
 		if (principal == null) {
-			model.addAttribute("jspPage", "/WEB-INF/view/common/login.jsp");
-			return "template";
+			return "login";
 		}
 		
 		// get and prepare list of orders to view
 		User user = userService.findOneWithOrders(principal.getName());
-
-		// get list of orders from DB and prepate it for view
-		OrdersList ordersList = new OrdersList(user);
-
-		System.out.println("--- after: OrdersList ordersList = new OrdersList(user);");
-
-		request.getSession().setAttribute("ordersList", ordersList);
 		
-		model.addAttribute("jspPage", "/WEB-INF/view/registered/orders.jsp");
-		return "template";
+		// get list of orders from DB and prepare it for view
+		Set<Order> listOfOrders = orderService.findAllByUser(user);
+		model.addAttribute("listOfOrders", listOfOrders);
+				
+		return "orders";
 	}
+
+	/**
+	 * parse url parameter and check it
+	 */
+	private int parsePathVariable(String string) {
+		int number;
+		try {
+			number = Integer.valueOf(string);
+		} catch (NumberFormatException e) {
+			// throw new WrongUrlException(e);
+			// just show first
+			number = -1;
+		}
+		return number;
+	}
+
 
 }

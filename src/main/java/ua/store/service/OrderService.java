@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ua.store.model.entity.Order;
+import ua.store.model.entity.OrderItem;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.User;
 import ua.store.repository.OrderRepository;
@@ -20,6 +21,9 @@ public class OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 	
+	@Autowired
+	private OrderItemService orderItemService;
+	
 	public void save(Order order) {
 		orderRepository.save(order);
 	}
@@ -30,6 +34,13 @@ public class OrderService {
 
 	public Set<Order> findAllByUser(User user) {
 		return orderRepository.findAllByUser(user);
+	}
+
+	public Order findOneByIdWithProducts(long id) {
+		Order order = orderRepository.findOne(id);
+		Set<OrderItem> orderItems = orderItemService.findAllByOrder(order);
+		order.setOrderItems(orderItems);
+		return order;
 	}
 
 }
