@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/layout/taglib.jsp"%>
+<%@ include file="/WEB-INF/layout/message.jsp" %>
 
 <table class="table table-hover">
 	<tbody>

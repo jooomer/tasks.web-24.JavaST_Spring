@@ -1,7 +1,7 @@
 /**
  * 
  */
-package ua.store.model.entity;
+package ua.store.constant;
 
 /**
  * @author Sergey

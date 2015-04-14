@@ -41,14 +41,6 @@ public class ExtendedProductRepository {
 
 		ParameterExpression<ProductCategory> pCategory = criteriaBuilder
 				.parameter(ProductCategory.class);
-		// ParameterExpression<Integer> pPage =
-		// criteriaBuilder.parameter(Integer.class);
-		// ParameterExpression<Integer> pItems =
-		// criteriaBuilder.parameter(Integer.class);
-		// ParameterExpression<Direction> pDirection =
-		// criteriaBuilder.parameter(Direction.class);
-		// ParameterExpression<String> pField =
-		// criteriaBuilder.parameter(String.class);
 
 		query.select(rProduct).where(
 				criteriaBuilder.equal(rProduct.get("productCategory"),

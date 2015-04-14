@@ -30,11 +30,11 @@ public class Product implements Comparable<Product> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(nullable = false)
+	@Column(name = "id", nullable = false)
 	private Integer id;
 	
 	@Size(min = 3, message = "The product name must be at least 3 characters!")
-	@Column(length = 100)
+	@Column(name= "name", length = 100)
 	private String name;
 	
 	@Lob
@@ -42,6 +42,7 @@ public class Product implements Comparable<Product> {
 	@Column(length = Integer.MAX_VALUE)
 	private String description;
 
+	@Column(name = "price")
 	private Double price;
 	
 	@Column(name = "quantity_in_stock")

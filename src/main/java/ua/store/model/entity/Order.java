@@ -31,6 +31,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ua.store.constant.OrderStatus;
+
 @Entity
 @Table(name = "orders")
 public class Order {

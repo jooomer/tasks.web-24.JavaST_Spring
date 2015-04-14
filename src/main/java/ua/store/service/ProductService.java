@@ -37,9 +37,9 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 
-	public List<Product> findAllByPage(int page, int itemsOnPage, Direction direction) {
+	public List<Product> findAllByPage(int page, int itemsOnPage, Direction direction, String sortField) {
 		return productRepository.findAll(
-				new PageRequest(page, itemsOnPage, direction, "id")).getContent();
+				new PageRequest(page, itemsOnPage, direction, sortField)).getContent();
 	}
 
 	public int getTotalPages() {
@@ -97,11 +97,11 @@ public class ProductService {
 	}
 
 	public List<Product> findByCategoryByPage(String categoryName, int page,
-			int itemsOnPage, Direction direction) {
+			int itemsOnPage, Direction direction, String sortField) {
 		ProductCategory productCategory = productCategoryService
 				.findByName(categoryName);
 		return extendedProductRepository.findByProductCategoryByPage(
-				productCategory, page, itemsOnPage,	direction, "id");
+				productCategory, page, itemsOnPage,	direction, sortField);
 	}
 
 	public int getTotalPagesByCategory(String categoryName, int itemsOnPage) {

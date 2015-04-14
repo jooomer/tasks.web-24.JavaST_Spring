@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import ua.store.constant.OrderStatus;
 import ua.store.model.entity.Order;
 import ua.store.model.entity.OrderItem;
-import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.User;
 import ua.store.service.OrderService;
 import ua.store.service.UserService;
@@ -48,9 +48,9 @@ public class OrderController {
 		logger.debug("--- started");
 
 		// check user login
-		if (principal == null) {
-			return "login";
-		}
+//		if (principal == null) {
+//			return "login";
+//		}
 		
 		// get user
 		User user = userService.findByName(principal.getName());
@@ -68,7 +68,7 @@ public class OrderController {
 		if (order == null) {
 			logger.debug("ERROR! Order with this number doesn't exist.");
 			model.addAttribute("message_danger", "ERROR! Order with this number doesn't exist.");
-			return "message";
+			return "message-page";
 		}
 
 		logger.debug("Order is found. Order #: " + id);
@@ -87,10 +87,9 @@ public class OrderController {
 		logger.debug("doMakeOrder() started.");
 
 		// check user login
-		if (principal == null) {
-			model.addAttribute("jspPage", "/WEB-INF/view/common/login.jsp");
-			return "template";
-		}
+//		if (principal == null) {
+//			return "login";
+//		}
 
 		// prepare order and save it to DB
 		HttpSession session = request.getSession();
@@ -133,7 +132,8 @@ public class OrderController {
 		Set<OrderItem> listOfOrderItems = order.getOrderItems();
 		model.addAttribute("listOfOrderItems", listOfOrderItems);
 		
-		model.addAttribute("message", "Thank you for your order!");
+		model.addAttribute("message_success", "Thank you for your order! \n"
+				+ "As soon as you pay the order, we will send the goods to the specified address.");
 		return "order-created";
 	}
 	

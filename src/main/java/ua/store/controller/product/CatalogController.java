@@ -112,11 +112,6 @@ public class CatalogController {
 		return "redirect:/category/" + catIdStr + "/products/page/" + pageStr;
 	}
 		
-	
-	
-
-	
-	
 	/**
 	 * shows list of products by selected category (page-by-page)
 	 */
@@ -150,19 +145,34 @@ public class CatalogController {
 			session.setAttribute("catalog_itemsOnPage", itemsOnPage);
 		} 
 
-		// initialize sort direction 
+		// initialize sorting by direction 
 		Direction direction;
-		if (session.getAttribute("catalog_direction") != null) {
-			direction = (Direction) session.getAttribute("catalog_direction");
+		if (session.getAttribute("catalog_sortDirection") != null) {
+			direction = (Direction) session.getAttribute("catalog_sortDirection");
 		} else {
 			direction = Direction.ASC;
-			session.setAttribute("catalog_direction", direction);
+			session.setAttribute("catalog_sortDirection", direction);
 		}
 		if (selectSortByDto != null && selectSortByDto.getSortDirection() != null) {
 			direction = Direction.valueOf(selectSortByDto.getSortDirection());
-			session.setAttribute("catalog_direction", direction);
+			session.setAttribute("catalog_sortDirection", direction);
+			System.out.println("Direction: " + direction);
 		} 
 
+		// initialize sorting by field
+		String sortField;
+		if (session.getAttribute("catalog_sortField") != null) {
+			sortField = (String) session.getAttribute("catalog_sortField");
+		} else {
+			sortField = "id";
+			session.setAttribute("catalog_sortField", sortField);
+		}
+		if (selectSortByDto != null && selectSortByDto.getSortField() != null) {
+			sortField = selectSortByDto.getSortField();
+			session.setAttribute("catalog_sortField", sortField);
+		} 
+		
+		
 		// initialize selected category
 		if (selectProductCategoryDto.getProductCategory() != null) {
 			logger.debug("Selected category: "
@@ -236,9 +246,9 @@ public class CatalogController {
 		// prepare list of products for view
 		List<Product> listOfProducts = null;
 		if (catId == 0) {
-			listOfProducts = productService.findAllByPage(page - 1, itemsOnPage, direction);
+			listOfProducts = productService.findAllByPage(page - 1, itemsOnPage, direction, sortField);
 		} else {
-			listOfProducts = productService.findByCategoryByPage(categoryName, page - 1, itemsOnPage, direction);
+			listOfProducts = productService.findByCategoryByPage(categoryName, page - 1, itemsOnPage, direction, sortField);
 		}
 
 		// prepare some parameters

@@ -15,27 +15,15 @@
 		</div>
 	</div>
 	<div class="form-group">
-		<label class="col-sm-2 control-label">Id:</label>
+		<label class="col-sm-2 control-label">Category:</label>
 		<div style="padding-top: 7px;" class="col-sm-10">
-			${product.id}
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Published date:</label>
-		<div style="padding-top: 7px;" class="col-sm-10">
-			${product.publishedDate}
+			${product.productCategory.name}
 		</div>
 	</div>
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Price:</label>
 		<div style="padding-top: 7px;" class="col-sm-10">
 			${product.price}
-		</div>
-	</div>
-	<div class="form-group">
-		<label class="col-sm-2 control-label">Product category:</label>
-		<div style="padding-top: 7px;" class="col-sm-10">
-			${product.productCategory.name}
 		</div>
 	</div>
 	<div class="form-group">

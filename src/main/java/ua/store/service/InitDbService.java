@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ua.store.constant.OrderStatus;
 import ua.store.model.entity.Order;
-import ua.store.model.entity.OrderStatus;
 import ua.store.model.entity.Product;
 import ua.store.model.entity.ProductCategory;
 import ua.store.model.entity.Role;

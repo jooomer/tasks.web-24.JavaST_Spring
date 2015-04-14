@@ -39,10 +39,20 @@
  	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   </div>
   <div class="form-group">
-  Sort by:
+  Sort by direction:
 	<form:select path="sortDirection" cssClass="form-control input-sm" onchange="submit()" >
-		<option value="ASC" ${catalog_direction == 'ASC' ? 'selected' : ''}>Low to High</option>
-		<option value="DESC" ${catalog_direction == 'DESC' ? 'selected' : ''}>High to Low</option>
+		<option value="ASC" ${catalog_sortDirection == 'ASC' ? 'selected' : ''}>Low to High</option>
+		<option value="DESC" ${catalog_sortDirection == 'DESC' ? 'selected' : ''}>High to Low</option>
+	</form:select>
+  </div>
+  <div class="form-group">
+ 	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  </div>
+  <div class="form-group">
+  Sort by field:
+	<form:select path="sortField" cssClass="form-control input-sm" onchange="submit()" >
+		<option value="name" ${catalog_sortField == 'name' ? 'selected' : ''}>Name</option>
+		<option value="price" ${catalog_sortField == 'price' ? 'selected' : ''}>Price</option>
 	</form:select>
   </div>
 </form:form>
