@@ -10,26 +10,34 @@ import ua.store.annotation.PhoneField;
 public class UserAccountDto {
 
 	@Size(max = 20, message = "First name must be no more 20 characters!")
-	@Column(name = "first_name", length = 100)
+//	@Column(name = "first_name", length = 100)
 	private String firstName;
 
 	@Size(max = 20, message = "Last name must be no more 20 characters!")
-	@Column(name = "last_name", length = 100)
+//	@Column(name = "last_name", length = 100)
 	private String lastName;
 
 	@Email(message = "Invalid email address!")
 	@Size(min = 1, message = "Invalid email address!")
-	@Column(length = 100, nullable = false)
+//	@Column(length = 100, nullable = false)
 	private String email;
 
 	@PhoneField(message = "Phone must contain just numbers!")
 	@Size(max = 20, message = "Phone can be no more 20 characters!")
-	@Column(length = 20)
+//	@Column(length = 20)
 	private String phone;
 
 	@Size(max = 50, message = "Address must be no more 50 characters!")
-	@Column(length = 100)
+//	@Column(length = 100)
 	private String address;
+	
+	@Size(max = 50, message = "Address must be no more 1000 characters!")
+//	@Column(length = 1000)
+	private String comments;
+	
+	private boolean inBlackList;
+
+	private boolean enabled;
 	
 	@Override
 	public String toString() {
@@ -80,6 +88,30 @@ public class UserAccountDto {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public boolean isInBlackList() {
+		return inBlackList;
+	}
+
+	public void setInBlackList(boolean inBlackList) {
+		this.inBlackList = inBlackList;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 	
 

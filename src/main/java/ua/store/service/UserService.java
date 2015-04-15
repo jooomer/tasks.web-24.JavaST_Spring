@@ -41,6 +41,9 @@ public class UserService {
 	private RoleRepository roleRepository;
 	
 	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
 	private ProductRepository productRepository;
 	
 	
@@ -48,12 +51,12 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
-	public User findOne(int id) {
+	public User findOne(long id) {
 		return userRepository.findOne(id);
 	}
 
 	@Transactional
-	public User findOneWithOrders(int id) {
+	public User findOneWithOrders(long id) {
 		User user = findOne(id);
 //		Set<Order> orders = orderRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "date"));
 		Set<Order> orders = orderRepository.findAllByUser(user);
@@ -65,9 +68,6 @@ public class UserService {
 		user.setEnabled(true);
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		user.setPassword(encoder.encode(user.getPassword()));
-//		user.setConfirmPassword(user.getPassword());
-//		Role role = roleRepository.findByName("ROLE_USER");
-//		user.addRole(role);
 		userRepository.save(user);
 	}
 
@@ -96,6 +96,15 @@ public class UserService {
 		user.setOrders(orders);
 		return user;
 	}
+
+//	public Object findAllWithRoles() {
+//		List<User> users = userRepository.findAll();
+//		for (User user : users) {
+//			Set<Role> roles = roleService.findAllByUser(user);
+//			user.setRoles(roles);
+//		}
+//		return users;
+//	}
 
 
 }

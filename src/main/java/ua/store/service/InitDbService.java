@@ -74,19 +74,21 @@ public class InitDbService {
 		roleAdmin.setName(RoleType.ROLE_ADMIN);
 		roleService.save(roleAdmin);
 
+		Role roleManager = new Role();
+		roleManager.setName(RoleType.ROLE_MANAGER);
+		roleService.save(roleManager);
+
 		// init first user "admin"
 		logger.debug("--- init first user 'admin' started.");
 		User userAdmin = new User();
 		userAdmin.setName("admin");
-		userAdmin.setEmail("freddy@krugger.com");
-		userAdmin.setFirstName("Freddy");
-		userAdmin.setLastName("Krugger");
+		userAdmin.setEmail("freddie@mercury.com");
+		userAdmin.setFirstName("Freddie");
+		userAdmin.setLastName("Mercury");
 		userAdmin.setPhone("(103)501-23-92");
-		userAdmin.setAddress("45, First str, New York, USA");
-		userAdmin.setComments("This user is an administrator");
+		userAdmin.setAddress("Kensington, London, United Kingdom");
+		userAdmin.setComments("Interactively procrastinate high-payoff ...");
 		userAdmin.setInBlackList(false);
-//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//		userAdmin.setPassword(encoder.encode("admin"));
 		userAdmin.setPassword("admin");
 		userAdmin.setEnabled(true);
 		userAdmin.addRole(roleUser);
@@ -97,19 +99,34 @@ public class InitDbService {
 		logger.debug("--- init first user 'user' started.");
 		User userUser = new User();
 		userUser.setName("user");
-		userUser.setEmail("mike@tyson.com");
-		userUser.setFirstName("Mike");
-		userUser.setLastName("Tyson");
+		userUser.setEmail("michael@jackson.com");
+		userUser.setFirstName("Michael");
+		userUser.setLastName("Jackson");
 		userUser.setPhone("(103)694-03-85");
-		userUser.setAddress("196, Second str, San Francisco, USA");
-		userUser.setComments("This user is a bad boy");
+		userUser.setAddress("Holmby Hills, Los Angeles, California, United ");
+		userUser.setComments("Interactively procrastinate high-payoff ...");
 		userUser.setInBlackList(true);
-//		encoder = new BCryptPasswordEncoder();
-//		userUser.setPassword(encoder.encode("user"));
 		userUser.setPassword("user");
 		userUser.setEnabled(true);
 		userUser.addRole(roleUser);
 		userService.save(userUser);
+
+		// init second user "manager"
+		logger.debug("--- init first user 'user' started.");
+		User userManager = new User();
+		userManager.setName("manager");
+		userManager.setEmail("paul@mccartney.com");
+		userManager.setFirstName("Paul");
+		userManager.setLastName("McCartney");
+		userManager.setPhone("(103)694-03-85");
+		userManager.setAddress("Walton, Liverpool, United Kingdom");
+		userManager.setComments("Interactively procrastinate high-payoff ...");
+		userManager.setInBlackList(true);
+		userManager.setPassword("manager");
+		userManager.setEnabled(true);
+		userManager.addRole(roleUser);
+		userManager.addRole(roleManager);
+		userService.save(userManager);
 
 		// init product types
 		logger.debug("--- init product types started.");

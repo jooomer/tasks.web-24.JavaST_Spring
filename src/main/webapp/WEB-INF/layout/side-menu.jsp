@@ -17,7 +17,7 @@
         
 <h2>Catalog</h2>
       <div class="list-group">
-        <a href='<spring:url value="/products" />' class="list-group-item">All products for rent</a>
+        <a href='<spring:url value="/catalog" />' class="list-group-item">All products</a>
         <a href="search-products" class="list-group-item">Search products</a>
       </div>
       <br>

@@ -75,7 +75,7 @@
 			<tbody>
 				<tr>
 					<td></td>
-					<td><textarea name="comments" rows="5" cols="70"></textarea></td>
+					<td><textarea name="comments" rows="5" cols="70" class="form-control"></textarea></td>
 				</tr>
 			</tbody>
 		</table>

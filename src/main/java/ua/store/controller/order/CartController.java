@@ -61,7 +61,7 @@ public class CartController {
 			request.getSession().setAttribute("listOfOrderItems", null);
 			request.getSession().setAttribute("order", null);
 			request.getSession().setAttribute("orderSaved", null);
-			model.addAttribute("message", "Your cart is empty. Please, choose your product.");
+			model.addAttribute("message_info", "Your cart is empty. Please, choose your product.");
 			return "cart";
 		}
 

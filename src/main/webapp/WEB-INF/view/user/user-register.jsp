@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ include file="../layout/taglib.jsp"%>
+<%@ include file="/WEB-INF/layout/taglib.jsp" %>
 
 <c:if test="${ error == true }">
 	<div class="alert alert-danger">Please fill out the register form correctly.</div>

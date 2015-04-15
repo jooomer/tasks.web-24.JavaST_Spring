@@ -20,19 +20,19 @@
 
   <definition name="users" extends="common">
     <put-attribute name="title" value="Users" />
-    <put-attribute name="body" value="/WEB-INF/view/users.jsp" />
+    <put-attribute name="body" value="/WEB-INF/view/user/users.jsp" />
     <put-attribute name="current" value="users" />
   </definition>
 
   <definition name="user-detail" extends="common">
     <put-attribute name="title" value="User detail" />
-    <put-attribute name="body" value="/WEB-INF/view/user-detail.jsp" />
+    <put-attribute name="body" value="/WEB-INF/view/user/user-detail.jsp" />
     <put-attribute name="current" value="user-detail"></put-attribute>
   </definition>
 
   <definition name="register" extends="common">
     <put-attribute name="title" value="User registration" />
-    <put-attribute name="body" value="/WEB-INF/view/user-register.jsp" />
+    <put-attribute name="body" value="/WEB-INF/view/user/user-register.jsp" />
     <put-attribute name="current" value="register" />
   </definition>
 
@@ -62,13 +62,13 @@
 
   <definition name="account" extends="common">
     <put-attribute name="title" value="Account" />
-    <put-attribute name="body" value="/WEB-INF/view/account.jsp" />
+    <put-attribute name="body" value="/WEB-INF/view/user/account.jsp" />
     <put-attribute name="current" value="account" />
   </definition>
 
   <definition name="account-update" extends="common">
     <put-attribute name="title" value="Update account" />
-    <put-attribute name="body" value="/WEB-INF/view/account-update.jsp" />
+    <put-attribute name="body" value="/WEB-INF/view/user/account-update.jsp" />
     <put-attribute name="current" value="account-update" />
   </definition>
 
@@ -103,7 +103,7 @@
   </definition>
 
   <definition name="order-created" extends="common">
-    <put-attribute name="title" value="Order created" />
+    <put-attribute name="title" value="Order" />
     <put-attribute name="body" value="/WEB-INF/view/order/order-created.jsp" />
     <put-attribute name="current" value="cart" />
   </definition>
@@ -120,7 +120,7 @@
     <put-attribute name="current" value="message" />
   </definition>
 
-  <definition name="login" template="/WEB-INF/view/login.jsp">
+  <definition name="login" template="/WEB-INF/view/user/login.jsp">
     <put-attribute name="title" value="Login" />
   </definition>
 

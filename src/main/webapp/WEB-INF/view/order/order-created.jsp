@@ -30,7 +30,17 @@
 		</tr>
 		<tr>
 			<th>Order status:</th>
-			<td>${order.orderStatus}</td>
+			<td>${order.orderStatus}
+<%-- 			<c:if test="${not empty listOfOrderStatuses}" > --%>
+<!-- 				&nbsp; -->
+<%-- 				<form:form commandName="orderStatusStr" > --%>
+<%-- 					<form:select path="orderStatusStr" onchange="submit()"> --%>
+<%-- 						<form:option value="--- Set required status ---" /> --%>
+<%-- 						<form:options items="${listOfOrderStatuses}" itemValue="name" itemLabel="name"/>					 --%>
+<%-- 					</form:select> --%>
+<%-- 				</form:form>				 --%>
+<%-- 			</c:if> --%>
+			</td>
 		</tr>
 		<tr>
 			<th>Your comments:</th>
@@ -75,4 +85,11 @@
 			</tr>
 		</tbody>
 	</table>
-<br>
+
+<c:if test="${order.orderStatus eq 'WAITING_FOR_PAIMENT'}" >
+	<form action="<spring:url value="/orders" />" method="post">
+		<p class="text-right">
+			<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger btn-sm">Cancel this order</button>
+		</p>
+	</form>
+</c:if>

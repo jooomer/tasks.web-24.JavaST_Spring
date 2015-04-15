@@ -7,17 +7,13 @@
 	<div class="alert alert-danger">Please fill out account fields correctly.</div>
 </c:if>
 
-<form:form commandName="userAccountDto" action="account" class="form-horizontal">
+<form:form commandName="userAccountDto" class="form-horizontal">
  
 	<div class="form-group">
 		<label class="col-sm-2 control-label"></label>
 		<div style="padding-top: 7px;" class="col-sm-10">
 			<h2><spring:message text="${user.name}" /></h2>
-<%-- 			<form:input path="id" type="hidden" /> --%>
-<%-- 			<form:input path="name" type="hidden" /> --%>
-<%-- 			<form:input path="password" type="hidden" /> --%>
-<%-- 			<form:input path="confirmPassword" type="hidden" /> --%>
-<%-- 			<form:input path="userType" type="hidden" /> --%>
+			
 		</div>
 	</div>
 	<div class="form-group">
@@ -55,6 +51,40 @@
 			<form:errors path="address" class="text-danger" />
 		</div>
 	</div>
+	
+	<security:authorize access="hasRole('ROLE_ADMIN')">
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label">In black list:</label>
+		<div style="padding-top: 7px;" class="col-sm-10">
+			<input type="checkbox" name="inBlackList" value="true" 
+			${user.inBlackList == true ? 'checked' : ''} >
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Enabled:</label>
+		<div style="padding-top: 7px;" class="col-sm-10">
+			<input type="checkbox" name="enabled" value="true" 
+			${user.enabled == true ? 'checked' : ''} >
+		</div>
+	</div>
+		
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Orders:</label>
+		<div style="padding-top: 7px;" class="col-sm-10">
+			<a href="<spring:url value="/users/${user.id}/orders" />" >Click to view user orders</a> 
+		</div>
+	</div>
+		
+	<div class="form-group">
+		<label class="col-sm-2 control-label">Comments:</label>
+		<div style="padding-top: 7px;" class="col-sm-10">
+			<textarea name="comments" rows="5" cols="70" class="form-control"></textarea>
+		</div>
+	</div>
+	</security:authorize>	
+	
 	<div class="form-group">
 		<label class="col-sm-2 control-label"> </label>
 		<div class="col-sm-10">
@@ -64,7 +94,8 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label"></label>
 		<div class="col-sm-10">
-			<input type="submit" value="Save" class="btn btn-lg btn-primary" />
+			<button type="submit" name="save_account" value="${user.id}" >Save</button>
+<!-- 			<input type="submit" value="Save" class="btn btn-lg btn-primary" /> -->
 		</div>
 	</div>
  

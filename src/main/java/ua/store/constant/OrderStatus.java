@@ -8,7 +8,20 @@ package ua.store.constant;
  *
  */
 public enum OrderStatus {
-	WAITING_FOR_PAIMENT, PAID, DELIVERED, CANCELED;
+	WAITING_FOR_PAIMENT("Waiting for payment"), 
+	PAID("Paid"), 
+	DELIVERED("Delivered"), 
+	CANCELED("Canceled");
+	
+	private String name;
+	
+	OrderStatus(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
+	}
 	
 	public static OrderStatus getOrderStatus(String orderSatusString) {
 		for (OrderStatus orderStatus : OrderStatus.values()) {

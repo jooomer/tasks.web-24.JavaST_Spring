@@ -90,10 +90,7 @@ public class ProductService {
 	}
 
 	public void save(List<Product> products) {
-		for (Product product : products) {
-			productRepository.save(product);
-		}
-
+		productRepository.save(products);
 	}
 
 	public List<Product> findByCategoryByPage(String categoryName, int page,

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,14 +44,14 @@ public class AccountController {
 	 * call account.jsp to show user detail
 	 */
 	@RequestMapping("/account**")
-	public String showAccount(Model model, Principal principal,
-			HttpServletRequest request) {
-		logger.debug("Method showAccount() started.");
+	public String showAccount(Model model, Principal principal) {
+		logger.debug("--- started");
 
 		// get current user from DB
 		String name = principal.getName();
-		// model.addAttribute("user", userService.findByName(name));
-		request.getSession().setAttribute("user", userService.findByName(name));
+		User user = userService.findByName(name);
+		model.addAttribute("user", user);
+		logger.debug("Show account of user: " + user.toString());
 
 		// show user account
 		return "account";
@@ -59,12 +60,13 @@ public class AccountController {
 	/**
 	 * just shows account with update form
 	 */
-	@RequestMapping("/update-account**")
-	public String showUpdateAccount(Model model, Principal principal,
-			HttpServletRequest request) {
-		logger.debug("Method showUpdateAccount() started.");
+	@RequestMapping(value = {"/account**"}, method = RequestMethod.POST, params = {"update_account"})
+	public String showUpdateAccount(
+			Model model, 
+			@RequestParam("update_account") Long id) {
+		logger.debug("--- started");
 
-		User user = (User) request.getSession().getAttribute("user");
+		User user = userService.findOne(id);
 		logger.debug(user.toString());
 
 		UserAccountDto userAccountDto = new UserAccountDto();
@@ -83,14 +85,13 @@ public class AccountController {
 	/**
 	 * receives a new user account data, validates it and update to DB
 	 */
-	@RequestMapping(value = "/account**", method = RequestMethod.POST)
+	@RequestMapping(value = {"/account**", "/users/{idStr}"}, method = RequestMethod.POST)
 	public String doUpdateAccount(
 			Model model,
-			Principal principal,
 			@Valid @ModelAttribute("userAccountDto") UserAccountDto userAccountDto,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes,
-			HttpServletRequest request) {
-		logger.debug("doUpdateAccount() started.");
+			BindingResult bindingResult, 
+			@RequestParam("save_account") Long id) {
+		logger.debug("--- started");
 		logger.debug(userAccountDto.toString());
 
 		if (bindingResult.hasErrors()) {
@@ -100,12 +101,14 @@ public class AccountController {
 			return "account-update";
 		}
 
-		User user = (User) request.getSession().getAttribute("user");
+		User user = userService.findOne(id);
 		user.setFirstName(userAccountDto.getFirstName());
 		user.setLastName(userAccountDto.getLastName());
 		user.setEmail(userAccountDto.getEmail());
 		user.setPhone(userAccountDto.getPhone());
 		user.setAddress(userAccountDto.getAddress());
+		user.setInBlackList(userAccountDto.isInBlackList());
+		user.setEnabled(userAccountDto.isEnabled());
 		logger.debug(user.toString());
 
 		// update current user with new fields in DB
@@ -115,5 +118,7 @@ public class AccountController {
 		model.addAttribute("user", user);
 		return "account";
 	}
+	
+
 
 }

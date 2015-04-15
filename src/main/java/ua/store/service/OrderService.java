@@ -43,4 +43,13 @@ public class OrderService {
 		return order;
 	}
 
+	public Order findOneById(Long id) {
+		return orderRepository.findOne(id);
+	}
+
+	public void update(Order order) {
+		orderRepository.save(order);
+		
+	}
+
 }

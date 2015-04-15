@@ -1,6 +1,7 @@
 package ua.store.controller.order;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.store.constant.OrderStatus;
 import ua.store.model.entity.Order;
@@ -42,18 +45,14 @@ public class OrderController {
 	 * just show order
 	 */
 	@RequestMapping(value = "/orders/{idStr}")
-	public String showOrder(Model model, HttpServletRequest request,
+	public String showOrder(
+			Model model, 
 			Principal principal,
-			@PathVariable String idStr) {
+			@PathVariable String idStr,
+			@ModelAttribute("orderStatusStr") String orderStatusStr) {
 		logger.debug("--- started");
-
-		// check user login
-//		if (principal == null) {
-//			return "login";
-//		}
 		
-		// get user
-		User user = userService.findByName(principal.getName());
+		System.out.println(orderStatusStr);
 
 		// get and check order Id 
 		long id = parsePathVariable(idStr);
@@ -74,6 +73,13 @@ public class OrderController {
 		logger.debug("Order is found. Order #: " + id);
 		
 		model.addAttribute("order", order);
+		
+//		OrderStatus[] listOfOrderStatuses = OrderStatus.values();
+		List<String> listOfOrderStatuses = new ArrayList<>();
+		for (OrderStatus orderStatus : OrderStatus.values()) {
+			listOfOrderStatuses.add(orderStatus.toString());
+		}
+		model.addAttribute("listOfOrderStatuses", listOfOrderStatuses);
 
 		return "order-created";
 	}
@@ -85,11 +91,6 @@ public class OrderController {
 	public String doMakeOrder(Model model, HttpServletRequest request,
 			Principal principal) {
 		logger.debug("doMakeOrder() started.");
-
-		// check user login
-//		if (principal == null) {
-//			return "login";
-//		}
 
 		// prepare order and save it to DB
 		HttpSession session = request.getSession();
@@ -144,19 +145,38 @@ public class OrderController {
 	public String showOrders(Model model, Principal principal) {
 		logger.debug("--- started");
 		
-		// check user in a session
-		if (principal == null) {
-			return "login";
-		}
-		
 		// get and prepare list of orders to view
 		User user = userService.findOneWithOrders(principal.getName());
 		
 		// get list of orders from DB and prepare it for view
 		Set<Order> listOfOrders = orderService.findAllByUser(user);
 		model.addAttribute("listOfOrders", listOfOrders);
-				
+
+		// 
+		OrderStatus[] listOfOrderStatuses = OrderStatus.values();
+		model.addAttribute("listOfOrderStatuses", listOfOrderStatuses);
+		
 		return "orders";
+	}
+
+	/**
+	 * just show list of orders
+	 */
+	@RequestMapping(value = "/orders", params = "cancel_order")
+	public String showCancelOrder(
+			RedirectAttributes redirectAttributes,
+			@RequestParam("cancel_order") Long id) {
+		logger.debug("--- started");
+
+		// set order status to "Canceled"
+		Order order = orderService.findOneById(id);
+		order.setOrderStatus(OrderStatus.CANCELED);
+		orderService.update(order);
+		System.out.println("Order status: " + order.getOrderStatus());
+
+		redirectAttributes.addFlashAttribute("message_success", "Your order was successfully canceled.");
+				
+		return "redirect:/orders";
 	}
 
 	/**

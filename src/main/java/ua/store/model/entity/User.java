@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -34,7 +35,7 @@ public class User implements Comparable<User> {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
 
 //	@Size(min = 3, max = 20, message = "Name must be at least 3 and no more 20 characters!")
 //	@UniqueUsername(message = "Such username already exists!")
@@ -81,7 +82,7 @@ public class User implements Comparable<User> {
 	
 	private String userType;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable
 	private Set<Role> roles = new HashSet<>();
 
@@ -109,11 +110,11 @@ public class User implements Comparable<User> {
 				+ "roles:           " + userType + "\n";
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -207,7 +208,7 @@ public class User implements Comparable<User> {
 
 	@Override
 	public int compareTo(User user) {
-		return this.id - user.getId();
+		return (int) (this.id - user.getId());
 	}
 	
 	public String getUserType() {

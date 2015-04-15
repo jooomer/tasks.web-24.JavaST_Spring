@@ -5,7 +5,7 @@
 <%@ include file="/WEB-INF/layout/message.jsp" %>
 
 <c:if test="${empty listOfOrders}" >
-	<div class="alert alert-info" role="alert">You don't have any orders yet.</div>
+	<div class="alert alert-info" role="alert">List of orders is empty.</div>
 </c:if>
 
 <c:if test="${not empty listOfOrders}" >
@@ -18,6 +18,7 @@
 			<th>Status</th>
 			<th>Amount</th>
 			<th>Comments</th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -37,6 +38,13 @@
 				</td>
 				<td>
 					${order.comments}
+				</td>
+				<td>
+					<c:if test="${order.orderStatus eq 'WAITING_FOR_PAIMENT'}" >
+						<form action="<spring:url value="/orders" />" method="post">
+							<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger btn-sm">Cancel</button>
+						</form>
+					</c:if>
 				</td>
 			</tr>
 		</c:forEach>

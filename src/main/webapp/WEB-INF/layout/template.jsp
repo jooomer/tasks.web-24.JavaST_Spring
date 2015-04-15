@@ -68,6 +68,7 @@
 								</li>
 								<li><a href='<spring:url value="/logout" />'>Logout</a></li>
 							</security:authorize>
+							<li><a>|</a></li>
 							<li class="${current == 'cart' ? 'active' : ''}"><a href='<spring:url value="/cart" />'>Cart</a></li>
 							<li class="${current == 'search' ? 'active' : ''}"><a href='<spring:url value="/search" />'>Search</a></li>
 	          			</ul>
@@ -115,6 +116,7 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+		
 
 </body>
 </html>
