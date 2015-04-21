@@ -15,8 +15,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Repository;
 
-import ua.store.model.entity.Product;
-import ua.store.model.entity.ProductCategory;
+import ua.store.domain.model.entity.Product;
+import ua.store.domain.model.entity.ProductCategory;
 
 @Repository
 public class ExtendedProductRepository {

@@ -3,7 +3,7 @@
 
 <%-- <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%> --%>
 
-<%@ page import="ua.store.model.entity.User"%>
+<%-- <%@ page import="ua.store.model.entity.User"%> --%>
 
 <div id="navigation"> 
 	<ul>

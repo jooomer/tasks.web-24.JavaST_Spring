@@ -3,7 +3,7 @@
 
 <%-- <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%> --%>
 
-<%@ page import="ua.store.model.entity.Product"%>
+<%-- <%@ page import="ua.store.model.entity.Product"%> --%>
 
 <h1>
 	<fmt:message key="products.List_of_products" />

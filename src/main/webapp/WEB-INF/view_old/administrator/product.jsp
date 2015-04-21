@@ -3,7 +3,7 @@
 
 <%-- <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%> --%>
 
-<jsp:useBean id="product" scope="session" class="ua.store.model.entity.Product" />
+<%-- <jsp:useBean id="product" scope="session" class="ua.store.model.entity.Product" /> --%>
 
 <h1>Product page</h1>
 <br>

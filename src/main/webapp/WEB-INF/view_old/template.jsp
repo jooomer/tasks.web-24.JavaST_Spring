@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%@ page import="ua.store.model.entity.User"%>
+<%-- <%@ page import="ua.store.model.entity.User"%> --%>
 
 <!DOCTYPE html>
 <html lang="${language}" xmlns="http://www.w3.org/1999/xhtml" dir="ltr">

@@ -12,7 +12,7 @@
 		<apache.tiles>3.0.3</apache.tiles>
 		<org.apache.logging.log4j>2.1</org.apache.logging.log4j>
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
-		<db.name>store_spring_test_test</db.name>
+		<db.name>store_spring_test</db.name>
 	</properties>
 
 	<dependencies>

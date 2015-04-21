@@ -21,8 +21,8 @@
 		name="search_user" />":
 </h3>
 <br>
-<jsp:useBean id="search_user" scope="session"
-	class="ua.store.model.entity.User" />
+<%-- <jsp:useBean id="search_user" scope="session" --%>
+<%-- 	class="ua.store.model.entity.User" /> --%>
 
 <form action="account" method="post">
 	<p>

@@ -3,7 +3,7 @@
 
 <%-- <%@ include file="/WEB-INF/view/layouts/taglib.jsp"%> --%>
 
-<%@ page import="ua.store.model.entity.Product"%>
+<%-- <%@ page import="ua.store.model.entity.Product"%> --%>
 <%-- <%@ taglib prefix="ulist" uri="/WEB-INF/view/tld/custom.tld"%> --%>
 
 <h1>
