@@ -33,7 +33,7 @@
 
 	<bean id="emf"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="packagesToScan" value="ua.store.model.entity" />
+		<property name="packagesToScan" value="ua.store.domain.model.entity" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="jpaProperties">
 			<props>

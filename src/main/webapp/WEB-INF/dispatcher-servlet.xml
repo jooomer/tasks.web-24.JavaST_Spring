@@ -8,7 +8,7 @@
 
 	<mvc:annotation-driven />
 
-	<context:component-scan base-package="ua.store.controller" />
+	<context:component-scan base-package="ua.store.domain.controller" />
 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 

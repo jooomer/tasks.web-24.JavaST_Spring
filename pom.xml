@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ua.store</groupId>
 	<artifactId>tasks.web-24.JavaST_Spring</artifactId>
-	<version>1</version>
+	<version>v1</version>
 	<packaging>war</packaging>
 
 	<!-- Shared version number properties -->
@@ -12,7 +12,7 @@
 		<apache.tiles>3.0.3</apache.tiles>
 		<org.apache.logging.log4j>2.1</org.apache.logging.log4j>
 		<spring.security.version>3.2.5.RELEASE</spring.security.version>
-		<db.name>store_spring_test</db.name>
+		<db.name>store_spring</db.name>
 	</properties>
 
 	<dependencies>
