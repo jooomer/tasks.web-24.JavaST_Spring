@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<%@ include file="../layout/taglib.jsp"%>
-<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ include file="/WEB-INF/layout/taglib.jsp" %>
+<%-- <%@ include file="/WEB-INF/layout/modal.jsp" %> --%>
 
 <!DOCTYPE html>
 <html>
@@ -23,7 +23,6 @@
 
 <body>
 
-
 <%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx"%>
 
 <tilesx:useAttribute name="current"/> 
@@ -41,7 +40,7 @@
 					<div class="navbar-header">
 
 					<a class="navbar-brand" href='<spring:url value="/" />'>
-					  <span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home
+					  <span class="glyphicon glyphicon-home" aria-hidden="true"></span> <spring:message code="main_menu.Home" />
 					</a>
 
 					</div>
@@ -93,7 +92,7 @@
 				
 				<h1><tiles:getAsString name="title" /></h1>
 				<tiles:insertAttribute name="body" />
-
+				
 			</div>
 			<!--/.col-xs-12.col-sm-9-->
 		</div>
@@ -116,7 +115,6 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-		
 
 </body>
 </html>

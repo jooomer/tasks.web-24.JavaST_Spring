@@ -8,11 +8,11 @@
 	<tbody>
 		<tr>
 			<th width="20%">Date:</th>
-			<td>${order.date}</td>
+			<td><fmt:formatDate value="${order.date}" type="both" dateStyle="long" timeStyle="short" /></td>
 		</tr>
 		<tr>
-			<th>Amount:</th>
-			<td>${order.amount}</td>
+			<th>Amount, $:</th>
+			<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${order.amount}"/></td>
 		</tr>
 		<tr>
 			<th>Ship address:</th>
@@ -35,9 +35,9 @@
 				<th>Category</th>
 				<th>Product name</th>
 				<th>Description</th>
-				<th>Price</th>
+				<th width="80px">Price, $</th>
 				<th>Quantity</th>
-				<th>Amount</th>
+				<th width="100px">Amount, $</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -48,9 +48,9 @@
 						href='<spring:url value="/products/${orderItem.product.id}" />'>${orderItem.product.name}</a>
 					</td>
 					<td>${orderItem.product.description}</td>
-					<td>${orderItem.product.price}</td>
+					<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${orderItem.product.price}"/></td>
 					<td>${orderItem.productsQuantity}</td>
-					<td>${orderItem.amount}</td>
+					<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${orderItem.amount}"/></td>
 				</tr>
 			</c:forEach>
 			<tr>
@@ -59,7 +59,7 @@
 				<td></td>
 				<td></td>
 				<th>Summary</th>
-				<th>${order.amount}</th>
+				<th><fmt:formatNumber type="number"  minFractionDigits="2" value="${order.amount}"/></th>
 			</tr>
 		</tbody>
 	</table>
@@ -75,7 +75,7 @@
 			<tbody>
 				<tr>
 					<td></td>
-					<td><textarea name="comments" rows="5" cols="70" class="form-control"></textarea></td>
+					<td><textarea name="comments" rows="1" cols="70" class="form-control"></textarea></td>
 				</tr>
 			</tbody>
 		</table>
@@ -83,6 +83,7 @@
 		<p class="text-right">
 			<input type="submit" name="save_and_checkout"
 				value="Save and checkout" class="btn btn-success btn-lg" />
+			<a href="#" onclick="window.history.go(-1); return false;" class="btn btn-lg btn-default" role="button">Cancel</a>
 		</p>
 	</form:form>
 

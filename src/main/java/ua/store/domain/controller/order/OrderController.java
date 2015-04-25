@@ -75,11 +75,16 @@ public class OrderController {
 //		OrderStatus[] listOfOrderStatuses = OrderStatus.values();
 		List<String> listOfOrderStatuses = new ArrayList<>();
 		for (OrderStatus orderStatus : OrderStatus.values()) {
-			listOfOrderStatuses.add(orderStatus.toString());
+			listOfOrderStatuses.add(orderStatus.getName());
 		}
 		model.addAttribute("listOfOrderStatuses", listOfOrderStatuses);
 
 		return "order-created";
+	}
+	
+	@RequestMapping("/order")
+	public String showNewOrder(Model model, HttpServletRequest request, Principal principal) {
+		return doMakeOrder(model, request, principal);
 	}
 
 	/**
@@ -93,6 +98,10 @@ public class OrderController {
 		// prepare order and save it to DB
 		HttpSession session = request.getSession();
 		Order order = (Order) session.getAttribute("order");
+		if (order == null) {
+			model.addAttribute("message_warning", "You don't have a new order.");
+			return "message-page";
+		}
 		
 		User user = userService.findByName(principal.getName());
 		order.setUser(user);
@@ -151,8 +160,13 @@ public class OrderController {
 		model.addAttribute("listOfOrders", listOfOrders);
 
 		// 
-		OrderStatus[] listOfOrderStatuses = OrderStatus.values();
+//		OrderStatus[] listOfOrderStatuses = OrderStatus.values();
+		List<String> listOfOrderStatuses = new ArrayList<>();
+		for (OrderStatus orderStatus : OrderStatus.values()) {
+			listOfOrderStatuses.add(orderStatus.getName());
+		}
 		model.addAttribute("listOfOrderStatuses", listOfOrderStatuses);
+		model.addAttribute("user", user);
 		
 		return "orders";
 	}

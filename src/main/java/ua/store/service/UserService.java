@@ -97,6 +97,11 @@ public class UserService {
 		return user;
 	}
 
+	public void update(List<User> users) {
+		userRepository.save(users);
+		
+	}
+
 //	public Object findAllWithRoles() {
 //		List<User> users = userRepository.findAll();
 //		for (User user : users) {

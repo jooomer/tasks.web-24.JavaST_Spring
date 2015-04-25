@@ -92,7 +92,7 @@ public class ExtendedProductRepository {
 		TypedQuery<Product> typedQuery = em.createQuery(query);
 		typedQuery.setParameter(pCategory, productCategory);
 
-		return typedQuery.getResultList().size() / itemsOnPage + 1;
+		return typedQuery.getResultList().size() / itemsOnPage;
 	}
 
 }

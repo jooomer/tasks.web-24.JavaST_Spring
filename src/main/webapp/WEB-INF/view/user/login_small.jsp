@@ -3,19 +3,6 @@
 	
 <%@ include file="/WEB-INF/layout/taglib.jsp" %>
 	
-<!DOCTYPE html>
-<html>
-<head>
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<title><tiles:getAsString name="title" /></title>
-
 <style>
 body {
   padding-top: 40px;
@@ -58,10 +45,6 @@ body {
 }
 </style>
 
-</head>
-
-<body>
-
 <form class="form-signin" action="<spring:url value="/j_spring_security_check" />" method="post">
 
 	<h2 class="form-signin-heading">Please sign in</h2>
@@ -72,11 +55,6 @@ body {
 
 	<input type="text" name="j_username" class="form-control" placeholder="Name" required autofocus> 
 	<input type="password" name="j_password" class="form-control" placeholder="Password" required>
-	<div class="row">
-		<div class="col-md-8"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></div>
-		<div><a href="#" onclick="window.history.go(-1); return false;" class="btn btn-lg btn-default" role="button">Cancel</a></div>
-	</div>
+	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 </form>
 
-</body>
-</html>

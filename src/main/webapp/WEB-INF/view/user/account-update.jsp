@@ -80,7 +80,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Comments:</label>
 		<div style="padding-top: 7px;" class="col-sm-10">
-			<textarea name="comments" rows="5" cols="70" class="form-control"></textarea>
+			<textarea name="comments" rows="1" cols="70" class="form-control"></textarea>
 		</div>
 	</div>
 	</security:authorize>	
@@ -94,9 +94,10 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label"></label>
 		<div class="col-sm-10">
-			<button type="submit" name="save_account" value="${user.id}" >Save</button>
-<!-- 			<input type="submit" value="Save" class="btn btn-lg btn-primary" /> -->
+			<button type="submit" name="save_account" value="${user.id}" class="btn btn-lg btn-primary">Save account</button>
+			<a href="#" onclick="window.history.go(-1); return false;" class="btn btn-lg btn-default" role="button">Cancel</a>
 		</div>
+		
 	</div>
  
 </form:form>

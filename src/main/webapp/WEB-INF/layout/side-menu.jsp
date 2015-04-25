@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<%@ include file="../layout/taglib.jsp" %>
-<%@ taglib uri="http://www.springframework.org/security/tags" prefix="secuity" %>
+<%@ include file="/WEB-INF/layout/taglib.jsp" %>
 
-<secuity:authorize access="hasRole('ROLE_ADMIN')" >
+<security:authorize access="hasRole('ROLE_ADMIN')" >
 <h2>Administrator menu</h2>
       <div class="list-group">
         <a href='<spring:url value="/users" />' class="list-group-item">All users</a>
@@ -13,13 +12,17 @@
         <a href='<spring:url value="/product-types" />' class="list-group-item">All product types</a>
       </div>
       <br>
-</secuity:authorize>
+</security:authorize>
         
-<h2>Catalog</h2>
-      <div class="list-group">
-        <a href='<spring:url value="/catalog" />' class="list-group-item">All products</a>
-        <a href="search-products" class="list-group-item">Search products</a>
-      </div>
-      <br>
+<c:if test="${catalog eq true}">
+	<h2>Categories</h2>
+	<form:form commandName="category">
+		<form:select path="ProductCategory.name" cssClass="form-control" onchange="submit()" >
+			<form:option value="">SELECT PRODUCT CATEGORY</form:option>
+			<form:option value="All products" />
+			<form:options items="${listOfProductCategories}" itemValue="name" itemLabel="name" />
+		</form:select>
+	</form:form>
+</c:if>
 
 

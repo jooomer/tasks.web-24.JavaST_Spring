@@ -12,11 +12,11 @@
 		</tr>
 		<tr>
 			<th>Date:</th>
-			<td>${order.date}</td>
+			<td><fmt:formatDate value="${order.date}" type="both" dateStyle="long" timeStyle="short" /></td>
 		</tr>
 		<tr>
-			<th>Amount:</th>
-			<td>${order.amount}</td>
+			<th>Amount, $:</th>
+			<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${order.amount}"/></td>
 		</tr>
 		<tr>
 			<th>Customer:</th>
@@ -30,7 +30,7 @@
 		</tr>
 		<tr>
 			<th>Order status:</th>
-			<td>${order.orderStatus}
+			<td>${order.orderStatus.name}
 <%-- 			<c:if test="${not empty listOfOrderStatuses}" > --%>
 <!-- 				&nbsp; -->
 <%-- 				<form:form commandName="orderStatusStr" > --%>
@@ -56,9 +56,9 @@
 				<th>Category</th>
 				<th>Product name</th>
 				<th>Description</th>
-				<th>Price</th>
+				<th width="80px">Price, $</th>
 				<th>Quantity</th>
-				<th>Amount</th>
+				<th width="100px">Amount, $</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -70,9 +70,9 @@
 						href='<spring:url value="/products/${orderItem.product.id}" />'>${orderItem.product.name}</a>
 					</td>
 					<td>${orderItem.product.description}</td>
-					<td>${orderItem.product.price}</td>
+					<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${orderItem.product.price}"/></td>
 					<td>${orderItem.productsQuantity}</td>
-					<td>${orderItem.amount}</td>
+					<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${orderItem.amount}"/></td>
 				</tr>
 			</c:forEach>
 			<tr>
@@ -81,7 +81,7 @@
 				<td></td>
 				<td></td>
 				<th>Summary</th>
-				<th>${order.amount}</th>
+				<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${orderItem.amount}"/></td>
 			</tr>
 		</tbody>
 	</table>
@@ -89,7 +89,7 @@
 <c:if test="${order.orderStatus eq 'WAITING_FOR_PAIMENT'}" >
 	<form action="<spring:url value="/orders" />" method="post">
 		<p class="text-right">
-			<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger btn-sm">Cancel this order</button>
+			<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger">Cancel this order</button>
 		</p>
 	</form>
 </c:if>

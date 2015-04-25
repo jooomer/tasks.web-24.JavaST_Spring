@@ -42,8 +42,8 @@ public class ProductService {
 				new PageRequest(page, itemsOnPage, direction, sortField)).getContent();
 	}
 
-	public int getTotalPages() {
-		return productRepository.findAll(new PageRequest(0, 10))
+	public int getTotalPages(int itemsOnPage) {
+		return productRepository.findAll(new PageRequest(0, itemsOnPage))
 				.getTotalPages();
 	}
 

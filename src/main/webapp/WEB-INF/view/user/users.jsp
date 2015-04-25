@@ -4,6 +4,7 @@
 <%@ include file="/WEB-INF/layout/taglib.jsp" %>
 <%@ include file="/WEB-INF/layout/message.jsp" %>
 
+<form method="post">
 <table class="table table-bordered table-hover table-stripped">
 	<thead>
 		<tr>
@@ -48,19 +49,16 @@
 <!-- 				</td> -->
 				<td>
     				<p class="text-center">
-	    				<input type="checkbox" name="inBlackList" value="option1" 
+	    				<input type="checkbox" name="inBlackList" value="${user.id}" 
 	    				${user.inBlackList == true ? 'checked' : ''} >
 					</p>
 				<td>
     				<p class="text-center">
-	    				<input type="checkbox" name="enabled" value="option1" 
+	    				<input type="checkbox" name="enabled" value="${user.id}" 
 	    				${user.enabled == true ? 'checked' : ''} >
     				</p>
 				</td>
 				<td>
-    				<button type="submit" name="enebled" value="${user.id}" 
-    				class="btn btn-success btn-sm">Save</button>
-
 					<button type="submit" name="delete_user" value="${user.id}" 
 					class="btn btn-danger btn-sm" >Delete</button>
 				</td>
@@ -69,3 +67,9 @@
 	</tbody>
 
 </table>
+
+<p class="text-right">
+	<button type="submit" name="update_users" value="${users}" class="btn btn-success btn-lg">Update users</button>
+</p>
+
+</form>

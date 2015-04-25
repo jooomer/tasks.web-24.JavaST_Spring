@@ -4,6 +4,10 @@
 <%@ include file="/WEB-INF/layout/taglib.jsp" %>
 <%@ include file="/WEB-INF/layout/message.jsp" %>
 
+<security:authorize access="hasRole('ROLE_ADMIN')" >
+	<h2>User ${user.name}</h2>
+</security:authorize>
+
 <c:if test="${empty listOfOrders}" >
 	<div class="alert alert-info" role="alert">List of orders is empty.</div>
 </c:if>
@@ -13,10 +17,10 @@
 <table class="table table-bordered table-hover table-stripped">
 	<thead>
 		<tr>
-			<th>Order #</th>
-			<th>Date</th>
+			<th style="width:70px">Order #</th>
+			<th style="width:120px">Date</th>
 			<th>Status</th>
-			<th>Amount</th>
+			<th style="width:100px">Amount, $</th>
 			<th>Comments</th>
 			<th>Action</th>
 		</tr>
@@ -28,13 +32,13 @@
 					<a href='<spring:url value="/orders/${order.id}" />' class="btn btn-default" >${order.id}</a>
 				</td>
 				<td>
-					${order.date}
+					<fmt:formatDate value="${order.date}" type="both" dateStyle="long" timeStyle="short" />
 				</td>
 				<td>
-					${order.orderStatus}
+					${order.orderStatus.name}
 				</td>
 				<td>
-					${order.amount}
+					 <fmt:formatNumber type="number"  minFractionDigits="2" value="${order.amount}"/>
 				</td>
 				<td>
 					${order.comments}

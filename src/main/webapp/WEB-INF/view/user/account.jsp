@@ -12,7 +12,7 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label"></label>
 		<div style="padding-top: 7px;" class="col-sm-10">
-			<h2><c:out value="${user.name}" /></h2>
+			<h2><spring:message text="${user.name}" /></h2>
 		</div>
 	</div>
 	<div class="form-group">
@@ -46,12 +46,12 @@
 		</div>
 	</div>
 	
-		<security:authorize access="hasRole('ROLE_ADMIN')">
+	<security:authorize access="hasRole('ROLE_ADMIN')">
 	
 	<div class="form-group">
 		<label class="col-sm-2 control-label">In black list:</label>
 		<div style="padding-top: 7px;" class="col-sm-10">
-			<input type="checkbox" name="inBlackList" value="true" 
+			<input type="checkbox" name="inBlackList" value="true" disabled="disabled"
 			${user.inBlackList == true ? 'checked' : ''} >
 		</div>
 	</div>
@@ -59,24 +59,31 @@
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Enabled:</label>
 		<div style="padding-top: 7px;" class="col-sm-10">
-			<input type="checkbox" name="enabled" value="true" 
+			<input type="checkbox" name="enabled" value="true" disabled="disabled"
 			${user.enabled == true ? 'checked' : ''} >
+		</div>
+	</div>
+		
+		<div class="form-group">
+		<label class="col-sm-2 control-label">Orders:</label>
+		<div style="padding-top: 7px;" class="col-sm-10">
+			<a href="<spring:url value="/users/${user.id}/orders" />" >Click to view user orders</a> 
 		</div>
 	</div>
 		
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Comments:</label>
 		<div style="padding-top: 7px;" class="col-sm-10">
-			<textarea name="comments" rows="5" cols="70" class="form-control"></textarea>
+			<textarea name="comments" rows="1" cols="70" class="form-control"></textarea>
 		</div>
 	</div>
+	
 	</security:authorize>	
 	
 	<div class="form-group">
 		<label class="col-sm-2 control-label"></label>
 		<div class="col-sm-10">
-			<button type="submit" name="update_account" value="${user.id}" class="btn btn-lg btn-primary">Update account</button>
-<!-- 			<input type="submit" value="Update account" class="btn btn-lg btn-primary" /> -->
+			<button type="submit" name="update_account" value="${user.id}" class="btn btn-lg btn-primary">Click to update account</button>
 		</div>
 	</div>
  

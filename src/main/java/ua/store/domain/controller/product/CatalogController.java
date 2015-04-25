@@ -131,7 +131,7 @@ public class CatalogController {
 		// ---------------------------------
 		HttpSession session = request.getSession();
 		
-		// initialize itemsOnpage
+		// initialize itemsOnPage
 		int itemsOnPage;
 		if (session.getAttribute("catalog_itemsOnPage") != null) {
 			itemsOnPage = (int) session.getAttribute("catalog_itemsOnPage");
@@ -206,7 +206,7 @@ public class CatalogController {
 			// just show products for all categories
 			categoryName = "All categories";
 			catId = 0;
-			totalPages = productService.getTotalPages();
+			totalPages = productService.getTotalPages(itemsOnPage);
 		} else {
 			logger.debug("catId is between 0 and category number; catId = "
 					+ catId);
@@ -254,6 +254,7 @@ public class CatalogController {
 		model.addAttribute("listOfProducts", listOfProducts);
 		model.addAttribute("page", page);
 		model.addAttribute("totalPages", totalPages);
+		model.addAttribute("catalog", true);
 
 		return "catalog";
 	}

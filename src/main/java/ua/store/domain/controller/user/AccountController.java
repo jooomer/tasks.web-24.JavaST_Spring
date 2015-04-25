@@ -55,7 +55,7 @@ public class AccountController {
 	/**
 	 * just shows account with update form
 	 */
-	@RequestMapping(value = {"/account**"}, method = RequestMethod.POST, params = {"update_account"})
+	@RequestMapping(value = {"/account**", "/users/{idStr}"}, method = RequestMethod.POST, params = {"update_account"})
 	public String showUpdateAccount(
 			Model model, 
 			@RequestParam("update_account") Long id) {
@@ -72,13 +72,14 @@ public class AccountController {
 		userAccountDto.setAddress(user.getAddress());
 
 		model.addAttribute("userAccountDto", userAccountDto);
+		model.addAttribute("user", user);
 
 		// show user account with update form
 		return "account-update";
 	}
 
 	/**
-	 * receives a new user account data, validates it and update to DB
+	 * receives a new account data, validates it and update to DB
 	 */
 	@RequestMapping(value = {"/account**", "/users/{idStr}"}, method = RequestMethod.POST)
 	public String doUpdateAccount(
@@ -114,6 +115,4 @@ public class AccountController {
 		return "account";
 	}
 	
-
-
 }
