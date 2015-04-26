@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,10 +15,12 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ua.store.domain.model.dto.UserAccountDto;
 import ua.store.domain.model.entity.Order;
@@ -41,7 +44,6 @@ public class UsersController {
 		logger.debug("--- started"); 
 		
 		// get list of all users from DB
-//		model.addAttribute("users", userService.findAll());
 		session.setAttribute("users", userService.findAll());
 		return "users";
 	}
@@ -126,9 +128,54 @@ public class UsersController {
 		return "redirect:/users";
 		
 	}
-
-
 	
+	@RequestMapping(value = {"/users", "/users/{idStr}"}, method = RequestMethod.POST, params = {"delete_user"})
+	public String doDeleteUserFromAccount(
+			RedirectAttributes redirectAttributes,
+			@RequestParam("delete_user") Long id
+			) {
+		logger.debug("--- started");
+		
+		if (id == null) {
+			logger.debug("Error. Cannot get user id to delete him.");
+			redirectAttributes.addFlashAttribute("message_alert", "Wrong user id to delete.");
+			return "redirect:/users";
+		}
+		logger.debug("User id to delete: " + id);
+
+		userService.delete(id);
+		
+		redirectAttributes.addFlashAttribute("message_success", "User was successfully deleted.");
+		
+		return "redirect:/users";
+	}
+	
+	@RequestMapping(value = "/users/{idStr}/delete")
+	public String doDeleteUserFromUsers(
+			Model model,
+			HttpSession session,
+			@PathVariable String idStr) {
+		logger.debug("--- started"); 
+
+		long id = parsePathVariable(idStr);
+		if (id < 0) {
+			logger.debug("ERROR! Wrong user Id in URL.");
+			model.addAttribute("message_danger", "This user doesn't exist.");
+			return "message-page";
+		}
+		User user = userService.findOneWithOrders(id);
+		if (user == null) {
+			logger.debug("ERROR! Wrong user Id in URL.");
+			model.addAttribute("message_warning", "This user doesn't exist.");
+			return "message-page";
+		}
+		logger.debug("User is found. Id: " + id);
+		
+		model.addAttribute("userId", id);
+		
+		return "popup_delete_user";
+	}
+ 	
 	@RequestMapping("/users/{idStr}/orders") 
 	public String showUserOrders(
 			Model model,
@@ -140,7 +187,7 @@ public class UsersController {
 		if (id < 0) {
 			logger.debug("ERROR! Wrong user Id in URL.");
 			model.addAttribute("message_danger", "This user doesn't exist.");
-			return "message";
+			return "message-page";
 		}
 		
 		// get user from DB and and check 
@@ -148,7 +195,7 @@ public class UsersController {
 		if (user == null) {
 			logger.debug("ERROR! Wrong user Id in URL.");
 			model.addAttribute("message_warning", "This user doesn't exist.");
-			return "message";
+			return "message-page";
 		}
 		logger.debug("User is found. Id: " + id);
 		
@@ -177,7 +224,6 @@ public class UsersController {
 		}
 		return number;
 	}
-
 
 	
 }

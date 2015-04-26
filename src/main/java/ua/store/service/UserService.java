@@ -58,6 +58,9 @@ public class UserService {
 	@Transactional
 	public User findOneWithOrders(long id) {
 		User user = findOne(id);
+		if (user == null) {
+			return null;
+		}
 //		Set<Order> orders = orderRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "date"));
 		Set<Order> orders = orderRepository.findAllByUser(user);
 		user.setOrders(orders);
@@ -100,6 +103,10 @@ public class UserService {
 	public void update(List<User> users) {
 		userRepository.save(users);
 		
+	}
+
+	public void delete(Long id) {
+		userRepository.delete(id);
 	}
 
 //	public Object findAllWithRoles() {

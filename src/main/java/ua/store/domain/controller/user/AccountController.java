@@ -81,7 +81,7 @@ public class AccountController {
 	/**
 	 * receives a new account data, validates it and update to DB
 	 */
-	@RequestMapping(value = {"/account**", "/users/{idStr}"}, method = RequestMethod.POST)
+	@RequestMapping(value = {"/account**", "/users/{idStr}"}, method = RequestMethod.POST, params = {"save_account"})
 	public String doUpdateAccount(
 			Model model,
 			@Valid @ModelAttribute("userAccountDto") UserAccountDto userAccountDto,
@@ -114,5 +114,7 @@ public class AccountController {
 		model.addAttribute("user", user);
 		return "account";
 	}
+	
+	
 	
 }

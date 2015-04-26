@@ -3,6 +3,8 @@
 - check urls directly
 - handle wrong url
 - control setting state of order
+- @Transactional на все методы 
+- message-page --> message
 
 -------------------------
 - Менеджер (не адмн) должен иметь возможность редактировать заказы, менять статус и тп
