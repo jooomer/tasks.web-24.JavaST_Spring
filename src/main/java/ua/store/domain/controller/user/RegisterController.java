@@ -49,7 +49,7 @@ public class RegisterController {
 	/**
 	 * Receives user data from registration form and saves it into DB
 	 */
-	@RequestMapping(value = "/register**", method = RequestMethod.POST)
+	@RequestMapping(value = "/register**", method = RequestMethod.POST, params = {"do_register"})
 	public String doRegister(
 			Model model,
 			RedirectAttributes redirectAttributes,

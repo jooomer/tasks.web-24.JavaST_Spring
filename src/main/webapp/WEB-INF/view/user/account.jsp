@@ -115,7 +115,7 @@
 	      <div class="modal-body">
 				<div class="alert alert-warning">
 					You are going to delete user permanently.<br>
-		      			Press "Delete user" to delete or "Cancel" to return to previous page. 
+		      			Press "Delete user" to delete or "Cancel" to return to the previous page. 
 				</div>
 	      </div>
 	      <div class="modal-footer">
@@ -126,7 +126,5 @@
 	    </div>
 	  </div>
 	</div>
-	
- 
  	
 </form:form>

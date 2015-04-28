@@ -41,7 +41,8 @@ public class Order {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String name;
+	@Column(name = "order_number")
+	private String orderNumber;
 	
 	private Date date;
 	
@@ -159,14 +160,6 @@ public class Order {
 		this.date = date;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public String getComments() {
 		return comments;
 	}
@@ -189,6 +182,14 @@ public class Order {
 
 	public void setOrderItems(Set<OrderItem> orderItems) {
 		this.orderItems = orderItems;
+	}
+
+	public String getOrderNumber() {
+		return orderNumber;
+	}
+
+	public void setOrderNumber(String orderNumber) {
+		this.orderNumber = orderNumber;
 	}
 
 

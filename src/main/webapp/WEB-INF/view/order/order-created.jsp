@@ -8,10 +8,10 @@
 	<tbody>
 		<tr>
 			<th width="20%">Order #:</th>
-			<td>${order.id}</td>
+			<td>${order.orderNumber}</td>
 		</tr>
 		<tr>
-			<th>Date:</th>
+			<th><spring:message code="order.Date" />:</th>
 			<td><fmt:formatDate value="${order.date}" type="both" dateStyle="long" timeStyle="short" /></td>
 		</tr>
 		<tr>
@@ -24,7 +24,7 @@
 			<td>${order.user.firstName}&nbsp;${order.user.lastName}</td>
 		</tr>
 		<tr>
-			<th>Ship address:</th>
+			<th><spring:message code="order.Ship_to" />:</th>
 <%-- 			<td><c:out value="${user.address}" /></td> --%>
 			<td><c:out value="${order.user.address}" /></td>
 		</tr>
@@ -43,7 +43,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th>Your comments:</th>
+			<th><spring:message code="order.Your_comments" />:</th>
 			<td><c:out value="${order.comments}" /></td>
 		</tr>
 	</tbody>
@@ -53,19 +53,19 @@
 	<table class="table table-bordered table-hover table-stripped">
 		<thead>
 			<tr>
-				<th>Category</th>
-				<th>Product name</th>
-				<th>Description</th>
-				<th width="80px">Price, $</th>
-				<th>Quantity</th>
-				<th width="100px">Amount, $</th>
+				<th><spring:message code="order.Category" /></th>
+				<th><spring:message code="order.Product_name" /></th>
+				<th><spring:message code="order.Description" /></th>
+				<th width="80px"><spring:message code="order.Price" />, $</th>
+				<th><spring:message code="order.Quantity" /></th>
+				<th width="100px"><spring:message code="order.Amount" />, $</th>
 			</tr>
 		</thead>
 		<tbody>
 <%-- 			<c:forEach var="orderItem" items="${listOfOrderItems}"> --%>
 			<c:forEach var="orderItem" items="${order.orderItems}">
 				<tr>
-					<td>${orderItem.product.productCategory.name}</td>
+					<td>${orderItem.product.category.name}</td>
 					<td><a
 						href='<spring:url value="/products/${orderItem.product.id}" />'>${orderItem.product.name}</a>
 					</td>
@@ -80,7 +80,7 @@
 				<td></td>
 				<td></td>
 				<td></td>
-				<th>Summary</th>
+				<th><spring:message code="order.Summary" /></th>
 				<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${orderItem.amount}"/></td>
 			</tr>
 		</tbody>
@@ -89,7 +89,7 @@
 <c:if test="${order.orderStatus eq 'WAITING_FOR_PAIMENT'}" >
 	<form action="<spring:url value="/orders" />" method="post">
 		<p class="text-right">
-			<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger">Cancel this order</button>
+			<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger"><spring:message code="order.Cancel_this_order" /></button>
 		</p>
 	</form>
 </c:if>

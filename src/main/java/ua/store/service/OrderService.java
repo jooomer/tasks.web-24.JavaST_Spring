@@ -1,5 +1,6 @@
 package ua.store.service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Set;
 
@@ -24,7 +25,13 @@ public class OrderService {
 	@Autowired
 	private OrderItemService orderItemService;
 	
-	public void save(Order order) {
+	public void saveNewOrder(Order order) {
+		orderRepository.save(order);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(order.getDate());
+		int year = cal.get(Calendar.YEAR);
+		String orderNumber = "#" + year + "-" + order.getId();
+		order.setOrderNumber(orderNumber);
 		orderRepository.save(order);
 	}
 
@@ -49,6 +56,11 @@ public class OrderService {
 
 	public void update(Order order) {
 		orderRepository.save(order);
+		
+	}
+
+	public void update(Set<Order> orders) {
+		orderRepository.save(orders);
 		
 	}
 

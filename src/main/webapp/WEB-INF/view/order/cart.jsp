@@ -13,20 +13,20 @@
 	<table class="table table-bordered table-hover table-stripped">
 		<thead>
 			<tr>
-				<th>Category</th>
-				<th>Product name</th>
-				<th>Description</th>
-				<th style="width:100px">Price, $</th>
-				<th>Quantity</th>
-				<th style="width:100px">Amount, $</th>
-				<th>Action</th>
+				<th><spring:message code="cart.Category" /></th>
+				<th><spring:message code="cart.Product_name" /></th>
+				<th><spring:message code="cart.Description" /></th>
+				<th style="width:100px"><spring:message code="cart.Price" />, $</th>
+				<th><spring:message code="cart.Quantity" /></th>
+				<th style="width:100px"><spring:message code="cart.Amount" />, $</th>
+				<th><spring:message code="cart.Action" /></th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="orderItem" items="${listOfOrderItems}">
 				<tr>
 					<td>
-						${orderItem.product.productCategory.name}
+						${orderItem.product.category.name}
 					</td>
 					<td>
 						<a href='<spring:url value="/products/${orderItem.product.id}" />'>${orderItem.product.name}</a>
@@ -45,7 +45,8 @@
 					</td>
 					<td>
 						<form:form>
-						 	<button type="submit" name="remove_from_cart" value="${orderItem.product.id}" class="btn btn-danger btn-sm">Remove</button>
+						 	<button type="submit" name="remove_from_cart" value="${orderItem.product.id}" 
+						 	class="btn btn-danger btn-sm"><spring:message code="cart.Remove" /></button>
 						</form:form>
 					</td>
 				</tr>
@@ -55,25 +56,25 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<th>Summary</th>
-					<th>${order.amount}</th>
+					<th><spring:message code="cart.Summary" /></th>
+					<th><fmt:formatNumber type="number"  minFractionDigits="2" value="${order.amount}"/></th>
 					<td></td>
 				</tr>
 		</tbody>
 	</table>
 
 	<div class="row">
-		<div class="col-xs-12 col-md-10">
+		<div class="col-xs-12 col-md-9">
 			<form:form action="order">
 				<p class="text-right" >
-					<input type="submit" name="make_order" value="Make order" class="btn btn-success btn-lg" />
+					<input type="submit" name="make_order" value="<spring:message code="cart.Make_order" />" class="btn btn-success btn-lg" />
 				</p>
 			</form:form>
 		</div>
 		<div class="col-xs-6 col-md-2">
 			<form:form>
 				<p class="text-right" >
-					<input type="submit" name="clean_cart" value="Clean cart" class="btn btn-primary btn-lg" />
+					<input type="submit" name="clean_cart" value="<spring:message code="cart.Clean_cart" />" class="btn btn-primary btn-lg" />
 				</p>
 			</form:form>
 		</div>

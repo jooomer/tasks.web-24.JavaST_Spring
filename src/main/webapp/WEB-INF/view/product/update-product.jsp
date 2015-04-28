@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/layout/taglib.jsp"%>
-<%@ include file="/WEB-INF/layout/message.jsp"%>
 
 <c:if test="${ error == true }">
 	<div class="alert alert-danger">Please fill out the form correctly.</div>
@@ -11,7 +10,7 @@
 <form:form commandName="productDto" cssClass="form-horizontal">
 
 		<div class="form-group">
-			<label for="category" class="col-sm-2 control-label">Product category (*):</label>
+			<label for="category" class="col-sm-2 control-label">Category (*):</label>
 			<div class="col-sm-10">
 				<form:select path="category.name" cssClass="form-control">
 					<form:option value="">--- SELECT PRODUCT CATEGORY ---</form:option>
@@ -23,7 +22,7 @@
 		<div class="form-group">
 			<label for="name" class="col-sm-2 control-label">Name (*):</label>
 			<div class="col-sm-10">
-				<form:input path="name" cssClass="form-control"/>
+				<form:input path="name" cssClass="form-control" />
 				<form:errors path="name" class="text-danger"/>
 			</div>
 		</div>
@@ -55,9 +54,9 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-2 control-label"> </label>
 			<div class="col-sm-10">
-				<input type="submit" value="Submit" class="btn btn-lg btn-primary" />
+				<button type="submit" name="save_product" value="${product.id}" 
+				class="btn btn-lg btn-primary" >Save product</button>
 			</div>
 		</div>
 

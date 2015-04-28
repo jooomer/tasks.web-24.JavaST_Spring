@@ -21,4 +21,8 @@ public class OrderItemService {
 		return orderItemRepository.findAllByOrder(order);
 	}
 
+	public void update(Set<OrderItem> orderItems) {
+		orderItemRepository.save(orderItems);
+	}
+
 }

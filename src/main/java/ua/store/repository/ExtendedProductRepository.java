@@ -16,7 +16,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Repository;
 
 import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.ProductCategory;
+import ua.store.domain.model.entity.Category;
 
 @Repository
 public class ExtendedProductRepository {
@@ -28,7 +28,7 @@ public class ExtendedProductRepository {
 	private EntityManager em;
 
 	public List<Product> findByProductCategoryByPage(
-			ProductCategory productCategory, int page, int itemsOnPage,
+			Category category, int page, int itemsOnPage,
 			Direction direction, String field) {
 		logger.debug("--- start");
 
@@ -39,11 +39,11 @@ public class ExtendedProductRepository {
 
 		Root<Product> rProduct = query.from(Product.class);
 
-		ParameterExpression<ProductCategory> pCategory = criteriaBuilder
-				.parameter(ProductCategory.class);
+		ParameterExpression<Category> pCategory = criteriaBuilder
+				.parameter(Category.class);
 
 		query.select(rProduct).where(
-				criteriaBuilder.equal(rProduct.get("productCategory"),
+				criteriaBuilder.equal(rProduct.get("category"),
 						pCategory));
 		
 		if (direction == Direction.ASC) {
@@ -54,7 +54,7 @@ public class ExtendedProductRepository {
 
 		TypedQuery<Product> typedQuery = em.createQuery(query);
 
-		typedQuery.setParameter(pCategory, productCategory);
+		typedQuery.setParameter(pCategory, category);
 
 		// page = 1;
 		// items = 50;
@@ -72,7 +72,7 @@ public class ExtendedProductRepository {
 		return typedQuery.getResultList().subList(fromIndex, toIndex);
 	}
 
-	public int getTotalPagesByCategory(ProductCategory productCategory,
+	public int getTotalPagesByCategory(Category category,
 			int page, int itemsOnPage) {
 		logger.debug("--- start");
 
@@ -82,15 +82,15 @@ public class ExtendedProductRepository {
 				.createQuery(Product.class);
 
 		Root<Product> rProduct = query.from(Product.class);
-		ParameterExpression<ProductCategory> pCategory = criteriaBuilder
-				.parameter(ProductCategory.class);
+		ParameterExpression<Category> pCategory = criteriaBuilder
+				.parameter(Category.class);
 
 		query.select(rProduct).where(
-				criteriaBuilder.equal(rProduct.get("productCategory"),
+				criteriaBuilder.equal(rProduct.get("category"),
 						pCategory));
 
 		TypedQuery<Product> typedQuery = em.createQuery(query);
-		typedQuery.setParameter(pCategory, productCategory);
+		typedQuery.setParameter(pCategory, category);
 
 		return typedQuery.getResultList().size() / itemsOnPage;
 	}

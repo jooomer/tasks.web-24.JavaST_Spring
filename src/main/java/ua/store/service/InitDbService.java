@@ -1,6 +1,9 @@
 package ua.store.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -17,7 +20,7 @@ import org.springframework.stereotype.Service;
 import ua.store.domain.constant.OrderStatus;
 import ua.store.domain.model.entity.Order;
 import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.ProductCategory;
+import ua.store.domain.model.entity.Category;
 import ua.store.domain.model.entity.Role;
 import ua.store.domain.model.entity.RoleType;
 import ua.store.domain.model.entity.User;
@@ -35,7 +38,7 @@ public class InitDbService {
 	private UserService userService;
 
 	@Autowired
-	private ProductCategoryService productCategoryService;
+	private CategoryService categoryService;
 	
 	@Autowired
 	private OrderService orderService;
@@ -132,21 +135,21 @@ public class InitDbService {
 
 		// init product types
 		logger.debug("--- init product types started.");
-		ProductCategory productCategoryCabinets = new ProductCategory();
-		productCategoryCabinets.setName("Cabinets");
-		productCategoryService.save(productCategoryCabinets);
+		Category categoryCabinets = new Category();
+		categoryCabinets.setName("Cabinets");
+		categoryService.save(categoryCabinets);
 
-		ProductCategory productCategorySofas = new ProductCategory();
-		productCategorySofas.setName("Sofas");
-		productCategoryService.save(productCategorySofas);
+		Category categorySofas = new Category();
+		categorySofas.setName("Sofas");
+		categoryService.save(categorySofas);
 
-		ProductCategory productCategoryArmchairs = new ProductCategory();
-		productCategoryArmchairs.setName("Armchairs");
-		productCategoryService.save(productCategoryArmchairs);
+		Category categoryArmchairs = new Category();
+		categoryArmchairs.setName("Armchairs");
+		categoryService.save(categoryArmchairs);
 
-		ProductCategory productCategoryTables = new ProductCategory();
-		productCategoryTables.setName("Tables");
-		productCategoryService.save(productCategoryTables);
+		Category categoryTables = new Category();
+		categoryTables.setName("Tables");
+		categoryService.save(categoryTables);
 
 		// init products
 		logger.debug("--- init products started.");
@@ -209,32 +212,34 @@ public class InitDbService {
 		
 		String comments = "Completely synergize resource sucking relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. ";
 
+		
 		int numberOfOrders = 10;
 		for (int i = 1; i < numberOfOrders + 1; i++) {
 			Order order1 = new Order();
 			order1.setUser(userService.findOne(1));
-			order1.setName("Order A/" + i);
+//			order1.setOrderNumber("Order A/" + i);
 			order1.addProduct(productService.findOne(1), 2);
 			order1.addProduct(productService.findOne(3), 1);
 			order1.addProduct(productService.findOne(4), 3);
 			order1.addProduct(productService.findOne(6), 5);
 			order1.setOrderStatus(OrderStatus.DELIVERED);
 			order1.setComments(comments);
-			orderService.save(order1);
+			orderService.saveNewOrder(order1);
+			
 
 			Order order2 = new Order();
 			order2.setUser(userService.findOne(2));
-			order2.setName("Order B/" + i);
+//			order2.setOrderNumber("Order B/" + i);
 			order2.addProduct(productService.findOne(2), 1);
 			order2.addProduct(productService.findOne(5), 4);
 			order2.addProduct(productService.findOne(10), 6);
-			order2.setOrderStatus(OrderStatus.DELIVERED);
+			order2.setOrderStatus(OrderStatus.WAITING_FOR_PAIMENT);
 			order2.setComments(comments);
-			orderService.save(order2);
+			orderService.saveNewOrder(order2);
 
 			Order order3 = new Order();
 			order3.setUser(userService.findOne(1));
-			order3.setName("Order C/" + i);
+//			order3.setOrderNumber("Order C/" + i);
 			order3.addProduct(productService.findOne(3),2);
 			order3.addProduct(productService.findOne(6), 5);
 			order3.addProduct(productService.findOne(11), 2);
@@ -242,15 +247,15 @@ public class InitDbService {
 			order3.addProduct(productService.findOne(15), 10);
 			order3.setOrderStatus(OrderStatus.CANCELED);
 			order3.setComments(comments);
-			orderService.save(order3);
+			orderService.saveNewOrder(order3);
 
 			Order order4 = new Order();
 			order4.setUser(userService.findOne(2));
-			order4.setName("Order D/" + i);
+//			order4.setOrderNumber("Order D/" + i);
 			order4.addProduct(productService.findOne(2), 15);
 			order4.setOrderStatus(OrderStatus.PAID);
 			order4.setComments(comments);
-			orderService.save(order4);
+			orderService.saveNewOrder(order4);
 		}
 		
 	}
@@ -268,7 +273,7 @@ public class InitDbService {
 		for (int i = 1; i < numberOfProducts + 1; i++) {
 			Product cabinet = new Product();
 			cabinet.setName("Cabinet " + i);
-			cabinet.setProductCategory(productCategoryService.findByName("Cabinets"));
+			cabinet.setCategory(categoryService.findByName("Cabinets"));
 			cabinet.setDescription(description);
 			cabinet.setPrice((double)(random.nextInt(100)) * 10);
 			cabinet.setPublishedDate(new Date(new GregorianCalendar(2014, 2, 25).getTimeInMillis()));
@@ -277,7 +282,7 @@ public class InitDbService {
 
 			Product sofa = new Product();
 			sofa.setName("Sofa " + i);
-			sofa.setProductCategory(productCategoryService.findByName("Sofas"));
+			sofa.setCategory(categoryService.findByName("Sofas"));
 			sofa.setDescription(description);
 			sofa.setPrice((double)(random.nextInt(100)) * 10);
 			sofa.setPublishedDate(new Date(new GregorianCalendar(2013, 5, 22).getTimeInMillis()));
@@ -286,7 +291,7 @@ public class InitDbService {
 
 			Product armchair = new Product();
 			armchair.setName("Armchair " + i);
-			armchair.setProductCategory(productCategoryService.findByName("Armchairs"));
+			armchair.setCategory(categoryService.findByName("Armchairs"));
 			armchair.setDescription(description);
 			armchair.setPrice((double)(random.nextInt(100)) * 10);
 			armchair.setPublishedDate(new Date(new GregorianCalendar(2012, 8, 5).getTimeInMillis()));
@@ -295,7 +300,7 @@ public class InitDbService {
 
 			Product table = new Product();
 			table.setName("Table " + i);
-			table.setProductCategory(productCategoryService.findByName("Tables"));
+			table.setCategory(categoryService.findByName("Tables"));
 			table.setDescription(description);
 			table.setPrice((double)(random.nextInt(100)) * 10);
 			table.setPublishedDate(new Date(new GregorianCalendar(2011, 10, 15).getTimeInMillis()));

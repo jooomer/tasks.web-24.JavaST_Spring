@@ -65,7 +65,7 @@ public class OrderController {
 		if (order == null) {
 			logger.debug("ERROR! Order with this number doesn't exist.");
 			model.addAttribute("message_danger", "ERROR! Order with this number doesn't exist.");
-			return "message-page";
+			return "message";
 		}
 
 		logger.debug("Order is found. Order #: " + id);
@@ -100,7 +100,7 @@ public class OrderController {
 		Order order = (Order) session.getAttribute("order");
 		if (order == null) {
 			model.addAttribute("message_warning", "You don't have a new order.");
-			return "message-page";
+			return "message";
 		}
 		
 		User user = userService.findByName(principal.getName());
@@ -129,7 +129,7 @@ public class OrderController {
 		Order order = (Order) request.getSession().getAttribute("order");
 		order.setComments(comments);
 		order.setOrderStatus(OrderStatus.WAITING_FOR_PAIMENT);
-		orderService.save(order);
+		orderService.saveNewOrder(order);
 		request.getSession().setAttribute("orderSaved", "success");
 		
 		// prepare User and Order to show an order in a page

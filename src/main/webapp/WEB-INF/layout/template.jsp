@@ -46,12 +46,12 @@
 					</div>
 					<div id="navbar" class="navbar-collapse collapse">
 						<ul class="nav navbar-nav">
-							<li class="${current == 'catalog' ? 'active' : ''}"><a href='<spring:url value="/catalog" />'>Catalog</a></li>
+							<li class="${current == 'catalog' ? 'active' : ''}"><a href='<spring:url value="/catalog" />'><spring:message code="main_menu.Catalog" /></a></li>
 						</ul>
 					 	<ul class="nav navbar-nav navbar-right">
 							<security:authorize access="!isAuthenticated()">
-								<li class="${current == 'register' ? 'active' : ''}"><a href='<spring:url value="/register" />'>Register</a></li>
-								<li class="${current == 'login' ? 'active' : ''}"><a href='<spring:url value="/login" />'>Sign in</a></li>
+								<li class="${current == 'register' ? 'active' : ''}"><a href='<spring:url value="/register" />'><spring:message code="main_menu.Register" /></a></li>
+								<li class="${current == 'login' ? 'active' : ''}"><a href='<spring:url value="/login" />'><spring:message code="main_menu.Sign_in" /></a></li>
 							</security:authorize>
 							<security:authorize access="isAuthenticated()">
 								<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -59,17 +59,17 @@
 										<security:authentication property="principal.username" /> 
 										<span class="caret"></span></a>
 									<ul class="dropdown-menu" role="menu">
-										<li><a href="<spring:url value="/account"/>">My account</a></li>
+										<li><a href="<spring:url value="/account"/>"><spring:message code="main_menu.My_account" /></a></li>
 										<li class="divider"></li>
-										<li class="dropdown-header">Products</li>
-										<li><a href="<spring:url value="/orders"/>">My orders</a></li>
+										<li class="dropdown-header"><spring:message code="main_menu.Products" /></li>
+										<li><a href="<spring:url value="/orders"/>"><spring:message code="main_menu.My_orders" /></a></li>
 									</ul>
 								</li>
-								<li><a href='<spring:url value="/logout" />'>Logout</a></li>
+								<li><a href='<spring:url value="/logout" />'><spring:message code="main_menu.Logout" /></a></li>
 							</security:authorize>
 							<li><a>|</a></li>
-							<li class="${current == 'cart' ? 'active' : ''}"><a href='<spring:url value="/cart" />'>Cart</a></li>
-							<li class="${current == 'search' ? 'active' : ''}"><a href='<spring:url value="/search" />'>Search</a></li>
+							<li class="${current == 'cart' ? 'active' : ''}"><a href='<spring:url value="/cart" />'><spring:message code="main_menu.Cart" /></a></li>
+<%-- 							<li class="${current == 'search' ? 'active' : ''}"><a href='<spring:url value="/search" />'><spring:message code="main_menu.Search" /></a></li> --%>
 	          			</ul>
 	          			
 						

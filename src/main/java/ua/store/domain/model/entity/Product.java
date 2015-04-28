@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -22,7 +23,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
 
-import ua.store.service.ProductCategoryService;
+import ua.store.service.CategoryService;
 
 @Entity
 @Table(name = "products")
@@ -31,7 +32,7 @@ public class Product implements Comparable<Product> {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
-	private Integer id;
+	private Long id;
 	
 	@Size(min = 3, message = "The product name must be at least 3 characters!")
 	@Column(name= "name", length = 100)
@@ -52,11 +53,11 @@ public class Product implements Comparable<Product> {
 	private Date publishedDate;
 	
 	@ManyToOne
-	@JoinColumn(name = "product_category_id")
+	@JoinColumn(name = "category_id")
 	@Enumerated(EnumType.STRING)
-	private ProductCategory productCategory;
+	private Category category;
 	
-	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Set<OrderItem> orderItems = new LinkedHashSet<>();
 	
 	@Override
@@ -67,14 +68,15 @@ public class Product implements Comparable<Product> {
 				+ "price:           " + price + "\n"
 				+ "quantityInStock: " + quantityInStock + "\n"
 				+ "publishedDate:   " + publishedDate + "\n"
-				+ "productCategory: " + productCategory.getName() + "\n"
+//				+ "category: " + category.getName() + "\n"
+				+ "category: " + category + "\n"
 				+ "description:     " + description + "\n";
 //				+ "orderItems size: " + orderItems.size() + "\n";
 	}
 	
 	@Override
 	public int compareTo(Product product) {
-		return this.id - product.getId();
+		return (int) (this.id - product.getId());
 	}
 	
 	@Override
@@ -85,11 +87,11 @@ public class Product implements Comparable<Product> {
 		return true;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -117,12 +119,12 @@ public class Product implements Comparable<Product> {
 		this.publishedDate = publishedDate;
 	}
 
-	public ProductCategory getProductCategory() {
-		return productCategory;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setProductCategory(ProductCategory productCategory) {
-		this.productCategory = productCategory;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public Double getPrice() {

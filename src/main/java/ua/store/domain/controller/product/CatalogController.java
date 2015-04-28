@@ -22,12 +22,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ua.store.domain.model.dto.SelectProductCategoryDto;
+import ua.store.domain.model.dto.SelectCategoryDto;
 import ua.store.domain.model.dto.SelectSortByDto;
 import ua.store.domain.model.entity.Order;
 import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.ProductCategory;
-import ua.store.service.ProductCategoryService;
+import ua.store.domain.model.entity.Category;
+import ua.store.domain.util.Util;
+import ua.store.service.CategoryService;
 import ua.store.service.ProductService;
 import ua.store.service.UserService;
 
@@ -44,11 +45,11 @@ public class CatalogController {
 	private UserService userService;
 
 	@Autowired
-	private ProductCategoryService productCategoryService;
+	private CategoryService categoryService;
 
 	@ModelAttribute("category")
-	public SelectProductCategoryDto constructSelectProductCategoryDto() {
-		return new SelectProductCategoryDto();
+	public SelectCategoryDto constructSelectCategoryDto() {
+		return new SelectCategoryDto();
 	}
 
 	@ModelAttribute("selectOrderBy")
@@ -121,7 +122,7 @@ public class CatalogController {
 			HttpServletRequest request,
 			@PathVariable String catIdStr,
 			@PathVariable String pageStr,
-			@ModelAttribute("category") SelectProductCategoryDto selectProductCategoryDto,
+			@ModelAttribute("category") SelectCategoryDto selectCategoryDto,
 			@ModelAttribute("selectSortBy") SelectSortByDto selectSortByDto) {
 		logger.debug("--- started");
 		logger.debug("URL: /category/" + catIdStr + "/products/page/" + pageStr);
@@ -173,12 +174,12 @@ public class CatalogController {
 		
 		
 		// initialize selected category
-		if (selectProductCategoryDto.getProductCategory() != null) {
+		if (selectCategoryDto.getCategory() != null) {
 			logger.debug("Selected category: "
-					+ selectProductCategoryDto.getProductCategory().getName());
+					+ selectCategoryDto.getCategory().getName());
 
 			// get catId from DTO and reload page
-			int catId = getCatIdFromDto(selectProductCategoryDto);
+			Long catId = getCatIdFromDto(selectCategoryDto);
 			return "redirect:/category/" + catId + "/products/page/1";
 		}
 
@@ -187,13 +188,13 @@ public class CatalogController {
 		// ---------------------------------
 
 		// get category Id and name from URL and check Id
-		int catId = parsePathVariable(catIdStr);
-		List<ProductCategory> listOfProductCategories = productCategoryService
+		int catId = (int) Util.parsePathVariable(catIdStr);
+		List<Category> listOfCategories = categoryService
 				.findAll();
 		String categoryName = null;
 
 		// check min/max category request
-		if (catId < 0 || catId > listOfProductCategories.size()) {
+		if (catId < 0 || catId > listOfCategories.size()) {
 			logger.debug("catId < 0 or catId > category number; catId = "
 					+ catId);
 			return "redirect:/category/" + 0 + "/products/page/" + pageStr;
@@ -212,7 +213,7 @@ public class CatalogController {
 					+ catId);
 
 			// get category name
-			categoryName = listOfProductCategories.get(catId - 1).getName();
+			categoryName = listOfCategories.get(catId - 1).getName();
 			totalPages = productService.getTotalPagesByCategory(categoryName, itemsOnPage);
 		}
 
@@ -221,7 +222,7 @@ public class CatalogController {
 		// ---------------------------------
 
 		// get page number from URL
-		int page = parsePathVariable(pageStr);
+		int page = (int) Util.parsePathVariable(pageStr);
 
 		// check min/max page request
 		if (page < 1) {
@@ -240,7 +241,7 @@ public class CatalogController {
 		model.addAttribute("catId", catId);
 
 		// prepare list of categories for a view
-		model.addAttribute("listOfProductCategories", listOfProductCategories);
+		model.addAttribute("listOfCategories", listOfCategories);
 
 		// prepare list of products for view
 		List<Product> listOfProducts = null;
@@ -262,32 +263,17 @@ public class CatalogController {
 	/**
 	 * gets category Id that user selected
 	 */
-	private int getCatIdFromDto(
-			SelectProductCategoryDto selectProductCategoryDto) {
-		String productCategoryName = selectProductCategoryDto
-				.getProductCategory().getName();
-		ProductCategory productCategory = productCategoryService
-				.findByName(productCategoryName);
-		if (productCategory != null) {
-			return productCategory.getId();
+	private Long getCatIdFromDto(
+			SelectCategoryDto selectCategoryDto) {
+		String categoryName = selectCategoryDto
+				.getCategory().getName();
+		Category category = categoryService
+				.findByName(categoryName);
+		if (category != null) {
+			return category.getId();
 		} else {
-			return 0;
+			return 0L;
 		}
-	}
-
-	/**
-	 * parse url parameter and check it
-	 */
-	private int parsePathVariable(String string) {
-		int number;
-		try {
-			number = Integer.valueOf(string);
-		} catch (NumberFormatException e) {
-			// throw new WrongUrlException(e);
-			// just show first
-			number = -1;
-		}
-		return number;
 	}
 
 

@@ -55,7 +55,6 @@ public class UserService {
 		return userRepository.findOne(id);
 	}
 
-	@Transactional
 	public User findOneWithOrders(long id) {
 		User user = findOne(id);
 		if (user == null) {
@@ -106,6 +105,12 @@ public class UserService {
 	}
 
 	public void delete(Long id) {
+		User user = userRepository.findOne(id);
+		Set<Order> orders = user.getOrders();
+		for (Order order : orders) {
+			order.setUser(null);
+		}
+		orderService.update(orders);
 		userRepository.delete(id);
 	}
 

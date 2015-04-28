@@ -14,14 +14,14 @@
       </div>
       <div class="modal-body">
 			<div class="alert alert-warning">
-				You are going to delete user permanently.<br>
-	      		Press "Delete user" to delete or "Cancel" to return to previous page. 
+				You are going to delete object permanently.<br>
+	      		Press "Delete" to delete or "Cancel" to return to previous page.
 			</div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-		<button type="submit" name="delete_user" value="${userId}" 
-		class="btn btn-danger btn-lg" >Delete user</button>
+		<button type="submit" name="${action}" value="${id}" 
+		class="btn btn-danger btn-lg" >Delete</button>
       </div>
 <!--     </div> -->
 <!--   </div> -->

@@ -29,7 +29,7 @@
 		<c:forEach items="${listOfOrders}" var="order">
 			<tr>
 				<td>
-					<a href='<spring:url value="/orders/${order.id}" />' class="btn btn-default" >${order.id}</a>
+					<a href='<spring:url value="/orders/${order.orderNumber}" />' class="btn btn-default" >${order.orderNumber}</a>
 				</td>
 				<td>
 					<fmt:formatDate value="${order.date}" type="both" dateStyle="long" timeStyle="short" />

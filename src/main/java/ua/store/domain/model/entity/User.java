@@ -80,18 +80,18 @@ public class User implements Comparable<User> {
 	@Column(name = "in_black_list")
 	private boolean inBlackList;
 	
-	private String userType;
+//	private String userType;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable
 	private Set<Role> roles = new HashSet<>();
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private Set<Order> orders = new HashSet<>();
 	
 	public void addRole(Role role) {
 		roles.add(role);
-		userType = role.getName().toString();
+//		userType = role.getName().toString();
 	}
 	
 	@Override
@@ -105,9 +105,9 @@ public class User implements Comparable<User> {
 				+ "Email:           " + email + "\n"
 				+ "Phone:           " + phone + "\n"
 				+ "Address:         " + address + "\n"
-				+ "Password:        " + password + "\n"
+				+ "Password:        " + password + "\n";
 //				+ "ConfirmPassword: " + confirmPassword + "\n"
-				+ "roles:           " + userType + "\n";
+//				+ "roles:           " + userType + "\n";
 	}
 
 	public Long getId() {
@@ -211,13 +211,13 @@ public class User implements Comparable<User> {
 		return (int) (this.id - user.getId());
 	}
 	
-	public String getUserType() {
-		return userType;
-	}
-
-	public void setUserType(String userType) {
-		this.userType = userType;
-	}
+//	public String getUserType() {
+//		return userType;
+//	}
+//
+//	public void setUserType(String userType) {
+//		this.userType = userType;
+//	}
 
 	public Set<Order> getOrders() {
 		return orders;
@@ -227,12 +227,4 @@ public class User implements Comparable<User> {
 		this.orders = orders;
 	}
 
-/*	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-*/
 }

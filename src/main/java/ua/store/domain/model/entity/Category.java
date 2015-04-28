@@ -6,29 +6,32 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name = "product_category")
+@Table(name = "category")
 //@JsonIgnoreProperties(ignoreUnknown = true)
-public class ProductCategory {
+public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false)
-	private Integer id;
+	private Long id;
 	
 //	@Column(length = 10)
+	@Size(min = 3, max = 100, message = "Category should have at least 3 and no more 100 characters.")
 	private String name;
 	
-	@OneToMany(mappedBy = "productCategory")
+	@OneToMany(mappedBy = "category", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 	private List<Product> products;
 	
 	public void addProduct(Product product) {
@@ -37,16 +40,16 @@ public class ProductCategory {
 	
 	@Override
 	public String toString() {
-		return "ProductCategory: -------------- \n"
+		return "Category: -------------- \n"
 				+ "Id: " + id + "\n"
 				+ "name: " + name;
 	}
 	
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 

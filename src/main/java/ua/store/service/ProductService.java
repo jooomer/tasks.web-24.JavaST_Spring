@@ -1,6 +1,7 @@
 package ua.store.service;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -11,8 +12,9 @@ import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
+import ua.store.domain.model.entity.OrderItem;
 import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.ProductCategory;
+import ua.store.domain.model.entity.Category;
 import ua.store.domain.model.entity.User;
 import ua.store.repository.ExtendedProductRepository;
 import ua.store.repository.ProductRepository;
@@ -31,7 +33,10 @@ public class ProductService {
 	private UserService userService;
 
 	@Autowired
-	private ProductCategoryService productCategoryService;
+	private CategoryService categoryService;
+	
+	@Autowired
+	private OrderItemService orderItemService;
 
 	public List<Product> findAll() {
 		return productRepository.findAll();
@@ -47,7 +52,7 @@ public class ProductService {
 				.getTotalPages();
 	}
 
-	public Product findOne(int id) {
+	public Product findOne(long id) {
 		return productRepository.findOne(id);
 	}
 
@@ -69,23 +74,33 @@ public class ProductService {
 		return productRepository.findOneByName(name);
 	}
 
-	@PreAuthorize(value = "#product.user.name == authentication.name or hasRole('ROLE_ADMIN')")
-	public void delete(@P("product") Product product) {
+//	@PreAuthorize(value = "#product.user.name == authentication.name or hasRole('ROLE_ADMIN')")
+//	public void delete(@P("product") Product product) {
+//		productRepository.delete(product);
+//	}
+
+	public void delete(Product product) {
+		product = productRepository.findOne(product.getId());
+		Set<OrderItem> orderItems = product.getOrderItems();
+		for (OrderItem orderItem : orderItems) {
+			orderItem.setProduct(null);
+		}
+		orderItemService.update(orderItems);
 		productRepository.delete(product);
 	}
 
-	public List<Product> findAllByCategory(ProductCategory productCategory) {
-		return productRepository.findByProductCategory(productCategory);
+	public List<Product> findAllByCategory(Category category) {
+		return productRepository.findByCategory(category);
 	}
 
 	public void save(Product product) {
-		ProductCategory productCategory = productCategoryService
-				.findByName(product.getProductCategory().getName());
-		product.setProductCategory(productCategory);
+		Category category = categoryService
+				.findByName(product.getCategory().getName());
+		product.setCategory(category);
 		productRepository.save(product);
 	}
 
-	public void delete(int id) {
+	public void delete(long id) {
 		productRepository.delete(id);
 	}
 
@@ -95,17 +110,17 @@ public class ProductService {
 
 	public List<Product> findByCategoryByPage(String categoryName, int page,
 			int itemsOnPage, Direction direction, String sortField) {
-		ProductCategory productCategory = productCategoryService
+		Category category = categoryService
 				.findByName(categoryName);
 		return extendedProductRepository.findByProductCategoryByPage(
-				productCategory, page, itemsOnPage,	direction, sortField);
+				category, page, itemsOnPage,	direction, sortField);
 	}
 
 	public int getTotalPagesByCategory(String categoryName, int itemsOnPage) {
-		ProductCategory productCategory = productCategoryService
+		Category category = categoryService
 				.findByName(categoryName);
 		return extendedProductRepository.getTotalPagesByCategory(
-				productCategory, 0, itemsOnPage);
+				category, 0, itemsOnPage);
 	}
 
 }

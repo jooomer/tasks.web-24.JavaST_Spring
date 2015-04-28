@@ -6,11 +6,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.ProductCategory;
+import ua.store.domain.model.entity.Category;
 import ua.store.domain.model.entity.User;
 
-public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Integer> {
+public interface CategoryRepository extends JpaRepository<Category, Long> {
 
-	ProductCategory findOneByName(String name);
+	Category findOneByName(String name);
 
 }

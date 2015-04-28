@@ -2,39 +2,38 @@ package ua.store.domain.model.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Type;
-
+import ua.store.domain.annotation.CategoryRequired;
 import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.ProductCategory;
+import ua.store.domain.model.entity.Category;
 
-public class AddProductDto {
+public class ProductDto {
 	
-	@Size(min = 3, max = 50, message = "The product name must be at least 3 and no more 50 characters!")
+	@Size(min = 3, max = 50, message = "The product name should be at least 3 and no more 50 characters!")
 	private String name;
 	
-	@Size(max = 200, message = "The description must be at least 3 and no more 200 characters!")
+	@Size(max = 2000, message = "The description should be at least 3 and no more 2000 characters!")
 	private String description;
 
-//	@Size(min = 1, max = 200, message = "The price must be at least 3 and no more 200 characters!")
 	@NotNull(message = "Price is required.")
-	@Digits(fraction = 2, integer = 100, message = "The price must look like '1234' or '1234.56'")
+	@Digits(fraction = 2, integer = 10, message = "The price should look like '1234' or '1234.56'")
+	@DecimalMin(value = "0.00", message = "The price can not be less than 0.00")
 	private Double price;
 	
-	private int quantityInStock;
+	@NotNull(message = "Quantity in stock is required.")
+	@Digits(fraction = 0, integer = 10, message = "The quantity in stock should look like '1234'")
+	@Min(value = 0, message = "The quantity in stock can not be less than 0")
+	private Integer quantityInStock;
 	
 	private Date publishedDate;
 	
-	private ProductCategory productCategory;
+	@CategoryRequired(message = "Category is required.")
+	private Category category;
 	
 	public Product getAllFields(Product product) {
 		product.setName(name);
@@ -42,7 +41,7 @@ public class AddProductDto {
 		product.setPrice(price);
 		product.setQuantityInStock(quantityInStock);
 		product.setPublishedDate(publishedDate);
-		product.setProductCategory(productCategory);
+		product.setCategory(category);
 		return product;
 	}
 
@@ -70,11 +69,11 @@ public class AddProductDto {
 		this.price = price;
 	}
 
-	public int getQuantityInStock() {
+	public Integer getQuantityInStock() {
 		return quantityInStock;
 	}
 
-	public void setQuantityInStock(int quantityInStock) {
+	public void setQuantityInStock(Integer quantityInStock) {
 		this.quantityInStock = quantityInStock;
 	}
 
@@ -86,12 +85,12 @@ public class AddProductDto {
 		this.publishedDate = publishedDate;
 	}
 
-	public ProductCategory getProductCategory() {
-		return productCategory;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setProductCategory(ProductCategory productCategory) {
-		this.productCategory = productCategory;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 

@@ -19,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import ua.store.domain.model.dto.SelectProductCategoryDto;
+import ua.store.domain.model.dto.SelectCategoryDto;
 import ua.store.domain.model.dto.SelectSortByDto;
 import ua.store.domain.model.entity.Order;
 import ua.store.domain.model.entity.Product;
-import ua.store.service.ProductCategoryService;
+import ua.store.domain.util.Util;
+import ua.store.service.CategoryService;
 import ua.store.service.ProductService;
 import ua.store.service.UserService;
 
@@ -40,11 +41,11 @@ public class ProductController {
 	private UserService userService;
 
 	@Autowired
-	private ProductCategoryService productCategoryService;
+	private CategoryService categoryService;
 
 	@ModelAttribute("category")
-	public SelectProductCategoryDto constructSelectProductCategoryDto() {
-		return new SelectProductCategoryDto();
+	public SelectCategoryDto constructSelectProductCategoryDto() {
+		return new SelectCategoryDto();
 	}
 
 	@ModelAttribute("selectOrderBy")
@@ -55,37 +56,32 @@ public class ProductController {
 	/**
 	 * shows product detail
 	 */
-	@RequestMapping("/products/{id}")
-	public String showProductDetail(Model model, @PathVariable int id) {
-		logger.debug("showProductDetail() started. Product Id is \"" + id
+	@RequestMapping("/products/{idStr}")
+	public String showProductDetail(Model model, @PathVariable String idStr) {
+		logger.debug("showProductDetail() started. Product Id is \"" + idStr
 				+ "\"");
 
+		// parse id and check it
+		long id = Util.parsePathVariable(idStr);
+		if (id < 0) {
+			logger.debug("ERROR! Wrong product id: " + idStr);
+			model.addAttribute("message_warning", "ERROR! Product is unavailable. Please, choose another one.");
+			return "message";
+		}
+		Product product = productService.findOne(id);
+		if (product == null) {
+			model.addAttribute("message_warning", "Error! Product is unavailable. Please, choose another one.");
+			return "message";
+		}
+		logger.debug("Product is found. Id: " + id);
+
 		// get Product from DB
-		model.addAttribute("product", productService.findOne(id));
+		model.addAttribute("product", product);
 
 		// show product detail
 		return "product-detail";
 	}
 
-	/**
-	 * deletes product
-	 */
-	@RequestMapping(value = "/products/{id}", method = RequestMethod.POST, params = { "delete" })
-	public String doDeleteProduct(Model model, @PathVariable int id,
-			RedirectAttributes redirectAttributes) {
-		logger.debug("doUpdateProduct() started. Product Id is \"" + id + "\"");
-
-		// delete Product by id
-		productService.delete(id);
-
-		// prepare message
-		redirectAttributes.addFlashAttribute("message",
-				"Congratulations! You've just successfully deleted a product.");
-
-		// show list of products again
-		return "redirect:/products";
-	}
-	
 	/**
 	 * sends product to cart from product detail
 	 */
@@ -95,19 +91,19 @@ public class ProductController {
 			HttpServletRequest request) {
 		logger.debug("doSendToCart() started. Product Id is \"" + idStr + "\"");
 
-		// get product id from URL
-		int id = parsePathVariable(idStr);
+		// parse id and check it
+		long id = Util.parsePathVariable(idStr);
 		if (id < 0) {
 			logger.debug("ERROR! Wrong product id: " + idStr);
-			return "error-page";
+			model.addAttribute("message", "ERROR! Wrong product id: " + idStr);
+			return "message";
 		}
-				
-		// get Product from DB
 		Product product = productService.findOne(id);
 		if (product == null) {
 			model.addAttribute("message", "Error! Product is unavailable. Please, choose another one.");
 			return "message";
 		}
+		logger.debug("Product is found. Id: " + id);
 
 		// get Order from session
 		// if absent, then get new one
@@ -126,21 +122,6 @@ public class ProductController {
 		redirectAttributes.addFlashAttribute("message",
 				"Product is successfully added to your cart.");
 		return "redirect:/products/" + id;
-	}
-
-	/**
-	 * parse url parameter and check it
-	 */
-	private int parsePathVariable(String string) {
-		int number;
-		try {
-			number = Integer.valueOf(string);
-		} catch (NumberFormatException e) {
-			// throw new WrongUrlException(e);
-			// just show first
-			number = -1;
-		}
-		return number;
 	}
 
 }

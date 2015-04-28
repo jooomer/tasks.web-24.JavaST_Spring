@@ -25,6 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.store.domain.model.dto.UserAccountDto;
 import ua.store.domain.model.entity.Order;
 import ua.store.domain.model.entity.User;
+import ua.store.domain.util.Util;
 import ua.store.service.OrderService;
 import ua.store.service.UserService;
 
@@ -59,7 +60,8 @@ public class UsersController {
 			) {
 		logger.debug("--- started"); 
 
-		long id = parsePathVariable(idStr);
+		// parse id and check it
+		long id = Util.parsePathVariable(idStr);
 		if (id < 0) {
 			logger.debug("ERROR! Wrong user Id in URL.");
 			model.addAttribute("message_danger", "This user doesn't exist.");
@@ -130,7 +132,7 @@ public class UsersController {
 	}
 	
 	@RequestMapping(value = {"/users", "/users/{idStr}"}, method = RequestMethod.POST, params = {"delete_user"})
-	public String doDeleteUserFromAccount(
+	public String doDeleteUser(
 			RedirectAttributes redirectAttributes,
 			@RequestParam("delete_user") Long id
 			) {
@@ -157,23 +159,24 @@ public class UsersController {
 			@PathVariable String idStr) {
 		logger.debug("--- started"); 
 
-		long id = parsePathVariable(idStr);
+		long id = Util.parsePathVariable(idStr);
 		if (id < 0) {
 			logger.debug("ERROR! Wrong user Id in URL.");
 			model.addAttribute("message_danger", "This user doesn't exist.");
-			return "message-page";
+			return "message";
 		}
 		User user = userService.findOneWithOrders(id);
 		if (user == null) {
 			logger.debug("ERROR! Wrong user Id in URL.");
 			model.addAttribute("message_warning", "This user doesn't exist.");
-			return "message-page";
+			return "message";
 		}
 		logger.debug("User is found. Id: " + id);
 		
-		model.addAttribute("userId", id);
+		model.addAttribute("id", id);
+		model.addAttribute("action", "delete_user");
 		
-		return "popup_delete_user";
+		return "popup_delete";
 	}
  	
 	@RequestMapping("/users/{idStr}/orders") 
@@ -183,11 +186,11 @@ public class UsersController {
 		logger.debug("--- started");
 		
 		// parse and check user id
-		Long id = parsePathVariable(idStr);
+		Long id = Util.parsePathVariable(idStr);
 		if (id < 0) {
 			logger.debug("ERROR! Wrong user Id in URL.");
 			model.addAttribute("message_danger", "This user doesn't exist.");
-			return "message-page";
+			return "message";
 		}
 		
 		// get user from DB and and check 
@@ -195,7 +198,7 @@ public class UsersController {
 		if (user == null) {
 			logger.debug("ERROR! Wrong user Id in URL.");
 			model.addAttribute("message_warning", "This user doesn't exist.");
-			return "message-page";
+			return "message";
 		}
 		logger.debug("User is found. Id: " + id);
 		
@@ -209,21 +212,5 @@ public class UsersController {
 		
 		return "orders";
 	}
-	
-	/**
-	 * parse url parameter and check it
-	 */
-	private long parsePathVariable(String string) {
-		long number;
-		try {
-			number = Integer.valueOf(string);
-		} catch (NumberFormatException e) {
-			// throw new WrongUrlException(e);
-			// just show first
-			number = -1;
-		}
-		return number;
-	}
-
 	
 }

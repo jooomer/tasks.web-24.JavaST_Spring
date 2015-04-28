@@ -24,8 +24,8 @@
     <put-attribute name="current" value="users" />
   </definition>
 
-  <definition name="popup_delete_user" template="/WEB-INF/view/popup/popup.jsp">
-    <put-attribute name="title" value="Users" />
+  <definition name="popup_delete" template="/WEB-INF/view/popup/popup.jsp">
+<!--     <put-attribute name="title" value="Users" /> -->
   </definition>
 
   <definition name="user-detail" extends="common">
@@ -43,25 +43,37 @@
   <definition name="product-detail" extends="common">
     <put-attribute name="title" value="Product detail" />
     <put-attribute name="body" value="/WEB-INF/view/product/product-detail.jsp" />
-    <put-attribute name="current" value="product-detail" />
+    <put-attribute name="current" value="catalog" />
+  </definition>
+
+  <definition name="product-update" extends="common">
+    <put-attribute name="title" value="Update product" />
+    <put-attribute name="body" value="/WEB-INF/view/product/update-product.jsp" />
+    <put-attribute name="current" value="catalog" />
   </definition>
 
   <definition name="add-product" extends="common">
     <put-attribute name="title" value="Add new product" />
     <put-attribute name="body" value="/WEB-INF/view/product/add-product.jsp" />
-    <put-attribute name="current" value="add-product" />
+    <put-attribute name="current" value="catalog" />
   </definition>
 
-  <definition name="add-product-type" extends="common">
-    <put-attribute name="title" value="Add new product type" />
-    <put-attribute name="body" value="/WEB-INF/view/add-product-type.jsp" />
-    <put-attribute name="current" value="add-product-type" />
+  <definition name="add-category" extends="common">
+    <put-attribute name="title" value="Add new category" />
+    <put-attribute name="body" value="/WEB-INF/view/product/add-category.jsp" />
+    <put-attribute name="current" value="add-category" />
   </definition>
 
-  <definition name="product-types" extends="common">
-    <put-attribute name="title" value="All product types" />
-    <put-attribute name="body" value="/WEB-INF/view/product-types.jsp" />
-    <put-attribute name="current" value="product-types" />
+  <definition name="update-category" extends="common">
+    <put-attribute name="title" value="Update category" />
+    <put-attribute name="body" value="/WEB-INF/view/product/update-category.jsp" />
+    <put-attribute name="current" value="update-category" />
+  </definition>
+
+  <definition name="categories" extends="common">
+    <put-attribute name="title" value="All categories" />
+    <put-attribute name="body" value="/WEB-INF/view/product/categories.jsp" />
+    <put-attribute name="current" value="categories" />
   </definition>
 
   <definition name="account" extends="common">
@@ -118,7 +130,7 @@
     <put-attribute name="current" value="error-page" />
   </definition>
 
-  <definition name="message-page" extends="common">
+  <definition name="message" extends="common">
     <put-attribute name="title" value="Message" />
     <put-attribute name="body" value="/WEB-INF/view/common/message-page.jsp" />
     <put-attribute name="current" value="message" />

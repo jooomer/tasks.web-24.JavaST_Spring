@@ -62,6 +62,11 @@ public class AccountController {
 		logger.debug("--- started");
 
 		User user = userService.findOne(id);
+		if (user == null) {
+			logger.debug("ERROR! User is absent in DB. Wrong user id: " + id);
+			model.addAttribute("message_alert", "Error! User is unavailable.");
+			return "message";
+		}
 		logger.debug(user.toString());
 
 		UserAccountDto userAccountDto = new UserAccountDto();

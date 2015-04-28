@@ -62,7 +62,8 @@
 					<c:set var="userId" value="${user.id}" />
 <!-- 					<button type="button" data-toggle="modal" data-target="#myModal" -->
 <%-- 					class="btn btn-danger btn-sm" name="delete_user" value="${user.id}">Delete</button> --%>
-					<a href='<spring:url value="/users/${user.id}/delete" />' type="button" data-toggle="modal" data-target="#myModal"
+					<a href='<spring:url value="/users/${user.id}/delete" />' 
+					type="button" data-toggle="modal" data-target="#myModal"
 					class="btn btn-danger btn-sm" >Delete</a>
 				</td>
 			</tr>
@@ -72,13 +73,14 @@
 </table>
 
 <p class="text-right">
-	<button type="submit" name="update_users" value="${users}" class="btn btn-success btn-lg">Update users</button>
+	<button type="submit" name="update_users" value="${users}" class="btn btn-success btn-lg" >Update users</button>
 </p>
 
 <!-- Modal -->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+    
 <!--       <div class="modal-header"> -->
 <!--         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
 <!--         <h4 class="modal-title" id="myModalLabel">Attention!</h4> -->
@@ -94,6 +96,7 @@
 <%-- 		<button type="submit" name="delete_user" value="${userId}"  --%>
 <!-- 		class="btn btn-danger btn-lg" >Delete user</button> -->
 <!--       </div> -->
+
     </div>
   </div>
 </div>

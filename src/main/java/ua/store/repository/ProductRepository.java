@@ -2,21 +2,17 @@ package ua.store.repository;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import ua.store.domain.model.entity.Order;
-import ua.store.domain.model.entity.OrderItem;
 import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.ProductCategory;
-import ua.store.domain.model.entity.User;
+import ua.store.domain.model.entity.Category;
 
-public interface ProductRepository extends JpaRepository<Product, Integer> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
 	Product findOneByName(String name);
 
-	List<Product> findByProductCategory(ProductCategory productCategory);
+	List<Product> findByCategory(Category category);
+
+	Product findOne(Long id);
 
 }

@@ -64,17 +64,17 @@ body {
 
 <form class="form-signin" action="<spring:url value="/j_spring_security_check" />" method="post">
 
-	<h2 class="form-signin-heading">Please sign in</h2>
+	<h2 class="form-signin-heading"><spring:message code="login.Please_sign_in" /></h2>
 	
 	<c:if test="${login_error eq true}">
-		<div class="alert alert-warning">Invalid name or password!</div>
+		<div class="alert alert-warning"><spring:message code="login.Error_message" /></div>
 	</c:if>
 
-	<input type="text" name="j_username" class="form-control" placeholder="Name" required autofocus> 
-	<input type="password" name="j_password" class="form-control" placeholder="Password" required>
+	<input type="text" name="j_username" class="form-control" placeholder="<spring:message code="login.Name" />" required autofocus> 
+	<input type="password" name="j_password" class="form-control" placeholder="<spring:message code="login.Password" />" required>
 	<div class="row">
-		<div class="col-md-8"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button></div>
-		<div><a href="#" onclick="window.history.go(-1); return false;" class="btn btn-lg btn-default" role="button">Cancel</a></div>
+		<div class="col-md-8"><button class="btn btn-lg btn-primary btn-block" type="submit"><spring:message code="login.Sign_in" /></button></div>
+		<div><a href="#" onclick="window.history.go(-1); return false;" class="btn btn-lg btn-default" role="button"><spring:message code="login.Cancel" /></a></div>
 	</div>
 </form>
 
