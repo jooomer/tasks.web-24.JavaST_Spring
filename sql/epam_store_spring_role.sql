@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `store_spring` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `store_spring`;
+CREATE DATABASE  IF NOT EXISTS `epam_store_spring` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `epam_store_spring`;
 -- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: store_spring
+-- Host: localhost    Database: epam_store_spring
 -- ------------------------------------------------------
 -- Server version	5.6.21-log
 
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-20 17:40:49
+-- Dump completed on 2015-04-29 14:07:37

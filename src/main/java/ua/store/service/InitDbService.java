@@ -245,7 +245,7 @@ public class InitDbService {
 			order3.addProduct(productService.findOne(11), 2);
 			order3.addProduct(productService.findOne(12), 3);
 			order3.addProduct(productService.findOne(15), 10);
-			order3.setOrderStatus(OrderStatus.CANCELED);
+			order3.setOrderStatus(OrderStatus.WAITING_FOR_PAIMENT);
 			order3.setComments(comments);
 			orderService.saveNewOrder(order3);
 
