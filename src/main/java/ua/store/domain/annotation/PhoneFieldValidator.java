@@ -9,7 +9,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.store.domain.controller.user.RegisterController;
+import ua.store.web.controller.user.RegisterController;
 
 public class PhoneFieldValidator implements ConstraintValidator<PhoneField, String> {
 

@@ -12,10 +12,10 @@ import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.model.entity.OrderItem;
-import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.Category;
-import ua.store.domain.model.entity.User;
+import ua.store.domain.entity.Category;
+import ua.store.domain.entity.OrderItem;
+import ua.store.domain.entity.Product;
+import ua.store.domain.entity.User;
 import ua.store.repository.ExtendedProductRepository;
 import ua.store.repository.ProductRepository;
 

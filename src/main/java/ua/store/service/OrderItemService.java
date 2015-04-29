@@ -6,8 +6,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.model.entity.Order;
-import ua.store.domain.model.entity.OrderItem;
+import ua.store.domain.entity.Order;
+import ua.store.domain.entity.OrderItem;
 import ua.store.repository.OrderItemRepository;
 
 @Service

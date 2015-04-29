@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="tasks.web-24.JavaST_Spring">
-		<class>ua.store.domain.model.entity.Product</class>
-		<class>ua.store.domain.model.entity.Category</class>
-		<class>ua.store.domain.model.entity.Role</class>
-		<class>ua.store.domain.model.entity.User</class>
-		<class>ua.store.domain.model.entity.Order</class>
-		<class>ua.store.domain.model.entity.OrderItem</class>
+		<class>ua.store.domain.entity.Product</class>
+		<class>ua.store.domain.entity.Category</class>
+		<class>ua.store.domain.entity.Role</class>
+		<class>ua.store.domain.entity.User</class>
+		<class>ua.store.domain.entity.Order</class>
+		<class>ua.store.domain.entity.OrderItem</class>
 	</persistence-unit>
 </persistence>

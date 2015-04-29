@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.store.domain.model.dto.UserRegisterDto;
+import ua.store.domain.dto.UserRegisterDto;
 
 public class ConfirmPasswordValidator implements ConstraintValidator<ConfirmPassword, UserRegisterDto> {
 

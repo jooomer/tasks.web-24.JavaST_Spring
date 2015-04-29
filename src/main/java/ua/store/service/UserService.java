@@ -11,11 +11,11 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.model.entity.Order;
-import ua.store.domain.model.entity.OrderItem;
-import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.Role;
-import ua.store.domain.model.entity.User;
+import ua.store.domain.entity.Order;
+import ua.store.domain.entity.OrderItem;
+import ua.store.domain.entity.Product;
+import ua.store.domain.entity.Role;
+import ua.store.domain.entity.User;
 import ua.store.repository.OrderRepository;
 import ua.store.repository.ProductRepository;
 import ua.store.repository.RoleRepository;

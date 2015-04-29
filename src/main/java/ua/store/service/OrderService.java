@@ -9,10 +9,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.model.entity.Order;
-import ua.store.domain.model.entity.OrderItem;
-import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.User;
+import ua.store.domain.entity.Order;
+import ua.store.domain.entity.OrderItem;
+import ua.store.domain.entity.Product;
+import ua.store.domain.entity.User;
 import ua.store.repository.OrderRepository;
 
 @Service

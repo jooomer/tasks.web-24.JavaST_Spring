@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidatorContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import ua.store.domain.model.entity.Category;
+import ua.store.domain.entity.Category;
 
 public class CategoryRequiredValidator implements ConstraintValidator<CategoryRequired, Category> {
 

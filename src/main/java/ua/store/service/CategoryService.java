@@ -8,8 +8,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.model.entity.Product;
-import ua.store.domain.model.entity.Category;
+import ua.store.domain.entity.Category;
+import ua.store.domain.entity.Product;
 import ua.store.repository.CategoryRepository;
 
 @Service
