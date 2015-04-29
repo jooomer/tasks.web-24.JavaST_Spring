@@ -7,10 +7,10 @@ CREATE TABLE `products` (
   `price` double DEFAULT NULL,
   `published_date` datetime DEFAULT NULL,
   `quantity_in_stock` int(11) DEFAULT NULL,
-  `product_category_id` int(11) DEFAULT NULL,
+  `category_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_m2wi2jkrcn171xn3tvfndwgxc` (`product_category_id`),
-  CONSTRAINT `FK_m2wi2jkrcn171xn3tvfndwgxc` FOREIGN KEY (`product_category_id`) REFERENCES `product_category` (`id`)
+  KEY `FK_m2wi2jkrcn171xn3tvfndwgxc` (`category_id`),
+  CONSTRAINT `FK_m2wi2jkrcn171xn3tvfndwgxc` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4001 DEFAULT CHARSET=utf8;
 
 LOCK TABLES `products` WRITE;
