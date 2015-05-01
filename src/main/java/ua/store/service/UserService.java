@@ -6,19 +6,14 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.entity.Order;
-import ua.store.domain.entity.OrderItem;
-import ua.store.domain.entity.Product;
-import ua.store.domain.entity.Role;
-import ua.store.domain.entity.User;
-import ua.store.repository.OrderRepository;
-import ua.store.repository.ProductRepository;
-import ua.store.repository.RoleRepository;
+import ua.store.domain.Order;
+import ua.store.domain.OrderItem;
+import ua.store.domain.Role;
+import ua.store.domain.User;
+import ua.store.dto.UserRegisterDto;
 import ua.store.repository.UserRepository;
 
 @Service
@@ -35,17 +30,7 @@ public class UserService {
 	private OrderItemService orderItemService;
 	
 	@Autowired
-	private OrderRepository orderRepository;
-	
-	@Autowired
-	private RoleRepository roleRepository;
-	
-	@Autowired
 	private RoleService roleService;
-	
-	@Autowired
-	private ProductRepository productRepository;
-	
 	
 	public List<User> findAll() {
 		return userRepository.findAll();
@@ -60,14 +45,12 @@ public class UserService {
 		if (user == null) {
 			return null;
 		}
-//		Set<Order> orders = orderRepository.findByUser(user, new PageRequest(0, 10, Direction.ASC, "date"));
-		Set<Order> orders = orderRepository.findAllByUser(user);
+		Set<Order> orders = orderService.findAllByUser(user);
 		user.setOrders(orders);
 		return user;
 	}
 
 	public void save(User user) {
-		user.setEnabled(true);
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		user.setPassword(encoder.encode(user.getPassword()));
 		userRepository.save(user);
@@ -92,7 +75,6 @@ public class UserService {
 		Set<Order> orders = orderService.findAllByUser(user);
 		for (Order order : orders) {
 			Set<OrderItem> orderItems = orderItemService.findAllByOrder(order);
-//			List<OrderItem> orderItems = orderItemService.findAllByOrder(order);
 			order.setOrderItems(orderItems);
 		}
 		user.setOrders(orders);
@@ -114,14 +96,22 @@ public class UserService {
 		userRepository.delete(id);
 	}
 
-//	public Object findAllWithRoles() {
-//		List<User> users = userRepository.findAll();
-//		for (User user : users) {
-//			Set<Role> roles = roleService.findAllByUser(user);
-//			user.setRoles(roles);
-//		}
-//		return users;
-//	}
-
+	public User createAndSaveNewUser(UserRegisterDto userRegisterDto) {
+		User user = new User();
+		user.setName(userRegisterDto.getName());
+		user.setFirstName(userRegisterDto.getFirstName());
+		user.setLastName(userRegisterDto.getLastName());
+		user.setEmail(userRegisterDto.getEmail());
+		user.setPhone(userRegisterDto.getPhone());
+		user.setAddress(userRegisterDto.getAddress());
+		user.setPassword(userRegisterDto.getPassword());
+		Role role = roleService.findByName(Role.Name.ROLE_USER);
+		user.addRole(role);
+		user.setEnabled(true);
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+		user.setPassword(encoder.encode(user.getPassword()));
+		userRepository.save(user);
+		return user;
+	}
 
 }

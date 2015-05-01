@@ -29,13 +29,13 @@
 		<c:forEach items="${listOfOrders}" var="order">
 			<tr>
 				<td>
-					<a href='<spring:url value="/orders/${order.orderNumber}" />' class="btn btn-default" >${order.orderNumber}</a>
+					<a href='<spring:url value="/orders/${order.id}" />' class="btn btn-default" >${order.number}</a>
 				</td>
 				<td>
 					<fmt:formatDate value="${order.date}" type="both" dateStyle="long" timeStyle="short" />
 				</td>
 				<td>
-					${order.orderStatus.name}
+					${order.status.name}
 				</td>
 				<td>
 					 <fmt:formatNumber type="number"  minFractionDigits="2" value="${order.amount}"/>
@@ -44,7 +44,7 @@
 					${order.comments}
 				</td>
 				<td>
-					<c:if test="${order.orderStatus eq 'WAITING_FOR_PAIMENT'}" >
+					<c:if test="${order.status eq 'WAITING_FOR_PAIMENT'}" >
 						<form action="<spring:url value="/orders" />" method="post">
 							<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger btn-sm">Cancel</button>
 						</form>

@@ -1,6 +1,5 @@
 package ua.store.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -8,8 +7,8 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.entity.Category;
-import ua.store.domain.entity.Product;
+import ua.store.domain.Category;
+import ua.store.domain.Product;
 import ua.store.repository.CategoryRepository;
 
 @Service
@@ -21,15 +20,6 @@ public class CategoryService {
 	
 	@Autowired
 	private ProductService productService;
-	
-//	public List<String> findAll() {
-//		List<ProductType> productTypes = productTypeRepository.findAll();
-//		List<String> types = new ArrayList<>();
-//		for (ProductType productType : productTypes) {
-//			types.add(productType.getName());
-//		}
-//		return types;
-//	}
 
 	public List<Category> findAll() {
 		return categoryRepository.findAll();

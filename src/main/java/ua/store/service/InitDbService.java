@@ -1,9 +1,6 @@
 package ua.store.service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -17,13 +14,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.constant.OrderStatus;
-import ua.store.domain.entity.Category;
-import ua.store.domain.entity.Order;
-import ua.store.domain.entity.Product;
-import ua.store.domain.entity.Role;
-import ua.store.domain.entity.RoleType;
-import ua.store.domain.entity.User;
+import ua.store.domain.Category;
+import ua.store.domain.Order;
+import ua.store.domain.Product;
+import ua.store.domain.Role;
+import ua.store.domain.User;
 
 @Transactional
 @Service
@@ -53,7 +48,7 @@ public class InitDbService {
 		logger.debug("Tomcat path: " + System.getProperty("catalina.base"));
 		System.out.println(System.getProperty("user.name"));
 		
-		if (roleService.findByName(RoleType.ROLE_ADMIN) != null) {
+		if (roleService.findByName(Role.Name.ROLE_ADMIN) != null) {
 			return;
 		}
 		
@@ -64,23 +59,18 @@ public class InitDbService {
 
 	public void doInit() {
 		
-//		roleRepository.deleteAll();
-//		userRepository.deleteAll();
-//		productRepository.deleteAll();
-//		productTypeRepository.deleteAll();
-		
 		// init roles
 		logger.debug("--- init roles started.");
 		Role roleUser = new Role();
-		roleUser.setName(RoleType.ROLE_USER);
+		roleUser.setName(Role.Name.ROLE_USER);
 		roleService.save(roleUser);
 
 		Role roleAdmin = new Role();
-		roleAdmin.setName(RoleType.ROLE_ADMIN);
+		roleAdmin.setName(Role.Name.ROLE_ADMIN);
 		roleService.save(roleAdmin);
 
 		Role roleManager = new Role();
-		roleManager.setName(RoleType.ROLE_MANAGER);
+		roleManager.setName(Role.Name.ROLE_MANAGER);
 		roleService.save(roleManager);
 
 		// init first user "admin"
@@ -98,6 +88,7 @@ public class InitDbService {
 		userAdmin.setEnabled(true);
 		userAdmin.addRole(roleUser);
 		userAdmin.addRole(roleAdmin);
+		userAdmin.setEnabled(true);
 		userService.save(userAdmin);
 
 		// init second user "user"
@@ -114,6 +105,7 @@ public class InitDbService {
 		userUser.setPassword("user");
 		userUser.setEnabled(true);
 		userUser.addRole(roleUser);
+		userUser.setEnabled(true);
 		userService.save(userUser);
 
 		// init second user "manager"
@@ -131,6 +123,7 @@ public class InitDbService {
 		userManager.setEnabled(true);
 		userManager.addRole(roleUser);
 		userManager.addRole(roleManager);
+		userManager.setEnabled(true);
 		userService.save(userManager);
 
 		// init product types
@@ -217,43 +210,39 @@ public class InitDbService {
 		for (int i = 1; i < numberOfOrders + 1; i++) {
 			Order order1 = new Order();
 			order1.setUser(userService.findOne(1));
-//			order1.setOrderNumber("Order A/" + i);
 			order1.addProduct(productService.findOne(1), 2);
 			order1.addProduct(productService.findOne(3), 1);
 			order1.addProduct(productService.findOne(4), 3);
 			order1.addProduct(productService.findOne(6), 5);
-			order1.setOrderStatus(OrderStatus.DELIVERED);
+			order1.setStatus(Order.Status.DELIVERED);
 			order1.setComments(comments);
 			orderService.saveNewOrder(order1);
 			
 
 			Order order2 = new Order();
 			order2.setUser(userService.findOne(2));
-//			order2.setOrderNumber("Order B/" + i);
 			order2.addProduct(productService.findOne(2), 1);
 			order2.addProduct(productService.findOne(5), 4);
 			order2.addProduct(productService.findOne(10), 6);
-			order2.setOrderStatus(OrderStatus.WAITING_FOR_PAIMENT);
+			order2.setStatus(Order.Status.WAITING_FOR_PAIMENT);
 			order2.setComments(comments);
 			orderService.saveNewOrder(order2);
 
 			Order order3 = new Order();
 			order3.setUser(userService.findOne(1));
-//			order3.setOrderNumber("Order C/" + i);
 			order3.addProduct(productService.findOne(3),2);
 			order3.addProduct(productService.findOne(6), 5);
 			order3.addProduct(productService.findOne(11), 2);
 			order3.addProduct(productService.findOne(12), 3);
 			order3.addProduct(productService.findOne(15), 10);
-			order3.setOrderStatus(OrderStatus.WAITING_FOR_PAIMENT);
+			order3.setStatus(Order.Status.WAITING_FOR_PAIMENT);
 			order3.setComments(comments);
 			orderService.saveNewOrder(order3);
 
 			Order order4 = new Order();
 			order4.setUser(userService.findOne(2));
-//			order4.setOrderNumber("Order D/" + i);
 			order4.addProduct(productService.findOne(2), 15);
-			order4.setOrderStatus(OrderStatus.PAID);
+			order4.setStatus(Order.Status.PAID);
 			order4.setComments(comments);
 			orderService.saveNewOrder(order4);
 		}
@@ -309,6 +298,7 @@ public class InitDbService {
 		}
 		
 		// save products to DB
+		logger.debug("List of products is ready to save");
 		productService.save(products);
 	}
 

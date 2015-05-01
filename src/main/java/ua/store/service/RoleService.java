@@ -5,8 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.entity.Role;
-import ua.store.domain.entity.RoleType;
+import ua.store.domain.Role;
 import ua.store.repository.RoleRepository;
 
 @Service
@@ -16,7 +15,7 @@ public class RoleService {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	public Role findByName(RoleType name) {
+	public Role findByName(Role.Name name) {
 		return roleRepository.findByName(name);
 	}
 
@@ -24,10 +23,4 @@ public class RoleService {
 		roleRepository.save(role);
 	}
 
-//	public Set<Role> findAllByUser(User user) {
-//		return roleRepository.findAllByUser(user);
-//	}
-	
-	
-	
 }

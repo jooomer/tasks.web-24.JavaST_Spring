@@ -8,7 +8,7 @@
 	<tbody>
 		<tr>
 			<th width="20%">Order #:</th>
-			<td>${order.orderNumber}</td>
+			<td>${order.number}</td>
 		</tr>
 		<tr>
 			<th><spring:message code="order.Date" />:</th>
@@ -30,7 +30,7 @@
 		</tr>
 		<tr>
 			<th>Order status:</th>
-			<td>${order.orderStatus.name}
+			<td>${order.status.name}
 <%-- 			<c:if test="${not empty listOfOrderStatuses}" > --%>
 <!-- 				&nbsp; -->
 <%-- 				<form:form commandName="orderStatusStr" > --%>
@@ -86,7 +86,7 @@
 		</tbody>
 	</table>
 
-<c:if test="${order.orderStatus eq 'WAITING_FOR_PAIMENT'}" >
+<c:if test="${order.status eq 'WAITING_FOR_PAIMENT'}" >
 	<form action="<spring:url value="/orders" />" method="post">
 		<p class="text-right">
 			<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger"><spring:message code="order.Cancel_this_order" /></button>

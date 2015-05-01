@@ -8,14 +8,11 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
-import org.springframework.security.access.method.P;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.entity.Category;
-import ua.store.domain.entity.OrderItem;
-import ua.store.domain.entity.Product;
-import ua.store.domain.entity.User;
+import ua.store.domain.Category;
+import ua.store.domain.OrderItem;
+import ua.store.domain.Product;
 import ua.store.repository.ExtendedProductRepository;
 import ua.store.repository.ProductRepository;
 
@@ -28,9 +25,6 @@ public class ProductService {
 
 	@Autowired
 	private ExtendedProductRepository extendedProductRepository;
-
-	@Autowired
-	private UserService userService;
 
 	@Autowired
 	private CategoryService categoryService;
@@ -55,20 +49,6 @@ public class ProductService {
 	public Product findOne(long id) {
 		return productRepository.findOne(id);
 	}
-
-	// public List<Product> findAllByUserName(String name) {
-	// List<Product> myProducts = productRepository.findAllByUserName(name);
-	// return myProducts;
-	// }
-
-	// public void save(Product product, String name) {
-	// User user = userService.findOneWithCarts(name);
-	// product.setUser(user);
-	// String productTypeName = product.getProductType().getName();
-	// ProductType productType = productTypeService.findByName(productTypeName);
-	// product.setProductType(productType);
-	// productRepository.save(product);
-	// }
 
 	public Product findOneByName(String name) {
 		return productRepository.findOneByName(name);

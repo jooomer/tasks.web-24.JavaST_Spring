@@ -9,10 +9,9 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import ua.store.domain.entity.Order;
-import ua.store.domain.entity.OrderItem;
-import ua.store.domain.entity.Product;
-import ua.store.domain.entity.User;
+import ua.store.domain.Order;
+import ua.store.domain.OrderItem;
+import ua.store.domain.User;
 import ua.store.repository.OrderRepository;
 
 @Service
@@ -26,12 +25,13 @@ public class OrderService {
 	private OrderItemService orderItemService;
 	
 	public void saveNewOrder(Order order) {
+		order.setStatus(Order.Status.WAITING_FOR_PAIMENT);
 		orderRepository.save(order);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(order.getDate());
 		int year = cal.get(Calendar.YEAR);
-		String orderNumber = "#" + year + "-" + order.getId();
-		order.setOrderNumber(orderNumber);
+		String number = "#" + year + "-" + order.getId();
+		order.setNumber(number);
 		orderRepository.save(order);
 	}
 

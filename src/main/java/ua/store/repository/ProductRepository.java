@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import ua.store.domain.entity.Category;
-import ua.store.domain.entity.Product;
+import ua.store.domain.Category;
+import ua.store.domain.Product;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
