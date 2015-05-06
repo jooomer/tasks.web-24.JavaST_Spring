@@ -7,29 +7,27 @@
 <table class="table table-hover">
 	<tbody>
 		<tr>
-			<th width="20%">Order #:</th>
+			<th width="20%"><spring:message code="order.Order_#" text="Order #"/>:</th>
 			<td>${order.number}</td>
 		</tr>
 		<tr>
-			<th><spring:message code="order.Date" />:</th>
+			<th><spring:message code="order.Date" text="Date"/>:</th>
 			<td><fmt:formatDate value="${order.date}" type="both" dateStyle="long" timeStyle="short" /></td>
 		</tr>
 		<tr>
-			<th>Amount, $:</th>
+			<th><spring:message code="order.Amount" text="Amount"/>, $:</th>
 			<td><fmt:formatNumber type="number"  minFractionDigits="2" value="${order.amount}"/></td>
 		</tr>
 		<tr>
-			<th>Customer:</th>
-<%-- 			<td>${user.firstName}&nbsp;${user.lastName}</td> --%>
+			<th><spring:message code="order.Customer" text="Customer"/>:</th>
 			<td>${order.user.firstName}&nbsp;${order.user.lastName}</td>
 		</tr>
 		<tr>
-			<th><spring:message code="order.Ship_to" />:</th>
-<%-- 			<td><c:out value="${user.address}" /></td> --%>
+			<th><spring:message code="order.Ship_to" text="Ship to"/>:</th>
 			<td><c:out value="${order.user.address}" /></td>
 		</tr>
 		<tr>
-			<th>Order status:</th>
+			<th><spring:message code="order.Order_status" text="Order status"/>:</th>
 			<td>${order.status.name}
 <%-- 			<c:if test="${not empty listOfOrderStatuses}" > --%>
 <!-- 				&nbsp; -->
@@ -43,7 +41,7 @@
 			</td>
 		</tr>
 		<tr>
-			<th><spring:message code="order.Your_comments" />:</th>
+			<th><spring:message code="order.Your_comments" text="Your comments"/>:</th>
 			<td><c:out value="${order.comments}" /></td>
 		</tr>
 	</tbody>
@@ -62,7 +60,6 @@
 			</tr>
 		</thead>
 		<tbody>
-<%-- 			<c:forEach var="orderItem" items="${listOfOrderItems}"> --%>
 			<c:forEach var="orderItem" items="${order.orderItems}">
 				<tr>
 					<td>${orderItem.product.category.name}</td>

@@ -24,14 +24,10 @@
 					</td>
 					<td>
 						<button formaction="<spring:url value="/categories/${category.id}/update" />" 
-						type="submit" class="btn btn-sm btn-primary" >Update</button>
-
-<%-- 						<a href='<spring:url value="/categories/${category.id}/delete" />'  --%>
-<!-- 						type="button" data-toggle="modal" data-target="#myModal" -->
-<!-- 						class="btn btn-danger btn-sm" >Delete</a>						 -->
+							type="submit" class="btn btn-sm btn-primary" >Update</button>
 						<a href='<spring:url value="/categories/${category.id}/delete" />' 
-						type="button" data-toggle="modal" data-target="#myModal"
-						class="btn btn-danger btn-sm" >Delete</a>						
+							type="button" data-toggle="modal" data-target="#myModal"
+							class="btn btn-danger btn-sm" >Delete</a>						
 					</td>
 				</tr>
 			</c:forEach>

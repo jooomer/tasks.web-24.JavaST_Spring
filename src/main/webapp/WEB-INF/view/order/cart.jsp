@@ -4,11 +4,6 @@
 <%@ include file="/WEB-INF/layout/taglib.jsp"%>
 <%@ include file="/WEB-INF/layout/message.jsp" %>
 
-<%-- <c:if test="${empty listOfOrderItems}"> --%>
-<!-- 		<fmt:message key="cart.Your_cart_is_empty" />. -->
-<!-- 	<div class="alert alert-info" role="alert">Your cart is empty.</div> -->
-<%-- </c:if> --%>
-
 <c:if test="${not empty listOfOrderItems}">
 	<table class="table table-bordered table-hover table-stripped">
 		<thead>

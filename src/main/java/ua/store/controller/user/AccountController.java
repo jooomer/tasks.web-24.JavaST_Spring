@@ -1,12 +1,14 @@
 package ua.store.controller.user;
 
 import java.security.Principal;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,6 +31,9 @@ public class AccountController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private MessageSource messageSource;
 
 	/**
 	 * call account.jsp to show user detail
@@ -53,15 +58,17 @@ public class AccountController {
 	@RequestMapping(value = {"/account**", "/users/{idStr}"}, 
 					method = RequestMethod.POST, 
 					params = {"update_account"})
-	public String showUpdateAccount(
-			Model model, 
-			@RequestParam("update_account") Long id) {
+	public String showUpdateAccount(Model model, 
+									@RequestParam("update_account") Long id,
+									Locale locale) {
 		logger.debug("--- started");
+
+		String message_warning = messageSource.getMessage("error.User_is_unavailable", null, locale);
 
 		User user = userService.findOne(id);
 		if (user == null) {
 			logger.debug("ERROR! User is absent in DB. Wrong user id: " + id);
-			model.addAttribute("message_alert", "Error! User is unavailable.");
+			model.addAttribute("message_warning", message_warning);
 			return "message";
 		}
 		logger.debug(user.toString());
@@ -86,11 +93,10 @@ public class AccountController {
 	@RequestMapping(value = {"/account**", "/users/{idStr}"}, 
 					method = RequestMethod.POST, 
 					params = {"save_account"})
-	public String doUpdateAccount(
-			Model model,
-			@Valid @ModelAttribute("userAccountDto") UserAccountDto userAccountDto,
-			BindingResult bindingResult, 
-			@RequestParam("save_account") Long id) {
+	public String doUpdateAccount(Model model,
+								@Valid @ModelAttribute("userAccountDto") UserAccountDto userAccountDto,
+								BindingResult bindingResult, 
+								@RequestParam("save_account") Long id) {
 		logger.debug("--- started");
 		logger.debug(userAccountDto.toString());
 

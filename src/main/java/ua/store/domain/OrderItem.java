@@ -1,6 +1,7 @@
 package ua.store.domain;
 
-import javax.persistence.Column;
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "order_items")
-public class OrderItem {
+public class OrderItem implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,10 +36,20 @@ public class OrderItem {
 	
 	@Override
 	public boolean equals(Object obj) {
+		if (obj == this) return true;
 		if (obj == null) return false;
 		if (!this.getClass().equals(obj.getClass())) return false;
 		if (!this.product.equals(((OrderItem) obj).getProduct())) return false;
 		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (product == null ? 0 : product.hashCode());
+		result = prime * result + (order == null ? 0 : order.hashCode());
+		return result;
 	}
 	
 	public Long getId() {
@@ -86,19 +99,5 @@ public class OrderItem {
 	public void setAmount(Double amount) {
 		this.amount = amount;
 	}
-
-
-//	@Override
-//	public boolean equals(Object o) {
-//		if (o == null) return false;
-//		if (o instanceof OrderItem) return false;
-//		if (this.product.getId() != ((OrderItem) o).getProduct().getId()) return false;
-//		return true;
-//	}
-//
-//	@Override
-//	public int hashCode(){
-//	    return this.product.getId().hashCode();
-//	  }
 
 }

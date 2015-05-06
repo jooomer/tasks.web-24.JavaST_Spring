@@ -13,13 +13,15 @@
   </definition>
 
   <definition name="index" extends="common">
-    <put-attribute name="title" value="BOUTIQUE FurnitureStore homepage" />
+    <put-attribute name="titleDefault" value="BOUTIQUE FurnitureStore homepage" />
+    <put-attribute name="title" value="title.index" />
     <put-attribute name="body" value="/WEB-INF/view/index.jsp" />
     <put-attribute name="current" value="index" />
   </definition>
 
   <definition name="users" extends="common">
-    <put-attribute name="title" value="Users" />
+    <put-attribute name="titleDefault" value="Users" />
+    <put-attribute name="title" value="title.Users" />
     <put-attribute name="body" value="/WEB-INF/view/user/users.jsp" />
     <put-attribute name="current" value="users" />
   </definition>
@@ -29,55 +31,15 @@
   </definition>
 
   <definition name="user-detail" extends="common">
-    <put-attribute name="title" value="User detail" />
-    <put-attribute name="body" value="/WEB-INF/view/user/user-detail.jsp" />
-    <put-attribute name="current" value="user-detail"></put-attribute>
-  </definition>
-
-  <definition name="register" extends="common">
-    <put-attribute name="title" value="User registration" />
-    <put-attribute name="body" value="/WEB-INF/view/user/user-register.jsp" />
-    <put-attribute name="current" value="register" />
-  </definition>
-
-  <definition name="product-detail" extends="common">
-    <put-attribute name="title" value="Product detail" />
-    <put-attribute name="body" value="/WEB-INF/view/product/product-detail.jsp" />
-    <put-attribute name="current" value="catalog" />
-  </definition>
-
-  <definition name="product-update" extends="common">
-    <put-attribute name="title" value="Update product" />
-    <put-attribute name="body" value="/WEB-INF/view/product/update-product.jsp" />
-    <put-attribute name="current" value="catalog" />
-  </definition>
-
-  <definition name="add-product" extends="common">
-    <put-attribute name="title" value="Add new product" />
-    <put-attribute name="body" value="/WEB-INF/view/product/add-product.jsp" />
-    <put-attribute name="current" value="catalog" />
-  </definition>
-
-  <definition name="add-category" extends="common">
-    <put-attribute name="title" value="Add new category" />
-    <put-attribute name="body" value="/WEB-INF/view/product/add-category.jsp" />
-    <put-attribute name="current" value="add-category" />
-  </definition>
-
-  <definition name="update-category" extends="common">
-    <put-attribute name="title" value="Update category" />
-    <put-attribute name="body" value="/WEB-INF/view/product/update-category.jsp" />
-    <put-attribute name="current" value="update-category" />
-  </definition>
-
-  <definition name="categories" extends="common">
-    <put-attribute name="title" value="All categories" />
-    <put-attribute name="body" value="/WEB-INF/view/product/categories.jsp" />
-    <put-attribute name="current" value="categories" />
+    <put-attribute name="titleDefault" value="User detail" />
+    <put-attribute name="title" value="title.User_detail" />
+    <put-attribute name="body" value="/WEB-INF/view/user/account.jsp" />
+    <put-attribute name="current" value="user-detail" />
   </definition>
 
   <definition name="account" extends="common">
-    <put-attribute name="title" value="Account" />
+    <put-attribute name="titleDefault" value="Account" />
+    <put-attribute name="title" value="title.Account" />
     <put-attribute name="body" value="/WEB-INF/view/user/account.jsp" />
     <put-attribute name="current" value="account" />
   </definition>
@@ -88,56 +50,112 @@
     <put-attribute name="current" value="account-update" />
   </definition>
 
+  <definition name="register" extends="common">
+    <put-attribute name="titleDefault" value="User registration" />
+    <put-attribute name="title" value="title.User_registration" />
+    <put-attribute name="body" value="/WEB-INF/view/user/user-register.jsp" />
+    <put-attribute name="current" value="register" />
+  </definition>
+
+  <definition name="product-detail" extends="common">
+    <put-attribute name="titleDefault" value="Product detail" />
+    <put-attribute name="title" value="title.Product_detail" />
+    <put-attribute name="body" value="/WEB-INF/view/product/product-detail.jsp" />
+    <put-attribute name="current" value="catalog" />
+  </definition>
+
+  <definition name="product-update" extends="common">
+    <put-attribute name="titleDefault" value="Update product" />
+    <put-attribute name="title" value="title.Update_product" />
+    <put-attribute name="body" value="/WEB-INF/view/product/update-product.jsp" />
+    <put-attribute name="current" value="catalog" />
+  </definition>
+
+  <definition name="add-product" extends="common">
+    <put-attribute name="titleDefault" value="Add new product" />
+    <put-attribute name="title" value="title.Add_new_product" />
+    <put-attribute name="body" value="/WEB-INF/view/product/add-product.jsp" />
+    <put-attribute name="current" value="catalog" />
+  </definition>
+
+  <definition name="add-category" extends="common">
+    <put-attribute name="titleDefault" value="Add new category" />
+    <put-attribute name="title" value="title.Add_new_category" />
+    <put-attribute name="body" value="/WEB-INF/view/product/add-category.jsp" />
+    <put-attribute name="current" value="add-category" />
+  </definition>
+
+  <definition name="update-category" extends="common">
+    <put-attribute name="titleDefault" value="Update category" />
+    <put-attribute name="title" value="title.Update_category" />
+    <put-attribute name="body" value="/WEB-INF/view/product/update-category.jsp" />
+    <put-attribute name="current" value="update-category" />
+  </definition>
+
+  <definition name="categories" extends="common">
+    <put-attribute name="titleDefault" value="All categories" />
+    <put-attribute name="title" value="title.All_categories" />
+    <put-attribute name="body" value="/WEB-INF/view/product/categories.jsp" />
+    <put-attribute name="current" value="categories" />
+  </definition>
+
   <definition name="search" extends="common">
-    <put-attribute name="title" value="Search" />
+    <put-attribute name="titleDefault" value="Search" />
+    <put-attribute name="title" value="title.Search" />
     <put-attribute name="body" value="/WEB-INF/view/search.jsp" />
     <put-attribute name="current" value="search" />
   </definition>
 
   <definition name="catalog" extends="common">
-    <put-attribute name="title" value="Catalog" />
+    <put-attribute name="titleDefault" value="Catalog" />
+    <put-attribute name="title" value="title.Catalog" />
     <put-attribute name="body" value="/WEB-INF/view/product/catalog.jsp" />
     <put-attribute name="current" value="catalog" />
   </definition>
 
   <definition name="cart" extends="common">
-    <put-attribute name="title" value="Cart" />
+    <put-attribute name="titleDefault" value="Cart" />
+    <put-attribute name="title" value="title.Cart" />
     <put-attribute name="body" value="/WEB-INF/view/order/cart.jsp" />
     <put-attribute name="current" value="cart" />
   </definition>
 
   <definition name="order" extends="common">
-    <put-attribute name="title" value="Order" />
+    <put-attribute name="titleDefault" value="Order" />
+    <put-attribute name="title" value="title.Order" />
     <put-attribute name="body" value="/WEB-INF/view/order/order.jsp" />
     <put-attribute name="current" value="cart" />
   </definition>
 
   <definition name="orders" extends="common">
-    <put-attribute name="title" value="Orders" />
+    <put-attribute name="titleDefault" value="Orders" />
+    <put-attribute name="title" value="title.Orders" />
     <put-attribute name="body" value="/WEB-INF/view/order/orders.jsp" />
     <put-attribute name="current" value="account" />
   </definition>
 
   <definition name="order-created" extends="common">
-    <put-attribute name="title" value="Order" />
+    <put-attribute name="titleDefault" value="Order" />
+    <put-attribute name="title" value="title.Order" />
     <put-attribute name="body" value="/WEB-INF/view/order/order-created.jsp" />
     <put-attribute name="current" value="cart" />
   </definition>
 
-  <definition name="error-page" extends="common">
-    <put-attribute name="title" value="Error page" />
-    <put-attribute name="body" value="/WEB-INF/view/common/error-page.jsp" />
-    <put-attribute name="current" value="error-page" />
-  </definition>
-
   <definition name="message" extends="common">
-    <put-attribute name="title" value="Message" />
+    <put-attribute name="titleDefault" value="Message" />
+    <put-attribute name="title" value="title.Message" />
     <put-attribute name="body" value="/WEB-INF/view/common/message-page.jsp" />
     <put-attribute name="current" value="message" />
   </definition>
 
   <definition name="login" template="/WEB-INF/view/user/login.jsp">
-    <put-attribute name="title" value="Login" />
+    <put-attribute name="titleDfault" value="Login" />
+    <put-attribute name="title" value="title.Login" />
+  </definition>
+
+  <definition name="error" template="/WEB-INF/view/common/error-page.jsp">
+    <put-attribute name="titleDfault" value="Error" />
+    <put-attribute name="title" value="Error" />
   </definition>
 
 <!--   <definition name="login" extends="common"> -->

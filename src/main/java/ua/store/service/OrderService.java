@@ -24,6 +24,7 @@ public class OrderService {
 	@Autowired
 	private OrderItemService orderItemService;
 	
+	@Transactional
 	public void saveNewOrder(Order order) {
 		order.setStatus(Order.Status.WAITING_FOR_PAIMENT);
 		orderRepository.save(order);
@@ -43,6 +44,7 @@ public class OrderService {
 		return orderRepository.findAllByUser(user);
 	}
 
+	@Transactional
 	public Order findOneByIdWithProducts(long id) {
 		Order order = orderRepository.findOne(id);
 		Set<OrderItem> orderItems = orderItemService.findAllByOrder(order);

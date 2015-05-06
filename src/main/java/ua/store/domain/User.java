@@ -1,8 +1,7 @@
 package ua.store.domain;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -16,72 +15,48 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import ua.store.annotation.ConfirmPassword;
-import ua.store.annotation.PhoneField;
-import ua.store.annotation.UniqueUsername;
 
 @Entity
 @Table(name = "user")
-//@ConfirmPassword(message = "Passwords do not match.")
-public class User implements Comparable<User> {
+public class User implements Comparable<User>, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-//	@Size(min = 3, max = 20, message = "Name must be at least 3 and no more 20 characters!")
-//	@UniqueUsername(message = "Such username already exists!")
 	@Column(length = 100, unique = true, nullable = false)
 	private String name;
 
-//	@Size(min = 3, max = 100, message = "Password must be at least 3 and no more 100 characters!")
 	@Column(length = 100, nullable = false)
 	private String password;
 	
-//	@Transient
-//	private String confirmPassword;
-//	
 	private boolean enabled;
 
-//	@Size(max = 20, message = "First name must be no more 20 characters!")
 	@Column(name = "first_name", length = 100)
 	private String firstName;
 
-//	@Size(max = 20, message = "Last name must be no more 20 characters!")
 	@Column(name = "last_name", length = 100)
 	private String lastName;
 
-//	@Email(message = "Invalid email address!")
 	@Size(min = 1, message = "Invalid email address!")
 	@Column(length = 100, nullable = false)
 	private String email;
 
-//	@PhoneField(message = "Phone must contain just numbers!")
-//	@Size(max = 20, message = "Phone can be no more 20 characters!")
 	@Column(length = 20)
 	private String phone;
 
-//	@Size(max = 50, message = "Address must be no more 50 characters!")
 	@Column(length = 100)
 	private String address;
 	
-//	@Size(max = 100, message = "Comments must be no more 100 characters!")
 	@Column(length = 1000)
 	private String comments;
 	
 	@Column(name = "in_black_list")
 	private boolean inBlackList;
 	
-//	private String userType;
-
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable
 	private Set<Role> roles = new HashSet<>();
@@ -91,7 +66,6 @@ public class User implements Comparable<User> {
 	
 	public void addRole(Role role) {
 		roles.add(role);
-//		userType = role.getName().toString();
 	}
 	
 	@Override
@@ -106,8 +80,6 @@ public class User implements Comparable<User> {
 				+ "Phone:           " + phone + "\n"
 				+ "Address:         " + address + "\n"
 				+ "Password:        " + password + "\n";
-//				+ "ConfirmPassword: " + confirmPassword + "\n"
-//				+ "roles:           " + userType + "\n";
 	}
 
 	public Long getId() {
@@ -211,14 +183,6 @@ public class User implements Comparable<User> {
 		return (int) (this.id - user.getId());
 	}
 	
-//	public String getUserType() {
-//		return userType;
-//	}
-//
-//	public void setUserType(String userType) {
-//		this.userType = userType;
-//	}
-
 	public Set<Order> getOrders() {
 		return orders;
 	}

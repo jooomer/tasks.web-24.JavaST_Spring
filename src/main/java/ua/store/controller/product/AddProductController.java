@@ -1,12 +1,14 @@
 package ua.store.controller.product;
 
 import java.util.Date;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +34,9 @@ public class AddProductController {
 	@Autowired
 	private CategoryService categoryService;
 
+	@Autowired
+	private MessageSource messageSource;
+
 	/**
 	 * prepare entity Product for add-product form
 	 */
@@ -55,11 +60,11 @@ public class AddProductController {
 	}
 
 	@RequestMapping(value = "/add-product", method = RequestMethod.POST)
-	public String doAddProduct(
-			Model model,
-			@Valid @ModelAttribute("productDto") ProductDto productDto,
-			BindingResult bindingResult, 
-			RedirectAttributes redirectAttributes) {
+	public String doAddProduct(Model model,
+								@Valid @ModelAttribute("productDto") ProductDto productDto,
+								BindingResult bindingResult, 
+								RedirectAttributes redirectAttributes,
+								Locale locale) {
 		logger.debug("doAddProduct() started.");
 
 		// check data validation from form
@@ -75,7 +80,7 @@ public class AddProductController {
 			// show add-product form
 			return "add-product";
 		}
-		
+
 		// create a new product with the received fields
 		Product product = productDto.getAllFields(new Product());
 		
@@ -85,7 +90,9 @@ public class AddProductController {
 		// save new product in DB
 		productService.save(product);
 
-		redirectAttributes.addFlashAttribute("message_success", "Congratulations! New product was successfully created.");
+		String message_success = messageSource.getMessage("product.New_product_created", null, locale);
+		redirectAttributes.addFlashAttribute("message_success", message_success);
+		
 		return "redirect:products/" + product.getId();
 	}
 

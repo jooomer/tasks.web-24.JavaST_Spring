@@ -4,7 +4,7 @@
 <%@ include file="/WEB-INF/layout/taglib.jsp" %>
 <%@ include file="/WEB-INF/layout/message.jsp" %>
 
-<h2><spring:message code="catalog.Category" /> "${categoryName}"</h2>
+<h2><spring:message code="catalog.Category" text="Catalog" /> "${categoryName}"</h2>
 <br>
 
 <form:form commandName="selectSortBy" class="form-inline">
@@ -12,15 +12,15 @@
 	  <div class="col-xs-6 col-md-4">
 	  <spring:message code="catalog.Sort_by_direction" />:
 		<form:select path="sortDirection" cssClass="form-control input-sm" onchange="submit()" >
-			<option value="ASC" ${catalog_sortDirection == 'ASC' ? 'selected' : ''}><spring:message code="catalog.Low_to_High" /></option>
-			<option value="DESC" ${catalog_sortDirection == 'DESC' ? 'selected' : ''}><spring:message code="catalog.High_to_Low" /></option>
+			<option value="ASC" ${catalog_sortDirection == 'ASC' ? 'selected' : ''}><spring:message code="catalog.Low_to_High" text="Low to high" /></option>
+			<option value="DESC" ${catalog_sortDirection == 'DESC' ? 'selected' : ''}><spring:message code="catalog.High_to_Low" text="High to low" /></option>
 		</form:select>
 	  </div>
 	  <div class="col-xs-6 col-md-4">
 	  <spring:message code="catalog.Sort_by_field" />:
 		<form:select path="sortField" cssClass="form-control input-sm" onchange="submit()" >
-			<option value="name" ${catalog_sortField == 'name' ? 'selected' : ''}><spring:message code="catalog.Name" /></option>
-			<option value="price" ${catalog_sortField == 'price' ? 'selected' : ''}><spring:message code="catalog.Price" /></option>
+			<option value="name" ${catalog_sortField == 'name' ? 'selected' : ''}><spring:message code="catalog.Name" text="Name" /></option>
+			<option value="price" ${catalog_sortField == 'price' ? 'selected' : ''}><spring:message code="catalog.Price" text="Price" /></option>
 		</form:select>
 	  </div>
 	  <div class="col-xs-6 col-md-4">
@@ -110,32 +110,31 @@
 	  <div class="col-md-5">
 	  <ul class="pager">
 		  	<c:if test="${page > 1}">
-		    	<li class="next"><a href="<spring:url value="/category/${catId}/products/page/${page - 1}" />">Previous</a></li>
-		    	<li class="next"><a href="<spring:url value="/category/${catId}/products/page/${1}" />">First</a></li>
+		    	<li class="next"><a href="<spring:url value="/category/${catId}/products/page/${page - 1}" />"><spring:message code="catalog.Previous" /></a></li>
+		    	<li class="next"><a href="<spring:url value="/category/${catId}/products/page/${1}" />"><spring:message code="catalog.First" /></a></li>
 		  	</c:if>
 		  	<c:if test="${page <= 1}">
-		    	<li class="next"><a>Previous</a></li>
-		    	<li class="next"><a>First</a></li>
+		    	<li class="next"><a><spring:message code="catalog.Previous" /></a></li>
+		    	<li class="next"><a><spring:message code="catalog.First" /></a></li>
 		  	</c:if>
 	  </ul>
 	  </div>
 	  <div class="col-md-2">
 	  <ul class="pager">
-		   	<li>Rage ${page} of ${totalPages}</li>
+		   	<li><spring:message code="catalog.Rage" /> ${page} <spring:message code="catalog.of" /> ${totalPages}</li>
 	  </ul>
 	  </div>
 	  <div class="col-md-5">
 	  <ul class="pager">
 		  	<c:if test="${page < totalPages}">
-		    	<li class="previous"><a href="<spring:url value="/category/${catId}/products/page/${page + 1}" />">Next</a></li>
-		    	<li class="previous"><a href="<spring:url value="/category/${catId}/products/page/${totalPages}" />">Last</a></li>
+		    	<li class="previous"><a href="<spring:url value="/category/${catId}/products/page/${page + 1}" />"><spring:message code="catalog.Next" /></a></li>
+		    	<li class="previous"><a href="<spring:url value="/category/${catId}/products/page/${totalPages}" />"><spring:message code="catalog.Last" /></a></li>
 		  	</c:if>
 		  	<c:if test="${page >= totalPages}">
-		    	<li class="previous"><a>Next</a></li>
-		    	<li class="previous"><a>Last</a></li>
+		    	<li class="previous"><a><spring:message code="catalog.Next" /></a></li>
+		    	<li class="previous"><a><spring:message code="catalog.Last" /></a></li>
 		  	</c:if>
 	  </ul>
 	  </div>
 	</div>
 </nav>
-

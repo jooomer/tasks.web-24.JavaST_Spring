@@ -1,8 +1,11 @@
 package ua.store.controller.product;
 
+import java.util.Locale;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,34 +26,40 @@ public class DeleteProductController {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private MessageSource messageSource;
+
 	/**
 	 * deletes current product
 	 */
 	@RequestMapping(value = "/products/{idStr}", method = RequestMethod.POST, params = {"delete_product"})
-	public String doDeleteProduct(
-			Model model, 
-			@PathVariable String idStr,
-			RedirectAttributes redirectAttributes) {
+	public String doDeleteProduct(Model model, 
+								@PathVariable String idStr,
+								RedirectAttributes redirectAttributes,
+								Locale locale) {
 		logger.debug("--- started");
+
+		String message_warning = messageSource.getMessage("error.Product_is_unavailable", null, locale);
 
 		// parse id and check it
 		long id = Util.parsePathVariable(idStr);
 		if (id < 0) {
 			logger.debug("ERROR! Wrong product id: " + idStr);
-			model.addAttribute("message_alert", "ERROR! Wrong product id: " + idStr);
+			model.addAttribute("message_warning", message_warning);
 			return "message";
 		}
 		Product product = productService.findOne(id);
 		if (product == null) {
 			logger.debug("ERROR! Product is absent in DB. Wrong product id: " + idStr);
-			model.addAttribute("message_alert", "Error! Product is unavailable. Please, choose another one.");
+			model.addAttribute("message_warning", message_warning);
 			return "message";
 		}
 
 		// delete product from DB by id
 		productService.delete(product);
 		
-		model.addAttribute("message_success", "Product was successfully deleted.");
+		String message_success = messageSource.getMessage("product.Product_created", null, locale);
+		model.addAttribute("message_success", message_success);
 
 		return "message";
 	}

@@ -3,6 +3,7 @@
  */
 package ua.store.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +15,6 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -28,8 +28,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "orders")
-public class Order {
-	
+public class Order implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -51,8 +53,6 @@ public class Order {
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private Set<OrderItem> orderItems = new LinkedHashSet<>();
-//	private Map<OrderItem, Integer> orderItems = new LinkedHashMap<>();
-//	private List<OrderItem> orderItems = new LinkedList<>();
 	
 	public static enum Status {
 		WAITING_FOR_PAIMENT("Waiting for payment"), 
@@ -211,8 +211,5 @@ public class Order {
 	public void setNumber(String orderNumber) {
 		this.number = orderNumber;
 	}
-
-
-
 
 }

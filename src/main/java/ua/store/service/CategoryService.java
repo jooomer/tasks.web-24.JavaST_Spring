@@ -38,6 +38,7 @@ public class CategoryService {
 	}
 
 
+	@Transactional
 	public void delete(Long id) {
 		Category category = categoryRepository.findOne(id);
 		List<Product> products = productService.findAllByCategory(category);

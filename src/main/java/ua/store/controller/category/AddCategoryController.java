@@ -1,12 +1,14 @@
 package ua.store.controller.category;
 
 import java.security.Principal;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,6 +28,9 @@ public class AddCategoryController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@Autowired
+	private MessageSource messageSource;
+
 	// prepare entity ProductType for add-product-type form
 	@ModelAttribute("category")
 	public Category construct() {
@@ -39,10 +44,12 @@ public class AddCategoryController {
 	}
 
 	@RequestMapping(value = "/add-category", method = RequestMethod.POST, params = {"do-add-category"})
-	public String doAddCategory(
-			@Valid @ModelAttribute("category") Category category,
-			BindingResult result, Principal principal, Model model,
-			RedirectAttributes redirectAttributes) {
+	public String doAddCategory(@Valid @ModelAttribute("category") Category category,
+								BindingResult result, 
+								Principal principal, 
+								Model model,
+								RedirectAttributes redirectAttributes,
+								Locale locale) {
 		logger.debug("--- started");
 
 		// check data validation from form
@@ -59,7 +66,8 @@ public class AddCategoryController {
 		redirectAttributes.addFlashAttribute("success", true);
 
 		// prepare message and show all product types with message
-		redirectAttributes.addFlashAttribute("message", "Congratulations! New category was successfully created.");
+		String message_success = messageSource.getMessage("category.New_category_created", null, locale);
+		redirectAttributes.addFlashAttribute("message_success", message_success);
 		
 		// call add-product-type.jsp again
 		return "redirect:/categories";

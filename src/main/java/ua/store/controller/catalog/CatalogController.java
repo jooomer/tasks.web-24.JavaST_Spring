@@ -13,7 +13,7 @@ public class CatalogController {
 			.getLogger(CatalogController.class);
 
 	/**
-	 * just shows first page of list of product
+	 * just shows first page of products list
 	 */
 	@RequestMapping("/catalog")
 	public String showCatalog(Model model) {

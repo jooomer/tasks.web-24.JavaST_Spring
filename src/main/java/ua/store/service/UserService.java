@@ -40,6 +40,7 @@ public class UserService {
 		return userRepository.findOne(id);
 	}
 
+	@Transactional
 	public User findOneWithOrders(long id) {
 		User user = findOne(id);
 		if (user == null) {
@@ -50,12 +51,14 @@ public class UserService {
 		return user;
 	}
 
+	@Transactional
 	public void save(User user) {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		user.setPassword(encoder.encode(user.getPassword()));
 		userRepository.save(user);
 	}
 
+	@Transactional
 	public User findOneWithCarts(String name) {
 		User user = userRepository.findByName(name);
 		return findOneWithOrders(user.getId());
@@ -70,6 +73,7 @@ public class UserService {
 		return userRepository.findByName(name);
 	}
 
+	@Transactional
 	public User findOneWithOrders(String name) {
 		User user = userRepository.findByName(name);
 		Set<Order> orders = orderService.findAllByUser(user);
@@ -86,6 +90,7 @@ public class UserService {
 		
 	}
 
+	@Transactional
 	public void delete(Long id) {
 		User user = userRepository.findOne(id);
 		Set<Order> orders = user.getOrders();
@@ -96,6 +101,7 @@ public class UserService {
 		userRepository.delete(id);
 	}
 
+	@Transactional
 	public User createAndSaveNewUser(UserRegisterDto userRegisterDto) {
 		User user = new User();
 		user.setName(userRegisterDto.getName());

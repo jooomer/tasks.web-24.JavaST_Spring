@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="/WEB-INF/layout/taglib.jsp" %>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx"%>
 <%-- <%@ include file="/WEB-INF/layout/modal.jsp" %> --%>
 
 <!DOCTYPE html>
@@ -12,20 +13,18 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-	
-	
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title><tiles:getAsString name="title" /></title>
+<tilesx:useAttribute name="current"/> 
+<tilesx:useAttribute name="title" /> 
+
+<c:set var="titleDefault" ><tiles:getAsString name="titleDefault" /></c:set>
+<title><spring:message code="${title}" text="${titleDefault}" /></title>
 
 </head>
 
 <body>
-
-<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx"%>
-
-<tilesx:useAttribute name="current"/> 
 
 	<div class="container">
 
@@ -90,7 +89,8 @@
 			<!--/.sidebar-offcanvas-->
 			<div class="col-xs-12 col-sm-9">
 				
-				<h1><tiles:getAsString name="title" /></h1>
+				<h1><spring:message code="${title}" text="${titleDefault}" /></h1>
+				
 				<tiles:insertAttribute name="body" />
 				
 			</div>
@@ -101,9 +101,9 @@
 		<br> <br>
 		<hr>
 		<div>
-			<center>
+			<p class="text-center" >
 				<tiles:insertAttribute name="footer" />
-			</center>
+			</p>
 		</div>
 	</div>
 	<!-- End of container -->

@@ -1,13 +1,14 @@
 package ua.store.controller.catalog;
 
 import java.util.List;
+import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,9 @@ public class CategoryProductsPageController {
 
 	@Autowired
 	private CategoryService categoryService;
+	
+	@Autowired
+	private MessageSource messageSource;
 
 	@ModelAttribute("category")
 	public SelectCategoryDto constructSelectCategoryDto() {
@@ -58,6 +62,7 @@ public class CategoryProductsPageController {
 	public String doSendToCart(
 			Model model,
 			HttpSession session,
+			Locale locale,
 			RedirectAttributes redirectAttributes,
 			@RequestParam("send_to_cart") Long id,
 			@PathVariable String catIdStr,
@@ -68,7 +73,8 @@ public class CategoryProductsPageController {
 		Product product = productService.findOne(id);
 		if (product == null) {
 			logger.debug("Product is not found in DB");
-			model.addAttribute("message", "Error! Product is unavailable. Please, choose another one.");
+			String message_warning = messageSource.getMessage("error.Product_is_unavailable", null, locale);
+			model.addAttribute("message_warning", message_warning);
 			return "message";
 		}
 		logger.debug("Product is found in DB. Product id: " + product.getId());
@@ -86,8 +92,8 @@ public class CategoryProductsPageController {
 		// save Order to session
 		session.setAttribute("order", order);
 
-		redirectAttributes.addFlashAttribute("message_success",
-				"Product is successfully added to your cart.");
+		String message_success = messageSource.getMessage("cart.Product_is_added_to_cart", null, locale);
+		redirectAttributes.addFlashAttribute("message_success", message_success);
 		
 		return "redirect:/category/" + catIdStr + "/products/page/" + pageStr;
 	}
@@ -115,7 +121,7 @@ public class CategoryProductsPageController {
 		if (session.getAttribute("catalog_itemsOnPage") != null) {
 			itemsOnPage = (int) session.getAttribute("catalog_itemsOnPage");
 		} else {
-			itemsOnPage = 10;
+			itemsOnPage = 10;//86400000-5
 			session.setAttribute("catalog_itemsOnPage", itemsOnPage);
 		}
 		if (selectSortByDto != null && selectSortByDto.getItemsOnPage() > 0) {

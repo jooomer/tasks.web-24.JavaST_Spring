@@ -3,11 +3,13 @@ package ua.store.controller.order;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -34,15 +36,18 @@ public class OrdersController {
 	@Autowired
 	private UserService userService;
 
+	@Autowired
+	private MessageSource messageSource;
+
 	/**
 	 * just show order
 	 */
 	@RequestMapping(value = "/orders/{idStr}")
-	public String showOrder(
-			Model model, 
-			Principal principal,
-			@PathVariable String idStr,
-			@ModelAttribute("orderStatusStr") String orderStatusStr) {
+	public String showOrder(Model model, 
+							Principal principal,
+							Locale locale,
+							@PathVariable String idStr,
+							@ModelAttribute("orderStatusStr") String orderStatusStr) {
 		logger.debug("--- started");
 		
 		System.out.println(orderStatusStr);
@@ -51,7 +56,8 @@ public class OrdersController {
 		long id = Util.parsePathVariable(idStr);
 		if (id < 1) {
 			logger.debug("ERROR! Wrong order number.");
-			model.addAttribute("message_danger", "ERROR! Wrong order number.");
+			String message_danger = messageSource.getMessage("orders.Wrong_order_number", null, locale);
+			model.addAttribute("message_danger", message_danger);
 			return "message";
 		}
 		
@@ -59,7 +65,8 @@ public class OrdersController {
 		Order order = orderService.findOneByIdWithProducts(id);
 		if (order == null) {
 			logger.debug("ERROR! Order with this number doesn't exist.");
-			model.addAttribute("message_danger", "ERROR! Order with this number doesn't exist.");
+			String message_danger = messageSource.getMessage("orders.Order_number_doesnt_exist", null, locale);
+			model.addAttribute("message_danger", message_danger);
 			return "message";
 		}
 
@@ -67,7 +74,6 @@ public class OrdersController {
 		
 		model.addAttribute("order", order);
 		
-//		OrderStatus[] listOfOrderStatuses = OrderStatus.values();
 		List<String> listOfOrderStatuses = new ArrayList<>();
 		for (Order.Status orderStatus : Order.Status.values()) {
 			listOfOrderStatuses.add(orderStatus.getName());
@@ -81,7 +87,8 @@ public class OrdersController {
 	 * just show list of orders
 	 */
 	@RequestMapping("/orders")
-	public String showOrders(Model model, Principal principal) {
+	public String showOrders(Model model, 
+							Principal principal) {
 		logger.debug("--- started");
 		
 		// get and prepare list of orders to view
@@ -92,7 +99,6 @@ public class OrdersController {
 		model.addAttribute("listOfOrders", listOfOrders);
 
 		// 
-//		OrderStatus[] listOfOrderStatuses = OrderStatus.values();
 		List<String> listOfOrderStatuses = new ArrayList<>();
 		for (Order.Status orderStatus : Order.Status.values()) {
 			listOfOrderStatuses.add(orderStatus.getName());
@@ -107,9 +113,9 @@ public class OrdersController {
 	 * just show list of orders
 	 */
 	@RequestMapping(value = "/orders", params = "cancel_order")
-	public String showCancelOrder(
-			RedirectAttributes redirectAttributes,
-			@RequestParam("cancel_order") Long id) {
+	public String showCancelOrder(RedirectAttributes redirectAttributes,
+								Locale locale,
+								@RequestParam("cancel_order") Long id) {
 		logger.debug("--- started");
 
 		// set order status to "Canceled"
@@ -117,7 +123,8 @@ public class OrdersController {
 		order.setStatus(Order.Status.CANCELED);
 		orderService.update(order);
 
-		redirectAttributes.addFlashAttribute("message_success", "Your order was successfully canceled.");
+		String message_success = messageSource.getMessage("orders.Order_canceled", null, locale);
+		redirectAttributes.addFlashAttribute("message_success", message_success);
 				
 		return "redirect:/orders";
 	}

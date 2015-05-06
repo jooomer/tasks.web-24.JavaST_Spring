@@ -1,6 +1,7 @@
 package ua.store.controller.order;
 
 import java.security.Principal;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,15 +38,22 @@ public class CartController {
 	
 	@Autowired
 	public ProductService productService;
+	
+	@Autowired
+	private MessageSource messageSource;
 
 	/**
 	 * just show cart
 	 */
 	@RequestMapping("/cart")
-	public String showCart(Model model, HttpSession session, Principal principal) {
+	public String showCart(Model model, 
+							HttpSession session, 
+							Principal principal,
+							Locale locale) {
 		logger.debug("--- started");
 		
 		Order order = (Order) session.getAttribute("order");
+		String message_info = messageSource.getMessage("cart.Your_cart_is_empty", null, locale);
 		
 		// check state of order
 		if (order == null
@@ -56,14 +65,14 @@ public class CartController {
 			session.setAttribute("listOfOrderItems", null);
 			session.setAttribute("order", null);
 			session.setAttribute("orderSaved", null);
-			model.addAttribute("message_info", "Your cart is empty. Please, choose your product.");
+			model.addAttribute("message_info", message_info);
 			return "cart";
 		}
 
 		// prepare list of orderItems to show products in a cart page
 		Set<OrderItem> listOfOrderItems = order.getOrderItems();
 		if (listOfOrderItems.isEmpty()) {
-			model.addAttribute("message_info", "Your cart is empty. Please, choose your product.");
+			model.addAttribute("message_info", message_info);
 		} else {
 			model.addAttribute("listOfOrderItems", listOfOrderItems);
 		}
@@ -74,6 +83,7 @@ public class CartController {
 	public String doRemoveFromCart(
 			RedirectAttributes redirectAttributes, 
 			HttpSession session,
+			Locale locale,
 			@RequestParam("remove_from_cart") Long id) {
 		logger.debug("--- started");
 		logger.debug("Product id to remove: " + id);
@@ -86,7 +96,9 @@ public class CartController {
 		logger.debug("An order exists in a session.");
 		
 		order.deleteProduct(id);
-		redirectAttributes.addFlashAttribute("message_success", "The product is successfully removed from the cart.");
+		
+		String message_success = messageSource.getMessage("cart.Product_is_removed", null, locale);
+		redirectAttributes.addFlashAttribute("message_success", message_success);
 		
 		return "redirect:/cart";
 	}

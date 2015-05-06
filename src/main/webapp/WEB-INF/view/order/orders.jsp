@@ -5,11 +5,13 @@
 <%@ include file="/WEB-INF/layout/message.jsp" %>
 
 <security:authorize access="hasRole('ROLE_ADMIN')" >
-	<h2>User ${user.name}</h2>
+	<h2><spring:message code="orders.User" text="User"/> ${user.name}</h2>
 </security:authorize>
 
 <c:if test="${empty listOfOrders}" >
-	<div class="alert alert-info" role="alert">List of orders is empty.</div>
+	<div class="alert alert-info" role="alert">
+		<spring:message code="orders.List_of_orders_is_empty" text="List of orders is empty."/>
+	</div>
 </c:if>
 
 <c:if test="${not empty listOfOrders}" >
@@ -17,12 +19,12 @@
 <table class="table table-bordered table-hover table-stripped">
 	<thead>
 		<tr>
-			<th style="width:70px">Order #</th>
-			<th style="width:120px">Date</th>
-			<th>Status</th>
-			<th style="width:100px">Amount, $</th>
-			<th>Comments</th>
-			<th>Action</th>
+			<th style="width:70px"><spring:message code="orders.Order" text="Order"/> #</th>
+			<th style="width:120px"><spring:message code="orders.Date" text="Date"/></th>
+			<th><spring:message code="orders.Status" text="Status"/></th>
+			<th style="width:100px"><spring:message code="orders.Amount" text="Amount"/>, $</th>
+			<th><spring:message code="orders.Comments" text="Comments"/></th>
+			<th><spring:message code="orders.Action" text="Action"/></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -46,7 +48,9 @@
 				<td>
 					<c:if test="${order.status eq 'WAITING_FOR_PAIMENT'}" >
 						<form action="<spring:url value="/orders" />" method="post">
-							<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger btn-sm">Cancel</button>
+							<button type="submit" name="cancel_order" value="${order.id}" class="btn btn-danger btn-sm">
+								<spring:message code="orders.Cancel" text="Cancel"/>
+							</button>
 						</form>
 					</c:if>
 				</td>

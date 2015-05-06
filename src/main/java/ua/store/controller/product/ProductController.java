@@ -5,12 +5,14 @@
 package ua.store.controller.product;
 
 import java.security.Principal;
+import java.util.Locale;
 
 import javax.servlet.http.HttpSession;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -43,6 +45,9 @@ public class ProductController {
 	@Autowired
 	private CategoryService categoryService;
 
+	@Autowired
+	private MessageSource messageSource;
+
 	@ModelAttribute("category")
 	public SelectCategoryDto constructSelectProductCategoryDto() {
 		return new SelectCategoryDto();
@@ -57,22 +62,24 @@ public class ProductController {
 	 * shows product detail
 	 */
 	@RequestMapping("/products/{idStr}")
-	public String showProductDetail(
-			Model model, 
-			@PathVariable String idStr) {
+	public String showProductDetail(Model model, 
+									@PathVariable String idStr,
+									Locale locale) {
 		logger.debug("showProductDetail() started. Product Id is \"" + idStr
 				+ "\"");
+
+		String message_warning = messageSource.getMessage("error.Product_is_unavailable", null, locale);
 
 		// parse id and check it
 		long id = Util.parsePathVariable(idStr);
 		if (id < 0) {
 			logger.debug("ERROR! Wrong product id: " + idStr);
-			model.addAttribute("message_warning", "ERROR! Product is unavailable. Please, choose another one.");
+			model.addAttribute("message_warning", message_warning);
 			return "message";
 		}
 		Product product = productService.findOne(id);
 		if (product == null) {
-			model.addAttribute("message_warning", "Error! Product is unavailable. Please, choose another one.");
+			model.addAttribute("message_warning", message_warning);
 			return "message";
 		}
 		logger.debug("Product is found. Id: " + id);
@@ -90,24 +97,26 @@ public class ProductController {
 	@RequestMapping(value = "/products/{idStr}", 
 					method = RequestMethod.POST, 
 					params = { "send_to_cart" })
-	public String doSendToCart(
-			Model model, 
-			@PathVariable String idStr,
-			Principal principal, 
-			RedirectAttributes redirectAttributes,
-			HttpSession session) {
+	public String doSendToCart(Model model, 
+							@PathVariable String idStr,
+							Principal principal, 
+							RedirectAttributes redirectAttributes,
+							HttpSession session,
+							Locale locale) {
 		logger.debug("--- started. Product Id is \"" + idStr + "\"");
+
+		String message_warning = messageSource.getMessage("error.Product_is_unavailable", null, locale);
 
 		// parse id and check it
 		long id = Util.parsePathVariable(idStr);
 		if (id < 0) {
 			logger.debug("ERROR! Wrong product id: " + idStr);
-			model.addAttribute("message", "ERROR! Wrong product id: " + idStr);
+			model.addAttribute("message_warning", message_warning);
 			return "message";
 		}
 		Product product = productService.findOne(id);
 		if (product == null) {
-			model.addAttribute("message", "Error! Product is unavailable. Please, choose another one.");
+			model.addAttribute("message_warning", message_warning);
 			return "message";
 		}
 		logger.debug("Product is found. Id: " + id);
@@ -125,8 +134,9 @@ public class ProductController {
 		// save Order to session
 		session.setAttribute("order", order);
 
-		redirectAttributes.addFlashAttribute("message",
-				"Product is successfully added to your cart.");
+		String message_success = messageSource.getMessage("cart.Product_is_added_to_cart", null, locale);
+		redirectAttributes.addFlashAttribute("message_success",
+				message_success);
 		return "redirect:/products/" + id;
 	}
 

@@ -1,5 +1,6 @@
 package ua.store.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -24,7 +25,9 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name = "products")
-public class Product implements Comparable<Product> {
+public class Product implements Comparable<Product>, Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,7 +54,6 @@ public class Product implements Comparable<Product> {
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id")
-	@Enumerated(EnumType.STRING)
 	private Category category;
 	
 	@OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
@@ -65,10 +67,9 @@ public class Product implements Comparable<Product> {
 				+ "price:           " + price + "\n"
 				+ "quantityInStock: " + quantityInStock + "\n"
 				+ "publishedDate:   " + publishedDate + "\n"
-//				+ "category: " + category.getName() + "\n"
-				+ "category: " + category + "\n"
+				+ "category: 		" + category.getName() + "\n"
+//				+ "category: " + category + "\n"
 				+ "description:     " + description + "\n";
-//				+ "orderItems size: " + orderItems.size() + "\n";
 	}
 	
 	@Override
