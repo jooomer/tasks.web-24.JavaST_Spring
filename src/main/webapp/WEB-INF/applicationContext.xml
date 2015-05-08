@@ -18,7 +18,8 @@
 
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="/WEB-INF/jdbc.properties" />
+<!-- 		<property name="location" value="/WEB-INF/jdbc.properties" /> -->
+		<property name="location" value="/WEB-INF/jdbc-eclipse.properties" />
 	</bean>
 
 	<bean id="dataSource"

@@ -24,7 +24,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.store.domain.Order;
 import ua.store.domain.Product;
 import ua.store.dto.SelectCategoryDto;
-import ua.store.dto.SelectSortByDto;
 import ua.store.service.CategoryService;
 import ua.store.service.ProductService;
 import ua.store.service.UserService;
@@ -51,11 +50,6 @@ public class ProductController {
 	@ModelAttribute("category")
 	public SelectCategoryDto constructSelectProductCategoryDto() {
 		return new SelectCategoryDto();
-	}
-
-	@ModelAttribute("selectOrderBy")
-	public SelectSortByDto constructSelectSortByDto() {
-		return new SelectSortByDto();
 	}
 
 	/**

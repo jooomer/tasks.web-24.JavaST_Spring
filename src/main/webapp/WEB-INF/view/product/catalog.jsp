@@ -7,7 +7,7 @@
 <h2><spring:message code="catalog.Category" text="Catalog" /> "${categoryName}"</h2>
 <br>
 
-<form:form commandName="selectSortBy" class="form-inline">
+<form:form commandName="catalogSelectFormHandler" class="form-inline">
 	<div class="row">
 	  <div class="col-xs-6 col-md-4">
 	  <spring:message code="catalog.Sort_by_direction" />:
@@ -19,17 +19,17 @@
 	  <div class="col-xs-6 col-md-4">
 	  <spring:message code="catalog.Sort_by_field" />:
 		<form:select path="sortField" cssClass="form-control input-sm" onchange="submit()" >
-			<option value="name" ${catalog_sortField == 'name' ? 'selected' : ''}><spring:message code="catalog.Name" text="Name" /></option>
-			<option value="price" ${catalog_sortField == 'price' ? 'selected' : ''}><spring:message code="catalog.Price" text="Price" /></option>
+			<option value="name" ${catalogSelectFormHandler.sortField == 'name' ? 'selected' : ''}><spring:message code="catalog.Name" text="Name" /></option>
+			<option value="price" ${catalogSelectFormHandler.sortField == 'price' ? 'selected' : ''}><spring:message code="catalog.Price" text="Price" /></option>
 		</form:select>
 	  </div>
 	  <div class="col-xs-6 col-md-4">
 	  <spring:message code="catalog.Group_by" />:
 		<form:select path="itemsOnPage" cssClass="form-control input-sm" onchange="submit()" >
-			<option value="5" ${catalog_itemsOnPage == 5 ? 'selected' : ''}><spring:message code="catalog.5_items_on_a_page" /></option>
-			<option value="10" ${catalog_itemsOnPage == 10 ? 'selected' : ''}><spring:message code="catalog.10_items_on_a_page" /></option>
-			<option value="15" ${catalog_itemsOnPage == 15 ? 'selected' : ''}><spring:message code="catalog.15_items_on_a_page" /></option>
-			<option value="20" ${catalog_itemsOnPage == 20 ? 'selected' : ''}><spring:message code="catalog.20_items_on_a_page" /></option>
+			<option value="5" ${catalogSelectFormHandler.itemsOnPage == 5 ? 'selected' : ''}><spring:message code="catalog.5_items_on_a_page" /></option>
+			<option value="10" ${catalogSelectFormHandler.itemsOnPage == 10 ? 'selected' : ''}><spring:message code="catalog.10_items_on_a_page" /></option>
+			<option value="15" ${catalogSelectFormHandler.itemsOnPage == 15 ? 'selected' : ''}><spring:message code="catalog.15_items_on_a_page" /></option>
+			<option value="20" ${catalogSelectFormHandler.itemsOnPage == 20 ? 'selected' : ''}><spring:message code="catalog.20_items_on_a_page" /></option>
 		</form:select>
 	  </div>
 	</div>

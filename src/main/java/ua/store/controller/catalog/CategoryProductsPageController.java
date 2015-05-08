@@ -23,9 +23,9 @@ import ua.store.domain.Category;
 import ua.store.domain.Order;
 import ua.store.domain.Product;
 import ua.store.dto.SelectCategoryDto;
-import ua.store.dto.SelectSortByDto;
 import ua.store.service.CategoryService;
 import ua.store.service.ProductService;
+import ua.store.service.view.CatalogSelectFormHandler;
 import ua.store.util.Util;
 
 @Controller
@@ -42,15 +42,22 @@ public class CategoryProductsPageController {
 	
 	@Autowired
 	private MessageSource messageSource;
+	
+	@Autowired
+	private HttpSession session;
 
 	@ModelAttribute("category")
 	public SelectCategoryDto constructSelectCategoryDto() {
 		return new SelectCategoryDto();
 	}
-
-	@ModelAttribute("selectOrderBy")
-	public SelectSortByDto constructSelectSortByDto() {
-		return new SelectSortByDto();
+	
+	@ModelAttribute("catalogSelectFormHandler")
+	public CatalogSelectFormHandler constructCatalogSelectFormHandler() {
+		if (session.getAttribute("catalogSelectFormHandler") != null) {
+			return (CatalogSelectFormHandler) session.getAttribute("catalogSelectFormHandler");
+		} else {
+			return new CatalogSelectFormHandler();
+		}
 	}
 
 	/**
@@ -61,7 +68,6 @@ public class CategoryProductsPageController {
 					params = {"send_to_cart"})
 	public String doSendToCart(
 			Model model,
-			HttpSession session,
 			Locale locale,
 			RedirectAttributes redirectAttributes,
 			@RequestParam("send_to_cart") Long id,
@@ -105,57 +111,25 @@ public class CategoryProductsPageController {
 	public String showProductsByCategory(
 			Model model,
 			RedirectAttributes redirectAttributes,
-			HttpSession session,
 			@PathVariable String catIdStr,
 			@PathVariable String pageStr,
 			@ModelAttribute("category") SelectCategoryDto selectCategoryDto,
-			@ModelAttribute("selectSortBy") SelectSortByDto selectSortByDto) {
+			@ModelAttribute("catalogSelectFormHandler") CatalogSelectFormHandler catalogSelectFormHandler) {
 		logger.debug("--- started");
 		logger.debug("URL: /category/" + catIdStr + "/products/page/" + pageStr);
 
 		// ---------------------------------
 		// handle and initialize parameters of select form
 		// ---------------------------------
-		// initialize itemsOnPage
-		int itemsOnPage;
-		if (session.getAttribute("catalog_itemsOnPage") != null) {
-			itemsOnPage = (int) session.getAttribute("catalog_itemsOnPage");
-		} else {
-			itemsOnPage = 10;//86400000-5
-			session.setAttribute("catalog_itemsOnPage", itemsOnPage);
-		}
-		if (selectSortByDto != null && selectSortByDto.getItemsOnPage() > 0) {
-			itemsOnPage = selectSortByDto.getItemsOnPage();
-			session.setAttribute("catalog_itemsOnPage", itemsOnPage);
+		if (catalogSelectFormHandler == null) {
+			catalogSelectFormHandler = new CatalogSelectFormHandler();
 		} 
 
-		// initialize sorting by direction 
-		Direction direction;
-		if (session.getAttribute("catalog_sortDirection") != null) {
-			direction = (Direction) session.getAttribute("catalog_sortDirection");
-		} else {
-			direction = Direction.ASC;
-			session.setAttribute("catalog_sortDirection", direction);
-		}
-		if (selectSortByDto != null && selectSortByDto.getSortDirection() != null) {
-			direction = Direction.valueOf(selectSortByDto.getSortDirection());
-			session.setAttribute("catalog_sortDirection", direction);
-			System.out.println("Direction: " + direction);
-		} 
-
-		// initialize sorting by field
-		String sortField;
-		if (session.getAttribute("catalog_sortField") != null) {
-			sortField = (String) session.getAttribute("catalog_sortField");
-		} else {
-			sortField = "id";
-			session.setAttribute("catalog_sortField", sortField);
-		}
-		if (selectSortByDto != null && selectSortByDto.getSortField() != null) {
-			sortField = selectSortByDto.getSortField();
-			session.setAttribute("catalog_sortField", sortField);
-		} 
-		
+		// initialize sort fields
+		Direction direction = Direction.ASC;
+		int itemsOnPage = catalogSelectFormHandler.getItemsOnPage();
+		String sortField = catalogSelectFormHandler.getSortField();
+		session.setAttribute("catalogSelectFormHandler", catalogSelectFormHandler);
 		
 		// initialize selected category
 		if (selectCategoryDto.getCategory() != null) {

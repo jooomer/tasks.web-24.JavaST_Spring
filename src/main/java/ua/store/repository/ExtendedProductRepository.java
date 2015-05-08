@@ -37,19 +37,19 @@ public class ExtendedProductRepository {
 		CriteriaQuery<Product> query = criteriaBuilder
 				.createQuery(Product.class);
 
-		Root<Product> rProduct = query.from(Product.class);
+		Root<Product> root = query.from(Product.class);
 
 		ParameterExpression<Category> pCategory = criteriaBuilder
 				.parameter(Category.class);
 
-		query.select(rProduct).where(
-				criteriaBuilder.equal(rProduct.get("category"),
+		query.select(root).where(
+				criteriaBuilder.equal(root.get("category"),
 						pCategory));
 		
 		if (direction == Direction.ASC) {
-			query.orderBy(criteriaBuilder.asc(rProduct.get(field)));
+			query.orderBy(criteriaBuilder.asc(root.get(field)));
 		} else {
-			query.orderBy(criteriaBuilder.desc(rProduct.get(field)));
+			query.orderBy(criteriaBuilder.desc(root.get(field)));
 		}
 
 		TypedQuery<Product> typedQuery = em.createQuery(query);
@@ -81,12 +81,12 @@ public class ExtendedProductRepository {
 		CriteriaQuery<Product> query = criteriaBuilder
 				.createQuery(Product.class);
 
-		Root<Product> rProduct = query.from(Product.class);
+		Root<Product> root = query.from(Product.class);
 		ParameterExpression<Category> pCategory = criteriaBuilder
 				.parameter(Category.class);
 
-		query.select(rProduct).where(
-				criteriaBuilder.equal(rProduct.get("category"),
+		query.select(root).where(
+				criteriaBuilder.equal(root.get("category"),
 						pCategory));
 
 		TypedQuery<Product> typedQuery = em.createQuery(query);
