@@ -30,7 +30,6 @@
 				
 				<h1><tiles:getAsString name="title" /></h1>
 				<%@ include file="/WEB-INF/layout/message.jsp" %>
-
 				
 			</div>
 		</div>

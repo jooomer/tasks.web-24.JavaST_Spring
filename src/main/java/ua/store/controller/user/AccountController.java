@@ -45,6 +45,9 @@ public class AccountController {
 		// get current user from DB
 		String name = principal.getName();
 		User user = userService.findByName(name);
+		
+		System.out.println(user.toString());
+		
 		model.addAttribute("user", user);
 		logger.debug("Show account of user: " + user.toString());
 

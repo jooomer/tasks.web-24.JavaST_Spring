@@ -59,8 +59,6 @@ public class CategoriesController {
 		model.addAttribute("id", id);
 		model.addAttribute("action", "delete_category");
 
-		System.out.println(id);
-		
 		return "popup_delete";
 	}
 

@@ -136,9 +136,7 @@ public class Order implements Serializable {
 	public void deleteProduct(Long id) {
 		for (Iterator<OrderItem> i = orderItems.iterator(); i.hasNext();) {
 			OrderItem orderItem = i.next();
-			System.out.println(orderItem.getProduct().getId() + " - " + id);
 			if (orderItem.getProduct().getId().equals(id)) {
-				System.out.println("---------------");
 				amount -= orderItem.getAmount();
 				i.remove();
 			}

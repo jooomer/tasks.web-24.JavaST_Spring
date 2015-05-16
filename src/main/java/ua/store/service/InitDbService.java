@@ -46,7 +46,6 @@ public class InitDbService {
 		
 		logger.debug("--- init() started.");
 		logger.debug("Tomcat path: " + System.getProperty("catalina.base"));
-		System.out.println(System.getProperty("user.name"));
 		
 		if (roleService.findByName(Role.Name.ROLE_ADMIN) != null) {
 			return;

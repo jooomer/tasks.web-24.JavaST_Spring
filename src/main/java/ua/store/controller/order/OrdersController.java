@@ -50,8 +50,6 @@ public class OrdersController {
 							@ModelAttribute("orderStatusStr") String orderStatusStr) {
 		logger.debug("--- started");
 		
-		System.out.println(orderStatusStr);
-
 		// get and check order Id 
 		long id = Util.parsePathVariable(idStr);
 		if (id < 1) {

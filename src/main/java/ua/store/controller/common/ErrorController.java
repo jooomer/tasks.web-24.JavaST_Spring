@@ -22,7 +22,7 @@ public class ErrorController {
 	public String showErrorPage(Model model, Locale locale) {
 		logger.debug("--- started");
 		
-		String message_warning = messageSource.getMessage("error.Category_deleted", null, locale);
+		String message_warning = messageSource.getMessage("error.common_message", null, locale);
 
 		model.addAttribute("message_warning", message_warning);
 		return "error";

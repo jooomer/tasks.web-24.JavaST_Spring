@@ -79,7 +79,9 @@ public class User implements Comparable<User>, Serializable {
 				+ "Email:           " + email + "\n"
 				+ "Phone:           " + phone + "\n"
 				+ "Address:         " + address + "\n"
-				+ "Password:        " + password + "\n";
+				+ "Password:        " + password + "\n"
+				+ "Roles:        	" + (roles != null ? roles.size() : "null") + "\n"
+				;
 	}
 
 	public Long getId() {

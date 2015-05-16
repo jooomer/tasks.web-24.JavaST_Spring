@@ -12,8 +12,8 @@
 	  <div class="col-xs-6 col-md-4">
 	  <spring:message code="catalog.Sort_by_direction" />:
 		<form:select path="sortDirection" cssClass="form-control input-sm" onchange="submit()" >
-			<option value="ASC" ${catalog_sortDirection == 'ASC' ? 'selected' : ''}><spring:message code="catalog.Low_to_High" text="Low to high" /></option>
-			<option value="DESC" ${catalog_sortDirection == 'DESC' ? 'selected' : ''}><spring:message code="catalog.High_to_Low" text="High to low" /></option>
+			<option value="ASC" ${catalogSelectFormHandler.sortDirection == 'ASC' ? 'selected' : ''}><spring:message code="catalog.Low_to_High" text="Low to high" /></option>
+			<option value="DESC" ${catalogSelectFormHandler.sortDirection == 'DESC' ? 'selected' : ''}><spring:message code="catalog.High_to_Low" text="High to low" /></option>
 		</form:select>
 	  </div>
 	  <div class="col-xs-6 col-md-4">

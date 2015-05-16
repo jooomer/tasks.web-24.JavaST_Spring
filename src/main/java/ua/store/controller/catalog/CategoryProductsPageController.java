@@ -126,7 +126,7 @@ public class CategoryProductsPageController {
 		} 
 
 		// initialize sort fields
-		Direction direction = Direction.ASC;
+		Direction direction = catalogSelectFormHandler.getSortDirection();
 		int itemsOnPage = catalogSelectFormHandler.getItemsOnPage();
 		String sortField = catalogSelectFormHandler.getSortField();
 		session.setAttribute("catalogSelectFormHandler", catalogSelectFormHandler);
